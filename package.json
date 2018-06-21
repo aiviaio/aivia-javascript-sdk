@@ -1,0 +1,32 @@
+{
+  "name": "Solidity Proxy",
+  "version": "0.0.1",
+  "description": "This is Proxy smart contract for ethereum",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "keywords": [
+    "ethereum",
+    "eth",
+    "nsu",
+    "fund"
+  ],
+  "author": "dima.shmalko@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "openzeppelin-solidity": "1.10.0",
+    "truffle-contract": "^3.0.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.13.5"
+  }
+}
