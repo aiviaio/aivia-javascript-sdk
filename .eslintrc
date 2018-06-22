@@ -20,6 +20,7 @@
     "one-var": 0,
     "camelcase": 0,
     "capitalized-comments": 0,
-    "multiline-comment-style": 0
+    "multiline-comment-style": 0,
+    "max-statements": 0
   }
 }
