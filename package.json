@@ -1,5 +1,5 @@
 {
-  "name": "Solidity Proxy",
+  "name": "Solidity decentralization governance app",
   "version": "0.0.1",
   "description": "This is Proxy smart contract for ethereum",
   "main": "truffle-config.js",
