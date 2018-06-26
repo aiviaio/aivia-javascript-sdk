@@ -25,6 +25,7 @@
     "max-statements": 0,
     "id-length": 0,
     "no-plusplus": 0,
-    "no-control-regex": 0
+    "no-control-regex": 0,
+    "sort-keys": 0
   }
 }
