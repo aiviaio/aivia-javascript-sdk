@@ -26,6 +26,7 @@
     "id-length": 0,
     "no-plusplus": 0,
     "no-control-regex": 0,
-    "sort-keys": 0
+    "sort-keys": 0,
+    "no-bitwise": 0
   }
 }
