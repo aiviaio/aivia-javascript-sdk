@@ -21,7 +21,7 @@ module.exports = {
   },
   networks: {
     ganache: {
-      gas: 4500000,
+      gas: 4712388,
       gasPrice: 4000000000,
       host: "127.0.0.1",
       network_id: "*",

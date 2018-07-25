@@ -18,8 +18,7 @@
   "author": "dima.shmalko@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "openzeppelin-solidity": "1.11.0",
-    "truffle-contract": "^3.0.6"
+    "openzeppelin-solidity": "1.11.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

@@ -1,3 +1,3 @@
 rm -rf ./build
-truffle migrate  --reset --network ganache
+truffle migrate --compile-all --reset --network ganache
 truffle console --network ganache
