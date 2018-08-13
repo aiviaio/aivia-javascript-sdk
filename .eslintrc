@@ -28,6 +28,7 @@
     "no-control-regex": 0,
     "sort-keys": 0,
     "no-bitwise": 0,
+    "new-cap": 0,
     "prefer-destructuring": [
       "error",
       { "AssignmentExpression": { "array": true } }
