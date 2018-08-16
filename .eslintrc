@@ -16,8 +16,8 @@
     "Promise": false
   },
   "rules": {
-    "no-magic-numbers": 0,
     "no-console": 0,
+    "no-magic-numbers": 0,
     "one-var": 0,
     "camelcase": 0,
     "capitalized-comments": 0,
