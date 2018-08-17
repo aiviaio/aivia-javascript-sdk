@@ -32,6 +32,7 @@
     "prefer-destructuring": [
       "error",
       { "AssignmentExpression": { "array": true } }
-    ]
+    ],
+    "max-lines-per-function": 0
   }
 }
