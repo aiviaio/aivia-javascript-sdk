@@ -33,6 +33,7 @@
       "error",
       { "AssignmentExpression": { "array": true } }
     ],
-    "max-lines-per-function": 0
+    "max-lines-per-function": 0,
+    "require-unicode-regexp": 0
   }
 }
