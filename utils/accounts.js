@@ -1,12 +1,12 @@
 module.exports = {
-  DGAddress: "0x61667ddff96c8a32a70bc0aa4f6eb7f6d9a8babf",
-  platform: "0x68d2aa63f9dc2ce191e345b8d23840a67ea472cd",
-  projectOwner: "0x1a69e2da2197be27e2618d55f7f7b61a254776eb",
-  custodian: "0x76b49e9d05f683d76d35b41317d9e5640b127046",
-  auditor: "0x617f859887277f8625e9046b38f0f339830c86bc",
-  user: "0xc20ed4811071df1b43411898c4ceace41be15583",
-  otherUser: "0x4d0efce48c670b0de1f2da72b085f6d1da2336af",
-  platformWallet: "0xfe525cab8527573c2addc4ca274c7d722d8d420f"
-  // "0xdcb3218e67c5bd8a2c72d7842c9ef6f185cd8a9f"
-  // "0xf05ddb6670aa4f97fc6c58585eb82e9189aa5e8f"
+  DGAddress: "0x47adc0faa4f6eb42b499187317949ed99e77ee85",
+  platform: "0x4ef9e4721bbf02b84d0e73822ee4e26e95076b9d",
+  projectOwner: "0x4a5a6460d00c4d8c2835a3067f53fb42021d5bb9",
+  custodian: "0x4222ec932c5a68b80e71f4ddebb069fa02518b8a",
+  auditor: "0x2da061c6cfa5c23828e9d8dfbe295a22e8779712",
+  user: "0xc1f061d629bbba139dbd07f2eb6a9252a45514c7",
+  otherUser: "0x74260eb42ffde3c442682c4fb6ceb3e801bbb79a",
+  platformWallet: "0x76393ad6569272385963bc9a135356456bbe3f83"
+  // "0xae1708b0af10bf1fbee6b4b4220d9453f6007eeb"
+  // "0xf8e160be646d2429c64d46fba8e8588b8483dbaf"
 };
