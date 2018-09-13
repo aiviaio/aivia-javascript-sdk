@@ -21,6 +21,11 @@ module.exports = {
   mocha: {
     useColors: true
   },
+  solc: {
+    optimizer: {
+      enabled: true
+    }
+  },
   networks: {
     ganache: {
       gas: 6721975,
