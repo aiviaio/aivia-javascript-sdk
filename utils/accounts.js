@@ -7,6 +7,6 @@ module.exports = {
   user: "0xc1f061d629bbba139dbd07f2eb6a9252a45514c7",
   otherUser: "0x74260eb42ffde3c442682c4fb6ceb3e801bbb79a",
   platformWallet: "0x76393ad6569272385963bc9a135356456bbe3f83",
-  trueUSDOwner: "0xae1708b0af10bf1fbee6b4b4220d9453f6007eeb"
-  // "0xf8e160be646d2429c64d46fba8e8588b8483dbaf"
+  trueUSDOwner: "0xae1708b0af10bf1fbee6b4b4220d9453f6007eeb",
+  custodianAddress: "0xf8e160be646d2429c64d46fba8e8588b8483dbaf"
 };
