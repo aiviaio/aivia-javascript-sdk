@@ -34,6 +34,11 @@
       { "AssignmentExpression": { "array": true } }
     ],
     "max-lines-per-function": 0,
-    "require-unicode-regexp": 0
+    "require-unicode-regexp": 0,
+    "func-names": 0,
+    "no-invalid-this": 0,
+    "prefer-arrow-callback": 0,
+    "max-lines": 0,
+    "no-shadow": 0
   }
 }
