@@ -8,5 +8,5 @@ module.exports = {
   otherUser: "0x74260eb42ffde3c442682c4fb6ceb3e801bbb79a",
   platformWallet: "0x76393ad6569272385963bc9a135356456bbe3f83",
   trueUSDOwner: "0xae1708b0af10bf1fbee6b4b4220d9453f6007eeb",
-  rogue: "0xf8e160be646d2429c64d46fba8e8588b8483dbaf"
+  external: "0xf8e160be646d2429c64d46fba8e8588b8483dbaf"
 };
