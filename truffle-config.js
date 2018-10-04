@@ -11,7 +11,6 @@
  *     gasPrice: 10000000000,
  *   },
  */
-const accounts = require("./utils/accounts");
 
 module.exports = {
   /*
@@ -32,9 +31,7 @@ module.exports = {
       gasPrice: 4000000000,
       host: "127.0.0.1",
       network_id: "*",
-      // port: 8545 for ganache-cli
-      port: 7545,
-      from: accounts.platform
+      port: 8545
     }
   }
 };
