@@ -8,8 +8,9 @@ const getProxyAddress = async () => {
   return address;
 };
 
-const setProxyAddress = (address, options) =>
+const setProxyAddress = async (address, options) => {
   entryPoint.methods.setProxyAddress(address).send({ from: options.from });
+};
 
 module.exports = {
   getProxyAddress,

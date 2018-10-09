@@ -1,9 +1,30 @@
+const { expect } = require("chai");
 const AIVIA_SDK = require("../src");
+const assertRevert = require("./helpers/assertRevert");
+const getAccounts = require("./helpers/getAccounts");
+
+const FAKE_ADDRESS = "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe";
 
 const SDK = new AIVIA_SDK();
+describe("EntryPoint", () => {
+  describe("getProxyAddress", () => {
+    it("return PROXY address", async () => {
+      const address = await SDK.getProxyAddress();
+      expect(address).to.equal(require("../src/ABI/Proxy").address);
+    });
+  });
+  describe("setProxyAddress", () => {
+    it(" revert", async () => {
+      await assertRevert(
+        SDK.setProxyAddress(FAKE_ADDRESS, { from: await getAccounts("user") })
+      );
+    });
 
-test("should return PROXY address", async () => {
-  const address = await SDK.getProxyAddress();
-
-  expect(address).toBe(require("../src/ABI/Proxy").address);
+    it("change PROXY_ADDRESS", async () => {
+      await SDK.setProxyAddress(FAKE_ADDRESS, {
+        from: await getAccounts("DGAddress")
+      });
+      expect(await SDK.getProxyAddress()).to.equal(FAKE_ADDRESS);
+    });
+  });
 });
