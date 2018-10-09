@@ -18,6 +18,8 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-underscore-dangle": [1, { "allow": ["_id"] }],
-    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+    "global-require": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }
