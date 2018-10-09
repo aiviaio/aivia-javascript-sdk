@@ -16,7 +16,7 @@
     "fund"
   ],
   "author": "dima.shmalko@gmail.com",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^8.2.6",
     "bn-chai": "^1.0.1",
