@@ -2,7 +2,6 @@ const is = require("is_js");
 
 const web3 = require("../core");
 const Proxy = require("../ABI/Proxy");
-
 const errorHandler = require("../helpers/errorHandler");
 const Message = require("../helpers/Message");
 
@@ -38,13 +37,35 @@ const getContractAddress = (name, version) => {
 
 const getUserDetails = address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "is wrong checksum");
+    return Message("params", "'address' is wrong checksum");
   }
 
   return errorHandler(proxy.methods.getUserDetails(address).call());
 };
 
+const getUsersList = () => errorHandler(proxy.methods.getUsersList().call());
+
+const getAuditorDetails = async address => {
+  if (!web3.utils.isAddress(address)) {
+    return Message("params", "'address' is wrong checksum");
+  }
+
+  const result = await errorHandler(
+    proxy.methods.getAuditorDetails(address).call()
+  );
+
+  const [name, auditorType, expirationDate] = Object.values(result);
+
+  return {
+    name: web3.utils.hexToUtf8(name),
+    type: Number(auditorType),
+    expirationDate: Number(expirationDate)
+  };
+};
+
 module.exports = {
   getContractAddress,
-  getUserDetails
+  getUserDetails,
+  getUsersList,
+  getAuditorDetails
 };

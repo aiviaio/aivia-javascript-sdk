@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const AIVIA_SDK = require("../src");
+const getAccounts = require("./helpers/getAccounts");
 
 const SDK = new AIVIA_SDK();
 
@@ -31,6 +32,14 @@ describe("Proxy", () => {
     it("return contract address", async () => {
       const address = await SDK.getContractAddress("settings", 1);
       expect(address).to.equal(require("../src/ABI/SettingsRegistry").address);
+    });
+  });
+
+  describe("getAuditorDetails", () => {
+    it("return auditors details", async () => {
+      const auditorAddress = await getAccounts("auditor");
+      const auditorDetails = await SDK.getAuditorDetails(auditorAddress);
+      console.log(auditorAddress, auditorDetails);
     });
   });
 });

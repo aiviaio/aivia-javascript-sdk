@@ -5,4 +5,5 @@ module.exports = function SDK() {
   this.getProxyAddress = () => EntryPoint.getProxyAddress();
   this.getContractAddress = (name, version) =>
     Proxy.getContractAddress(name, version);
+  this.getAuditorDetails = address => Proxy.getAuditorDetails(address);
 };
