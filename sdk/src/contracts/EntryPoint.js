@@ -10,3 +10,5 @@ const getProxyAddress = () =>
 module.exports = {
   getProxyAddress
 };
+
+exports.default = getProxyAddress;

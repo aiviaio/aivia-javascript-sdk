@@ -4,6 +4,7 @@
   "description": "JavaScript SDK for AIVIA protocol",
   "main": "./src/index.js",
   "dependencies": {
+    "is_js": "^0.9.0",
     "web3": "^1.0.0-beta.36"
   },
   "devDependencies": {
