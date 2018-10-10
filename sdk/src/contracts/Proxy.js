@@ -23,11 +23,10 @@ const getContractAddress = (name, version) => {
   if (version && is.not.integer(version)) {
     return Message("params", "'version' field must be a integer");
   }
-
   if (version) {
     return errorHandler(
       proxy.methods
-        .getContractAddressSpecificVersion(web3.utils.fromAscii(name, version))
+        .getContractAddressSpecificVersion(web3.utils.fromAscii(name), version)
         .call()
     );
   }

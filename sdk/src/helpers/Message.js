@@ -16,16 +16,15 @@ class CustomError extends Error {
 
 module.exports = (name, message, type = "error") => {
   if (is.not.string(name) && is.not.string(is.not.string(message))) {
-    throw new CustomError("SDK error", "Parameters are not correct");
+    return new CustomError("SDK error", "Parameters are not correct");
   }
 
   if (type === "error") {
-    throw new CustomError(name, message);
-  } else {
-    return {
-      type,
-      name,
-      message
-    };
+    return new CustomError(name, message);
   }
+  return {
+    type,
+    name,
+    message
+  };
 };
