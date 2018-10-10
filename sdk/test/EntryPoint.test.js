@@ -13,6 +13,7 @@ describe("EntryPoint", () => {
       expect(address).to.equal(require("../src/ABI/Proxy").address);
     });
   });
+
   describe("setProxyAddress", () => {
     it(" revert", async () => {
       await assertRevert(
@@ -24,7 +25,12 @@ describe("EntryPoint", () => {
       await SDK.setProxyAddress(FAKE_ADDRESS, {
         from: await getAccounts("DGAddress")
       });
-      expect(await SDK.getProxyAddress()).to.equal(FAKE_ADDRESS);
+      const address = await SDK.getProxyAddress();
+      expect(address).to.equal(FAKE_ADDRESS);
+      // set address back
+      await SDK.setProxyAddress(require("../src/ABI/Proxy").address, {
+        from: await getAccounts("DGAddress")
+      });
     });
   });
 });
