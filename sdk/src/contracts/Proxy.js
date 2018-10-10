@@ -26,16 +26,25 @@ const getContractAddress = (name, version) => {
   if (version) {
     return errorHandler(
       proxy.methods
-        .getContractAddressSpecificVersion(web3.utils.fromAscii(name), version)
+        .getContractAddressSpecificVersion(web3.utils.utf8ToHex(name), version)
         .call()
     );
   }
 
   return errorHandler(
-    proxy.methods.getContractAddress(web3.utils.fromAscii(name)).call()
+    proxy.methods.getContractAddress(web3.utils.utf8ToHex(name)).call()
   );
 };
 
+const getUserDetails = address => {
+  if (!web3.utils.isAddress(address)) {
+    return Message("params", "is wrong checksum");
+  }
+
+  return errorHandler(proxy.methods.getUserDetails(address).call());
+};
+
 module.exports = {
-  getContractAddress
+  getContractAddress,
+  getUserDetails
 };
