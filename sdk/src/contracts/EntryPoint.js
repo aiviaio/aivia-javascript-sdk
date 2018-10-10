@@ -4,11 +4,12 @@ const errorHandler = require("../helpers/errorHandler");
 
 const entryPoint = new web3.eth.Contract(EntryPoint.abi, EntryPoint.address);
 
+/**
+ * get proxy address
+ */
 const getProxyAddress = () =>
   errorHandler(entryPoint.methods.getProxyAddress().call());
 
 module.exports = {
   getProxyAddress
 };
-
-exports.default = getProxyAddress;
