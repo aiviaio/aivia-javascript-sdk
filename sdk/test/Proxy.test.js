@@ -54,6 +54,14 @@ describe("Proxy", () => {
     });
   });
 
+  describe("getAuditorsList", () => {
+    it("return auditor list", async () => {
+      const result = await SDK.getAuditorsList();
+      expect(result[0]).to.equal(await getAccounts("auditor"));
+      expect(result.length).to.equal(1);
+    });
+  });
+
   describe("getUserDetails", () => {
     it("return users details", async () => {
       const userAddress = await getAccounts("user");
@@ -62,6 +70,17 @@ describe("Proxy", () => {
       expect(country).to.equal(56);
       expect(walletType).to.equal(1);
       expect(expirationDate).to.equal(1539250541);
+    });
+  });
+
+  describe("isAuditor", () => {
+    it("return false", async () => {
+      const userAddress = await getAccounts("user");
+      expect(await SDK.isAuditor(userAddress)).to.equal(false);
+    });
+    it("return true", async () => {
+      const auditorAddress = await getAccounts("auditor");
+      expect(await SDK.isAuditor(auditorAddress)).to.equal(true);
     });
   });
 });

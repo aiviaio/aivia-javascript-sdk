@@ -72,9 +72,21 @@ const getAuditorDetails = async address => {
   };
 };
 
+const getAuditorsList = () =>
+  errorHandler(proxy.methods.getAuditorsList().call());
+
+const isAuditor = address => {
+  if (!web3.utils.isAddress(address)) {
+    return Message("params", "'address' is wrong checksum");
+  }
+  return errorHandler(proxy.methods.isAuditor(address).call());
+};
+
 module.exports = {
   getContractAddress,
   getUserDetails,
   getUsersList,
-  getAuditorDetails
+  getAuditorDetails,
+  getAuditorsList,
+  isAuditor
 };
