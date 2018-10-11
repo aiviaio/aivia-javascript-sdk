@@ -35,12 +35,21 @@ const getContractAddress = (name, version) => {
   );
 };
 
-const getUserDetails = address => {
+const getUserDetails = async address => {
   if (!web3.utils.isAddress(address)) {
     return Message("params", "'address' is wrong checksum");
   }
 
-  return errorHandler(proxy.methods.getUserDetails(address).call());
+  const result = await errorHandler(
+    proxy.methods.getUserDetails(address).call()
+  );
+  const [country, walletType, expirationDate] = Object.values(result);
+
+  return {
+    country: Number(country),
+    walletType: Number(walletType),
+    expirationDate: Number(expirationDate)
+  };
 };
 
 const getUsersList = () => errorHandler(proxy.methods.getUsersList().call());

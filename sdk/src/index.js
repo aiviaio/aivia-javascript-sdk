@@ -6,4 +6,6 @@ module.exports = function SDK() {
   this.getContractAddress = (name, version) =>
     Proxy.getContractAddress(name, version);
   this.getAuditorDetails = address => Proxy.getAuditorDetails(address);
+  this.getUserDetails = address => Proxy.getUserDetails(address);
+  this.getUsersList = () => Proxy.getUsersList();
 };

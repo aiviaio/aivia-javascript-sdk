@@ -39,7 +39,29 @@ describe("Proxy", () => {
     it("return auditors details", async () => {
       const auditorAddress = await getAccounts("auditor");
       const auditorDetails = await SDK.getAuditorDetails(auditorAddress);
-      console.log(auditorAddress, auditorDetails);
+      const { name, type, expirationDate } = auditorDetails;
+      expect(name).to.equal("John Doe");
+      expect(type).to.equal(1);
+      expect(expirationDate).to.equal(0);
+    });
+  });
+
+  describe("getUsersList", () => {
+    it("return users list", async () => {
+      const result = await SDK.getUsersList();
+      expect(result[0]).to.equal(await getAccounts("user"));
+      expect(result.length).to.equal(1);
+    });
+  });
+
+  describe("getUserDetails", () => {
+    it("return users details", async () => {
+      const userAddress = await getAccounts("user");
+      const result = await SDK.getUserDetails(userAddress);
+      const { country, walletType, expirationDate } = result;
+      expect(country).to.equal(56);
+      expect(walletType).to.equal(1);
+      expect(expirationDate).to.equal(1539250541);
     });
   });
 });
