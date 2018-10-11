@@ -14,4 +14,10 @@ module.exports = function SDK() {
   this.getAuditorDetails = address => Proxy.getAuditorDetails(address);
   this.getAuditorsList = () => Proxy.getAuditorsList();
   this.isAuditor = address => Proxy.isAuditor(address);
+  // Custodian
+  this.getCustodiansList = () => Proxy.getCustodiansList();
+  this.getCustodianName = address => Proxy.getCustodianName(address);
+  // Assets Registry
+  this.getAssetsList = () => Proxy.getAssetsList();
+  this.getAssetRate = address => Proxy.getAssetRate(address);
 };

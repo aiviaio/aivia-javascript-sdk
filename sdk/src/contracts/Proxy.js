@@ -82,11 +82,49 @@ const isAuditor = address => {
   return errorHandler(proxy.methods.isAuditor(address).call());
 };
 
+const getCustodiansList = () =>
+  errorHandler(proxy.methods.getCustodiansList().call());
+
+const getCustodianName = async address => {
+  if (!web3.utils.isAddress(address)) {
+    return Message("params", "'address' is wrong checksum");
+  }
+  const name = await errorHandler(
+    proxy.methods.getCustodianName(address).call()
+  );
+  return web3.utils.hexToUtf8(name);
+};
+
+const getAssetsList = () => errorHandler(proxy.methods.getAssetsList().call());
+
+const getAssetRate = async address => {
+  if (!web3.utils.isAddress(address)) {
+    return Message("params", "'address' is wrong checksum");
+  }
+  const rate = await errorHandler(proxy.methods.getAssetRate(address).call());
+  return Number(rate);
+};
+
+const getAssetAddress = async name => {
+  if (is.not.String(name)) {
+    return Message("params", "'address' is wrong checksum");
+  }
+  const address = await errorHandler(
+    proxy.methods.getAssetAddress(name).call()
+  );
+  return address;
+};
+
 module.exports = {
   getContractAddress,
   getUserDetails,
   getUsersList,
   getAuditorDetails,
   getAuditorsList,
-  isAuditor
+  isAuditor,
+  getCustodiansList,
+  getCustodianName,
+  getAssetsList,
+  getAssetRate,
+  getAssetAddress
 };

@@ -83,4 +83,20 @@ describe("Proxy", () => {
       expect(await SDK.isAuditor(auditorAddress)).to.equal(true);
     });
   });
+  describe("custodian", () => {
+    let custodianAddress;
+    describe("getCustodiansList", () => {
+      it("return custodian list", async () => {
+        const result = await SDK.getCustodiansList();
+        expect(result.length).to.equal(1);
+        [custodianAddress] = result;
+      });
+    });
+    describe("getCustodianName", () => {
+      it("return custodian name", async () => {
+        const name = await SDK.getCustodianName(custodianAddress);
+        expect(name).to.equal("Jane Doe");
+      });
+    });
+  });
 });
