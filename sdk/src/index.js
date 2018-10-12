@@ -20,4 +20,5 @@ module.exports = function SDK() {
   // Assets Registry
   this.getAssetsList = () => Proxy.getAssetsList();
   this.getAssetRate = address => Proxy.getAssetRate(address);
+  this.getAssetAddress = name => Proxy.getAssetAddress(name);
 };

@@ -83,6 +83,7 @@ describe("Proxy", () => {
       expect(await SDK.isAuditor(auditorAddress)).to.equal(true);
     });
   });
+
   describe("custodian", () => {
     let custodianAddress;
     describe("getCustodiansList", () => {
@@ -96,6 +97,40 @@ describe("Proxy", () => {
       it("return custodian name", async () => {
         const name = await SDK.getCustodianName(custodianAddress);
         expect(name).to.equal("Jane Doe");
+      });
+    });
+  });
+
+  describe("assets", () => {
+    let AIVAddress;
+    let TUSDAddress;
+    describe("getAssetsList", () => {
+      it("return assets list", async () => {
+        const result = await SDK.getAssetsList();
+        expect(result.length).to.equal(2);
+        [AIVAddress, TUSDAddress] = result;
+        expect(AIVAddress).to.equal(
+          require("../src/ABI/PlatformToken").address
+        );
+        expect(TUSDAddress).to.equal(require("../src/ABI/TrueUSD").address);
+      });
+    });
+
+    describe("getAssetRate", () => {
+      it("return asset rate", async () => {
+        const AIVRate = await SDK.getAssetRate(AIVAddress);
+        const TUSDRate = await SDK.getAssetRate(TUSDAddress);
+        expect(AIVRate).to.equal(0.5);
+        expect(TUSDRate).to.equal(1.0129);
+      });
+    });
+
+    describe("getAssetAddress", () => {
+      it("return asset address", async () => {
+        const assetAddress = await SDK.getAssetAddress("AIV");
+        expect(assetAddress).to.equal(
+          require("../src/ABI/PlatformToken").address
+        );
       });
     });
   });

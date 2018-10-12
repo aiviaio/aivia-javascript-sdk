@@ -102,15 +102,15 @@ const getAssetRate = async address => {
     return Message("params", "'address' is wrong checksum");
   }
   const rate = await errorHandler(proxy.methods.getAssetRate(address).call());
-  return Number(rate);
+  return Number(web3.utils.fromWei(rate, "ether"));
 };
 
 const getAssetAddress = async name => {
-  if (is.not.String(name)) {
-    return Message("params", "'address' is wrong checksum");
+  if (is.not.string(name)) {
+    return Message("params", "'name' field must be a string");
   }
   const address = await errorHandler(
-    proxy.methods.getAssetAddress(name).call()
+    proxy.methods.getAssetAddress(web3.utils.utf8ToHex(name)).call()
   );
   return address;
 };
