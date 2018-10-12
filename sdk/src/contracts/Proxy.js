@@ -35,6 +35,12 @@ const getContractAddress = (name, version) => {
   );
 };
 
+/**
+ * Get user details by user address
+ *
+ * @param {sting/hex} address
+ * @returns {Object} {country ID, wallet type ID, expiration Date}
+ */
 const getUserDetails = async address => {
   if (!web3.utils.isAddress(address)) {
     return Message("params", "'address' is wrong checksum");
