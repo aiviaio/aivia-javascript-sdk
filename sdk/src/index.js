@@ -1,5 +1,6 @@
 const EntryPoint = require("./contracts/EntryPoint");
 const Proxy = require("./contracts/Proxy");
+const Project = require("./contracts/Project");
 
 module.exports = function SDK() {
   // entry point
@@ -21,4 +22,7 @@ module.exports = function SDK() {
   this.getAssetsList = () => Proxy.getAssetsList();
   this.getAssetRate = address => Proxy.getAssetRate(address);
   this.getAssetAddress = name => Proxy.getAssetAddress(name);
+
+  // project
+  this.deployProject = (options, from) => Project.deployProject(options, from);
 };
