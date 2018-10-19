@@ -32,19 +32,31 @@ const deployProject = async (
           web3.utils.utf8ToHex(tokenSymbol)
         ],
         [
-          projectTypeID,
-          maxTokens,
-          maxInvestors,
-          Number(web3.utils.toWei(initialPrice.toString(), "ether"))
+          web3.eth.abi.encodeParameter("uint256", projectTypeID),
+          web3.eth.abi.encodeParameter("uint256", maxTokens),
+          web3.eth.abi.encodeParameter("uint256", maxInvestors),
+          web3.eth.abi.encodeParameter(
+            "uint256",
+            web3.utils.toWei(initialPrice.toString(), "ether")
+          )
         ],
         [
-          Number(web3.utils.toWei(platformFee.toString(), "ether")),
-          Number(web3.utils.toWei(entryFee.toString(), "ether")),
-          Number(web3.utils.toWei(exitFee.toString(), "ether"))
+          web3.eth.abi.encodeParameter(
+            "uint256",
+            web3.utils.toWei(platformFee.toString(), "ether")
+          ),
+          web3.eth.abi.encodeParameter(
+            "uint256",
+            web3.utils.toWei(entryFee.toString(), "ether")
+          ),
+          web3.eth.abi.encodeParameter(
+            "uint256",
+            web3.utils.toWei(exitFee.toString(), "ether")
+          )
         ],
         custodianAddress
       )
-      .send({ from: web3.utils.toChecksumAddress(from) })
+      .call({ from: web3.utils.toChecksumAddress(from) })
   );
 };
 
