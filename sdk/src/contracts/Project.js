@@ -23,7 +23,7 @@ const deployProject = async (
   },
   { from }
 ) => {
-  await errorHandler(
+  const txResult = await errorHandler(
     proxy.methods
       .deployProject(
         [
@@ -58,6 +58,7 @@ const deployProject = async (
       )
       .call({ from: web3.utils.toChecksumAddress(from) })
   );
+  return txResult;
 };
 
 module.exports = {
