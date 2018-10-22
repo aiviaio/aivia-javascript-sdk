@@ -17,13 +17,11 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "jest": "^23.6.0",
     "mocha": "^5.2.0",
     "prettier": "^1.14.3"
   },
   "scripts": {
     "test": "mocha"
   },
-  "author": "dima.shmalko@gmail.com",
   "license": "MIT"
 }

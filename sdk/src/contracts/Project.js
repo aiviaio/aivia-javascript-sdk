@@ -23,10 +23,14 @@ const deployProject = async (
   },
   { from }
 ) => {
-  const txResult = await errorHandler(
+  await errorHandler(
     proxy.methods
       .deployProject(
-        [projectName, tokenName, tokenSymbol],
+        [
+          web3.utils.utf8ToHex(projectName),
+          web3.utils.utf8ToHex(tokenName),
+          web3.utils.utf8ToHex(tokenSymbol)
+        ],
         [
           projectTypeID,
           maxTokens,
@@ -40,9 +44,8 @@ const deployProject = async (
         ],
         custodianAddress
       )
-      .send({ from: web3.utils.toChecksumAddress(from) })
+      .send({ from })
   );
-  return txResult;
 };
 
 module.exports = {
