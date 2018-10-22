@@ -26,37 +26,21 @@ const deployProject = async (
   const txResult = await errorHandler(
     proxy.methods
       .deployProject(
+        [projectName, tokenName, tokenSymbol],
         [
-          web3.utils.utf8ToHex(projectName),
-          web3.utils.utf8ToHex(tokenName),
-          web3.utils.utf8ToHex(tokenSymbol)
+          projectTypeID,
+          maxTokens,
+          maxInvestors,
+          web3.utils.toWei(initialPrice.toString(), "ether")
         ],
         [
-          web3.eth.abi.encodeParameter("uint256", projectTypeID),
-          web3.eth.abi.encodeParameter("uint256", maxTokens),
-          web3.eth.abi.encodeParameter("uint256", maxInvestors),
-          web3.eth.abi.encodeParameter(
-            "uint256",
-            web3.utils.toWei(initialPrice.toString(), "ether")
-          )
-        ],
-        [
-          web3.eth.abi.encodeParameter(
-            "uint256",
-            web3.utils.toWei(platformFee.toString(), "ether")
-          ),
-          web3.eth.abi.encodeParameter(
-            "uint256",
-            web3.utils.toWei(entryFee.toString(), "ether")
-          ),
-          web3.eth.abi.encodeParameter(
-            "uint256",
-            web3.utils.toWei(exitFee.toString(), "ether")
-          )
+          web3.utils.toWei(platformFee.toString(), "ether"),
+          web3.utils.toWei(entryFee.toString(), "ether"),
+          web3.utils.toWei(exitFee.toString(), "ether")
         ],
         custodianAddress
       )
-      .call({ from: web3.utils.toChecksumAddress(from) })
+      .send({ from: web3.utils.toChecksumAddress(from) })
   );
   return txResult;
 };
