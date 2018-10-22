@@ -48,7 +48,7 @@ const deployProject = async (
       )
       .send({
         from,
-        gasPrice: "10000000000000",
+        gasPrice: 4000000000,
         gas: 6721975
       })
   );
