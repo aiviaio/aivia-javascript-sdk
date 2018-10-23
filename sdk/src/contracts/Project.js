@@ -1,9 +1,11 @@
 const Proxy = require("../ABI/Proxy");
+const PR = require("../ABI/ProjectsRegistry");
 const web3 = require("../core");
 const options = require("../options");
 const errorHandler = require("../helpers/errorHandler");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
+const pr = new web3.eth.Contract(PR.abi, PR.address);
 
 /**
  * deploy project
@@ -43,15 +45,17 @@ const deployProject = async (
     ],
     custodianAddress
   );
-
-  const tx = await errorHandler(
+  const a = await pr.methods.getProjectList().call();
+  console.log(a.length);
+  await errorHandler(
     action.send({
       from,
       gasPrice,
       gas: options.gasLimit
     })
   );
-  return tx;
+  const b = await pr.methods.getProjectList().call();
+  console.log(b.length);
 };
 
 module.exports = {
