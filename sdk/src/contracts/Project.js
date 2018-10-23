@@ -5,7 +5,7 @@ const options = require("../options");
 const errorHandler = require("../helpers/errorHandler");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
-const pr = new web3.eth.Contract(PR.abi, PR.address);
+const projectRegistry = new web3.eth.Contract(PR.abi, PR.address);
 
 /**
  * deploy project
@@ -45,17 +45,17 @@ const deployProject = async (
     ],
     custodianAddress
   );
-  const a = await pr.methods.getProjectList().call();
-  console.log(a.length);
-  await errorHandler(
+  const tx = await errorHandler(
     action.send({
       from,
       gasPrice,
       gas: options.gasLimit
     })
   );
-  const b = await pr.methods.getProjectList().call();
-  console.log(b.length);
+  const projectList = await projectRegistry.methods.getProjectList().call();
+  console.log(projectList.length);
+  console.log(await projectRegistry.methods.getProjectLength().call());
+  return tx.events[1].address;
 };
 
 module.exports = {
