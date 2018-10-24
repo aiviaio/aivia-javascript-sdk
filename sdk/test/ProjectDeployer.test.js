@@ -1,5 +1,5 @@
-// const web3 = require("web3");
-// const { expect } = require("chai");
+const web3 = require("web3");
+const { expect, assert } = require("chai");
 const AIVIA_SDK = require("../src");
 const getAccounts = require("./helpers/getAccounts");
 
@@ -8,7 +8,7 @@ describe("EntryPoint", () => {
   describe("deployProject", () => {
     it("deploy project", async () => {
       const from = await getAccounts("projectOwner");
-      SDK.deployProject(
+      const project = await SDK.deployProject(
         {
           projectName: "This is test project",
           tokenName: "EWT Token",
@@ -26,9 +26,13 @@ describe("EntryPoint", () => {
           from,
           gasPrice: 1000000000
         }
-      ).then(res => {
-        console.log(res);
-      });
+      );
+      const { address, config, token, owner } = project;
+      assert(web3.utils.isAddress(address));
+      assert(web3.utils.isAddress(config));
+      assert(web3.utils.isAddress(token));
+      assert(web3.utils.isAddress(owner));
+      expect(owner).to.equal(from);
     });
   });
 });

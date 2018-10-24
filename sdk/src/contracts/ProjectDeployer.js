@@ -52,10 +52,19 @@ const deployProject = async (
       gas: options.gasLimit
     })
   );
-  const projectList = await projectRegistry.methods.getProjectList().call();
-  console.log(projectList.length);
-  console.log(await projectRegistry.methods.getProjectLength().call());
-  return tx.events[1].address;
+
+  const projectAddress = tx.events[1].address;
+  // get project ID by project address
+  const projectID = await projectRegistry.methods
+    .getProjectID(projectAddress)
+    .call();
+  // get all deployed components
+  const projectComponentsTmp = await projectRegistry.methods
+    .getProjectByID(projectID)
+    .call();
+
+  const [address, config, token, owner] = Object.values(projectComponentsTmp);
+  return { address, config, token, owner };
 };
 
 module.exports = {
