@@ -1,8 +1,10 @@
+const is = require("is_js");
 const Proxy = require("../ABI/Proxy");
 const PR = require("../ABI/ProjectsRegistry");
 const web3 = require("../core");
 const options = require("../options");
 const errorHandler = require("../helpers/errorHandler");
+const Error = require("../helpers/Error");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
 const projectRegistry = new web3.eth.Contract(PR.abi, PR.address);
@@ -26,6 +28,23 @@ const deployProject = async (
   },
   { from, gasPrice = options.gasPrice }
 ) => {
+  const names = {
+    projectName,
+    tokenName,
+    tokenSymbol
+  };
+
+  Object.keys(names).forEach(name => {
+    const element = names[name];
+    if (is.not.string(element)) {
+      return Error({
+        name: "params",
+        message: `'${name}' field must be a string`
+      });
+    }
+    return null;
+  });
+
   const action = proxy.methods.deployProject(
     [
       web3.utils.utf8ToHex(projectName),

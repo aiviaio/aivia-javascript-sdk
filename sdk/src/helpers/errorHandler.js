@@ -2,6 +2,6 @@ module.exports = promise => {
   try {
     return promise;
   } catch (error) {
-    return error;
+    throw new Error(error);
   }
 };

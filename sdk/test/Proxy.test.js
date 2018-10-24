@@ -12,11 +12,11 @@ describe("Proxy", () => {
     });
 
     it("return error when name isn't string", async () => {
-      expect(await SDK.getContractAddress(666)).to.be.an("error");
+      expect(() => SDK.getContractAddress(666)).to.throw();
     });
 
     it("return error when version isn't integer", async () => {
-      expect(await SDK.getContractAddress("settings", 1.1)).to.be.an("error");
+      expect(() => SDK.getContractAddress("settings", 1.1)).to.throw();
     });
 
     it("return zero address when version doesn't exist", async () => {

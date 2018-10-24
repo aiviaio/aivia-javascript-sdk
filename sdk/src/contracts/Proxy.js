@@ -3,7 +3,7 @@ const is = require("is_js");
 const web3 = require("../core");
 const Proxy = require("../ABI/Proxy");
 const errorHandler = require("../helpers/errorHandler");
-const Message = require("../helpers/Message");
+const Error = require("../helpers/Error");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
 
@@ -16,11 +16,14 @@ const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
  */
 const getContractAddress = (name, version) => {
   if (is.not.string(name)) {
-    return Message("params", "'name' field must be a string");
+    return Error({ name: "params", message: "'name' field must be a string" });
   }
 
   if (version && is.not.integer(version)) {
-    return Message("params", "'version' field must be a integer");
+    return Error({
+      name: "params",
+      message: "'version' field must be a integer"
+    });
   }
   if (version) {
     return errorHandler(
@@ -43,7 +46,7 @@ const getContractAddress = (name, version) => {
  */
 const getUserDetails = async address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "'address' is wrong checksum");
+    return Error({ name: "params", message: "'address' is wrong checksum" });
   }
 
   const result = await errorHandler(
@@ -62,7 +65,7 @@ const getUsersList = () => errorHandler(proxy.methods.getUsersList().call());
 
 const getAuditorDetails = async address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "'address' is wrong checksum");
+    return Error({ name: "params", message: "'address' is wrong checksum" });
   }
 
   const result = await errorHandler(
@@ -83,7 +86,7 @@ const getAuditorsList = () =>
 
 const isAuditor = address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "'address' is wrong checksum");
+    return Error({ name: "params", message: "'address' is wrong checksum" });
   }
   return errorHandler(proxy.methods.isAuditor(address).call());
 };
@@ -93,7 +96,7 @@ const getCustodiansList = () =>
 
 const getCustodianName = async address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "'address' is wrong checksum");
+    return Error({ name: "params", message: "'address' is wrong checksum" });
   }
   const name = await errorHandler(
     proxy.methods.getCustodianName(address).call()
@@ -105,7 +108,7 @@ const getAssetsList = () => errorHandler(proxy.methods.getAssetsList().call());
 
 const getAssetRate = async address => {
   if (!web3.utils.isAddress(address)) {
-    return Message("params", "'address' is wrong checksum");
+    return Error({ name: "params", message: "'address' is wrong checksum" });
   }
   const rate = await errorHandler(proxy.methods.getAssetRate(address).call());
   return Number(web3.utils.fromWei(rate, "ether"));
@@ -113,7 +116,7 @@ const getAssetRate = async address => {
 
 const getAssetAddress = async name => {
   if (is.not.string(name)) {
-    return Message("params", "'name' field must be a string");
+    return Error({ name: "params", message: "'name' field must be a string" });
   }
   const address = await errorHandler(
     proxy.methods.getAssetAddress(web3.utils.utf8ToHex(name)).call()
