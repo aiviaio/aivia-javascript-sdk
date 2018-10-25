@@ -41,6 +41,6 @@ module.exports = function SDK() {
 
   // project
   this.getAuditDbAddress = address => Project.getAuditDbAddress(address);
-
   this.getConfigAddress = address => Project.getConfigAddress(address);
+  this.getTokenAddress = address => Project.getTokenAddress(address);
 };

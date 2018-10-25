@@ -37,7 +37,24 @@ const getConfigAddress = async projectAddress => {
   return configAddress;
 };
 
+const getTokenAddress = async projectAddress => {
+  if (!web3.utils.isAddress(projectAddress)) {
+    return Error({
+      name: "params",
+      message: "'projectAddress' field must be a number"
+    });
+  }
+
+  const project = new web3.eth.Contract(Project.abi, projectAddress);
+
+  const tokenAddress = await errorHandler(
+    project.methods.getTokenAddress().call()
+  );
+  return tokenAddress;
+};
+
 module.exports = {
   getAuditDbAddress,
-  getConfigAddress
+  getConfigAddress,
+  getTokenAddress
 };

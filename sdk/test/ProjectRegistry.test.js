@@ -1,6 +1,7 @@
 const web3 = require("web3");
 const { expect, assert } = require("chai");
 const AIVIA_SDK = require("../src");
+const getAccounts = require("./helpers/getAccounts");
 
 const SDK = new AIVIA_SDK();
 describe("ProjectRegistry", () => {
@@ -25,8 +26,18 @@ describe("ProjectRegistry", () => {
     it("return project id", async () => {
       const projectInfo = await SDK.getProjectByID(this.projectID);
       const configAddress = await SDK.getConfigAddress(this.projectAddress);
-      const [projectAddress, projectConfig] = Object.values(projectInfo);
-      expect(configAddress).to.equal(projectConfig);
+      const tokenAddress = await SDK.getTokenAddress(this.projectAddress);
+      const ownerAddress = await getAccounts("projectOwner");
+      const [
+        projectAddress,
+        projectConfig,
+        projectToken,
+        projectOwner
+      ] = Object.values(projectInfo);
+      expect(projectConfig).to.equal(configAddress);
+      expect(projectToken).to.equal(tokenAddress);
+      expect(projectToken).to.equal(tokenAddress);
+      expect(projectOwner).to.equal(ownerAddress);
       expect(web3.utils.isAddress(projectAddress)).to.equal(true);
       expect(projectAddress).to.equal(this.projectAddress);
     });
