@@ -1,13 +1,12 @@
 const is = require("is_js");
 const Proxy = require("../ABI/Proxy");
-const PR = require("../ABI/ProjectsRegistry");
+const projectRegistry = require("./ProjectRegistry");
 const web3 = require("../core");
 const options = require("../options");
 const errorHandler = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
-const projectRegistry = new web3.eth.Contract(PR.abi, PR.address);
 
 /**
  * deploy project
@@ -108,13 +107,9 @@ const deployProject = async (
 
   const projectAddress = tx.events[1].address;
   // get project ID by project address
-  const projectID = await projectRegistry.methods
-    .getProjectID(projectAddress)
-    .call();
+  const projectID = await projectRegistry.getProjectID(projectAddress);
   // get all deployed components
-  const projectComponentsTmp = await projectRegistry.methods
-    .getProjectByID(projectID)
-    .call();
+  const projectComponentsTmp = await projectRegistry.getProjectByID(projectID);
 
   const [address, config, token, owner] = Object.values(projectComponentsTmp);
   return { address, config, token, owner };
