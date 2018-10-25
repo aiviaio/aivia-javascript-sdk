@@ -8,9 +8,6 @@ const Error = require("../helpers/Error");
 
 const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
 
-/**
- * deploy project
- */
 const deployProject = async (
   {
     projectName,
