@@ -1,5 +1,5 @@
 {
-  "name": "ethereum-sdk",
+  "name": "aivia-ethereum-sdk",
   "version": "0.0.1",
   "description": "JavaScript SDK for AIVIA protocol",
   "main": "./src/index.js",
