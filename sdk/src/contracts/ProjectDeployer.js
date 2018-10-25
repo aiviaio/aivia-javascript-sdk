@@ -34,7 +34,20 @@ const deployProject = async (
     tokenSymbol
   };
 
-  Object.keys(names).forEach(name => {
+  const params = {
+    projectTypeID,
+    maxTokens,
+    maxInvestors,
+    initialPrice
+  };
+
+  const fees = {
+    platformFee,
+    entryFee,
+    exitFee
+  };
+
+  const namesArray = Object.keys(names).map(name => {
     const element = names[name];
     if (is.not.string(element)) {
       return Error({
@@ -42,26 +55,47 @@ const deployProject = async (
         message: `'${name}' field must be a string`
       });
     }
-    return null;
+    return web3.utils.utf8ToHex(element);
   });
 
+  const paramsArray = Object.keys(params).map(name => {
+    const element = params[name];
+    if (is.not.number(element)) {
+      return Error({
+        name: "params",
+        message: `'${name}' field must be a number`
+      });
+    }
+
+    if (name === "initialPrice") {
+      return web3.utils.toWei(element.toString(), "ether");
+    }
+
+    return element;
+  });
+
+  const feesArray = Object.keys(fees).map(name => {
+    const element = fees[name];
+    if (is.not.number(element)) {
+      return Error({
+        name: "params",
+        message: `'${name}' field must be a number`
+      });
+    }
+    return web3.utils.toWei(element.toString(), "ether");
+  });
+
+  if (!web3.utils.isAddress(custodianAddress)) {
+    return Error({
+      name: "params",
+      message: "'custodianAddress' field must be a address"
+    });
+  }
+
   const action = proxy.methods.deployProject(
-    [
-      web3.utils.utf8ToHex(projectName),
-      web3.utils.utf8ToHex(tokenName),
-      web3.utils.utf8ToHex(tokenSymbol)
-    ],
-    [
-      projectTypeID,
-      maxTokens,
-      maxInvestors,
-      web3.utils.toWei(initialPrice.toString(), "ether")
-    ],
-    [
-      web3.utils.toWei(platformFee.toString(), "ether"),
-      web3.utils.toWei(entryFee.toString(), "ether"),
-      web3.utils.toWei(exitFee.toString(), "ether")
-    ],
+    namesArray,
+    paramsArray,
+    feesArray,
     custodianAddress
   );
   const tx = await errorHandler(
