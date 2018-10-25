@@ -24,7 +24,9 @@ describe("ProjectRegistry", () => {
   describe("getProjectByID", () => {
     it("return project id", async () => {
       const projectInfo = await SDK.getProjectByID(this.projectID);
-      const [projectAddress] = Object.values(projectInfo);
+      const configAddress = await SDK.getConfigAddress(this.projectAddress);
+      const [projectAddress, projectConfig] = Object.values(projectInfo);
+      expect(configAddress).to.equal(projectConfig);
       expect(web3.utils.isAddress(projectAddress)).to.equal(true);
       expect(projectAddress).to.equal(this.projectAddress);
     });

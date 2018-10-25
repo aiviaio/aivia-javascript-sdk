@@ -2,6 +2,7 @@ const EntryPoint = require("./contracts/EntryPoint");
 const Proxy = require("./contracts/Proxy");
 const ProjectDeployer = require("./contracts/ProjectDeployer");
 const ProjectRegistry = require("./contracts/ProjectRegistry");
+const Project = require("./contracts/Project");
 
 module.exports = function SDK() {
   // entry point
@@ -37,4 +38,9 @@ module.exports = function SDK() {
   this.getProjectID = address => ProjectRegistry.getProjectID(address);
   this.getProjectByID = id => ProjectRegistry.getProjectByID(id);
   this.getProjectList = () => ProjectRegistry.getProjectList();
+
+  // project
+  this.getAuditDbAddress = address => Project.getAuditDbAddress(address);
+
+  this.getConfigAddress = address => Project.getConfigAddress(address);
 };
