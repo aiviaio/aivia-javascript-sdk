@@ -3,13 +3,14 @@ const Project = require("../ABI/Project");
 const web3 = require("../core");
 const errorHandler = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
+const projectAuditDB = require("./ProjectAuditDB");
 
 // get audit DB address
 const getAuditDbAddress = async projectAddress => {
   if (!web3.utils.isAddress(projectAddress)) {
     return Error({
       name: "params",
-      message: "'projectAddress' field must be a number"
+      message: "'projectAddress' field must be a address"
     });
   }
 
@@ -25,7 +26,7 @@ const getConfigAddress = async projectAddress => {
   if (!web3.utils.isAddress(projectAddress)) {
     return Error({
       name: "params",
-      message: "'projectAddress' field must be a number"
+      message: "'projectAddress' field must be a address"
     });
   }
 
@@ -41,7 +42,7 @@ const getTokenAddress = async projectAddress => {
   if (!web3.utils.isAddress(projectAddress)) {
     return Error({
       name: "params",
-      message: "'projectAddress' field must be a number"
+      message: "'projectAddress' field must be a address"
     });
   }
 
@@ -53,8 +54,23 @@ const getTokenAddress = async projectAddress => {
   return tokenAddress;
 };
 
+const getProjectTokenPrice = async projectAddress => {
+  if (!web3.utils.isAddress(projectAddress)) {
+    return Error({
+      name: "params",
+      message: "'projectAddress' field must be a address"
+    });
+  }
+  const auditDBAddress = await getAuditDbAddress(projectAddress);
+  const lastPrice = await errorHandler(
+    projectAuditDB.getLastPrice(auditDBAddress)
+  );
+  return Number(web3.utils.fromWei(lastPrice, "ether"));
+};
+
 module.exports = {
   getAuditDbAddress,
   getConfigAddress,
-  getTokenAddress
+  getTokenAddress,
+  getProjectTokenPrice
 };
