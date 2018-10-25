@@ -34,10 +34,17 @@ describe("ProjectAuditDB", () => {
     expect(owner).to.equal(from);
   });
 
-  describe("ProjectAuditDB", () => {
+  describe("getProjectTokenPrice", () => {
     it("get token price", async () => {
       const price = await SDK.getProjectTokenPrice(this.project.address);
       expect(price).to.equal(0.03);
+    });
+  });
+
+  describe("getRatingsList", () => {
+    it("get token price", async () => {
+      const list = await SDK.getRatingsList(this.project.address);
+      console.log(list);
     });
   });
 });

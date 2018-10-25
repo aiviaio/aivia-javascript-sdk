@@ -68,9 +68,24 @@ const getProjectTokenPrice = async projectAddress => {
   return Number(web3.utils.fromWei(lastPrice, "ether"));
 };
 
+const getRatingsList = async projectAddress => {
+  if (!web3.utils.isAddress(projectAddress)) {
+    return Error({
+      name: "params",
+      message: "'projectAddress' field must be a address"
+    });
+  }
+  const auditDBAddress = await getAuditDbAddress(projectAddress);
+  const list = await errorHandler(
+    projectAuditDB.getRatingsHistory(auditDBAddress)
+  );
+  return list;
+};
+
 module.exports = {
   getAuditDbAddress,
   getConfigAddress,
   getTokenAddress,
-  getProjectTokenPrice
+  getProjectTokenPrice,
+  getRatingsList
 };
