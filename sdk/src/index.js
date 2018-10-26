@@ -47,13 +47,18 @@ module.exports = function SDK() {
 
   this.token = {
     getAuditDbAddress: address => ProjectAuditDB.getAuditDbAddress(address),
-    // getConfigAddress: address => Project.getConfigAddress(address),
+    getConfigAddress: address => Project.getConfigAddress(address),
     getRating: address => ProjectAuditDB.getLastPrice(address),
     getRatings: address => ProjectAuditDB.getRatingsList(address),
     getLastAudit: address => ProjectAuditDB.getLastAudit(address)
   };
 
   this.auditor = {
+    /**
+     
+     * @param {String} address - project or token address
+     * @access only auditor
+     */
     updateRate: (address, options, from) =>
       ProjectAuditDB.updateRate(address, options, from)
   };

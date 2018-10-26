@@ -6,6 +6,8 @@ const getAccounts = require("./helpers/getAccounts");
 
 const SDK = new AIVIA_SDK();
 
+console.log(SDK);
+
 const newRate = {
   rate: 0.04,
   timestamp: Date.now(),
@@ -40,6 +42,18 @@ describe("ProjectAuditDB", () => {
     expect(owner).to.equal(from);
   });
 
+  describe("getConfigAddress", () => {
+    it("get token price", async () => {
+      const auditDBFromProject = await SDK.project.getConfigAddress(
+        this.project.address
+      );
+      const auditDBFromToken = await SDK.project.getConfigAddress(
+        this.project.token
+      );
+      assert(auditDBFromProject === auditDBFromToken);
+    });
+  });
+
   describe("Token:getRating", () => {
     it("get token price", async () => {
       const price = await SDK.token.getRating(this.project.address);
@@ -48,7 +62,7 @@ describe("ProjectAuditDB", () => {
   });
 
   describe("Token:getLastAudit", () => {
-    it("get token price", async () => {
+    it("get last audit of token", async () => {
       const { rate, timestamp, checksum } = await SDK.token.getLastAudit(
         this.project.address
       );
@@ -60,7 +74,7 @@ describe("ProjectAuditDB", () => {
   });
 
   describe("Auditor:updateRate", () => {
-    it("update token price", async () => {
+    it("update token price from audit account", async () => {
       const from = await getAccounts("auditor");
       const tx = await SDK.auditor.updateRate(this.project.address, newRate, {
         from
@@ -75,7 +89,7 @@ describe("ProjectAuditDB", () => {
   });
 
   describe("Token:getRatings", () => {
-    it("get token price", async () => {
+    it("get token ratings array", async () => {
       const [initAudit, firstAudit] = await SDK.token.getRatings(
         this.project.address
       );
