@@ -1,7 +1,9 @@
+const is = require("is_js");
 const AuditDB = require("../ABI/ProjectAudit");
 const web3 = require("../core");
 const errorHandler = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
+const options = require("../options");
 
 // get audit DB address
 const getLastPrice = async auditAddress => {
@@ -63,8 +65,47 @@ const getLastAudit = async auditAddress => {
   };
 };
 
+const updateRate = async (
+  auditAddress,
+  { rate, timestamp, checksum },
+  { from, gasPrice = options.gasPrice }
+) => {
+  if (is.not.number(rate)) {
+    return Error({
+      name: "params",
+      message: "'rate' field must be a number"
+    });
+  }
+  if (is.not.number(timestamp)) {
+    return Error({
+      name: "params",
+      message: "'rate' field must be a number"
+    });
+  }
+  if (is.not.number(checksum)) {
+    return Error({
+      name: "params",
+      message: "'rate' field must be a string"
+    });
+  }
+  const auditDB = new web3.eth.Contract(AuditDB.abi, auditAddress);
+  const action = auditDB.methods.updateRate(rate, timestamp, checksum);
+  const gas = web3.eth.estimateGas(action, { from });
+
+  const tx = await errorHandler(
+    action.send({
+      from,
+      gasPrice,
+      gas
+    })
+  );
+
+  return tx;
+};
+
 module.exports = {
   getLastPrice,
   getRatingsList,
-  getLastAudit
+  getLastAudit,
+  updateRate
 };
