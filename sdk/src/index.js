@@ -45,5 +45,8 @@ module.exports = function SDK() {
   this.getTokenAddress = address => Project.getTokenAddress(address);
   // ~~~~~~~~~~~~~~~~
   this.getProjectTokenPrice = address => Project.getProjectTokenPrice(address);
-  this.getRatingsList = address => Project.getRatingsList(address);
+  this.getProjectTokenRatings = address =>
+    Project.getProjectTokenRatings(address);
+
+  this.getProjectLastAudit = address => Project.getProjectLastAudit(address);
 };

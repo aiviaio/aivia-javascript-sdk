@@ -1,4 +1,5 @@
 const web3 = require("web3");
+const is = require("is_js");
 const { expect, assert } = require("chai");
 const AIVIA_SDK = require("../src");
 const getAccounts = require("./helpers/getAccounts");
@@ -41,9 +42,21 @@ describe("ProjectAuditDB", () => {
     });
   });
 
-  describe("getRatingsList", () => {
+  describe("getProjectLastAudit", () => {
     it("get token price", async () => {
-      const list = await SDK.getRatingsList(this.project.address);
+      const { rate, timestamp, checksum } = await SDK.getProjectLastAudit(
+        this.project.address
+      );
+      expect(rate).to.equal(0.03);
+      expect(is.number(timestamp)).to.equal(true);
+      assert(timestamp < Date.now());
+      expect(checksum).to.equal("");
+    });
+  });
+
+  describe("getProjectTokenRatings", () => {
+    it("get token price", async () => {
+      const list = await SDK.getProjectTokenRatings(this.project.address);
       console.log(list);
     });
   });

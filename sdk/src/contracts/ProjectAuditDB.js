@@ -17,7 +17,7 @@ const getLastPrice = async auditAddress => {
   return lastPrice;
 };
 
-const getRatingsHistory = async auditAddress => {
+const getRatingsList = async auditAddress => {
   if (!web3.utils.isAddress(auditAddress)) {
     return Error({
       name: "params",
@@ -45,7 +45,26 @@ const getRatingsHistory = async auditAddress => {
   });
 };
 
+const getLastAudit = async auditAddress => {
+  if (!web3.utils.isAddress(auditAddress)) {
+    return Error({
+      name: "params",
+      message: "'auditAddress' field must be a address"
+    });
+  }
+
+  const auditDB = new web3.eth.Contract(AuditDB.abi, auditAddress);
+  const lastAudit = await errorHandler(auditDB.methods.getLastAudit().call());
+  const [rate, timestamp, checksum] = Object.values(lastAudit);
+  return {
+    rate: Number(web3.utils.fromWei(rate.toString(), "ether")),
+    timestamp: Number(timestamp),
+    checksum: web3.utils.hexToUtf8(checksum)
+  };
+};
+
 module.exports = {
   getLastPrice,
-  getRatingsHistory
+  getRatingsList,
+  getLastAudit
 };
