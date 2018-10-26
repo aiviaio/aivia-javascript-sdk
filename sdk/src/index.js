@@ -3,6 +3,7 @@ const Proxy = require("./contracts/Proxy");
 const ProjectDeployer = require("./contracts/ProjectDeployer");
 const ProjectRegistry = require("./contracts/ProjectRegistry");
 const Project = require("./contracts/Project");
+const ProjectAuditDB = require("./contracts/ProjectAuditDB");
 
 module.exports = function SDK() {
   // entry point
@@ -34,20 +35,26 @@ module.exports = function SDK() {
     // project deployer
     deploy: (options, from) => ProjectDeployer.deployProject(options, from),
     // project
-    getAuditDbAddress: address => Project.getAuditDbAddress(address),
+    getAuditDbAddress: address => ProjectAuditDB.getAuditDbAddress(address),
     getConfigAddress: address => Project.getConfigAddress(address),
     getTokenAddress: address => Project.getTokenAddress(address),
 
     // project registry
     getID: address => ProjectRegistry.getProjectID(address),
     getAddressByID: id => ProjectRegistry.getProjectByID(id),
-    getList: () => ProjectRegistry.getProjectList(),
+    getList: () => ProjectRegistry.getProjectList()
+  };
 
-    // project audit
-    getTokenPrice: address => Project.getProjectTokenPrice(address),
-    getTokenRatings: address => Project.getProjectTokenRatings(address),
-    getLastAudit: address => Project.getProjectLastAudit(address),
+  this.token = {
+    getAuditDbAddress: address => ProjectAuditDB.getAuditDbAddress(address),
+    // getConfigAddress: address => Project.getConfigAddress(address),
+    getRating: address => ProjectAuditDB.getLastPrice(address),
+    getRatings: address => ProjectAuditDB.getRatingsList(address),
+    getLastAudit: address => ProjectAuditDB.getLastAudit(address)
+  };
+
+  this.auditor = {
     updateRate: (address, options, from) =>
-      Project.updateRate(address, options, from)
+      ProjectAuditDB.updateRate(address, options, from)
   };
 };

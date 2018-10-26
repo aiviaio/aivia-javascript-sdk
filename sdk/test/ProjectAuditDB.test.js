@@ -40,16 +40,16 @@ describe("ProjectAuditDB", () => {
     expect(owner).to.equal(from);
   });
 
-  describe("project.getTokenPrice", () => {
+  describe("Token:getRating", () => {
     it("get token price", async () => {
-      const price = await SDK.project.getTokenPrice(this.project.address);
+      const price = await SDK.token.getRating(this.project.address);
       expect(price).to.equal(projectCfg.initialPrice);
     });
   });
 
-  describe("project.getLastAudit", () => {
+  describe("Token:getLastAudit", () => {
     it("get token price", async () => {
-      const { rate, timestamp, checksum } = await SDK.project.getLastAudit(
+      const { rate, timestamp, checksum } = await SDK.token.getLastAudit(
         this.project.address
       );
       expect(rate).to.equal(projectCfg.initialPrice);
@@ -59,10 +59,10 @@ describe("ProjectAuditDB", () => {
     });
   });
 
-  describe("project.updateRate", () => {
+  describe("Auditor:updateRate", () => {
     it("update token price", async () => {
       const from = await getAccounts("auditor");
-      const tx = await SDK.project.updateRate(this.project.address, newRate, {
+      const tx = await SDK.auditor.updateRate(this.project.address, newRate, {
         from
       });
       expect(tx.status).to.equal(true);
@@ -74,9 +74,9 @@ describe("ProjectAuditDB", () => {
     });
   });
 
-  describe("project.getTokenRatings", () => {
+  describe("Token:getRatings", () => {
     it("get token price", async () => {
-      const [initAudit, firstAudit] = await SDK.project.getTokenRatings(
+      const [initAudit, firstAudit] = await SDK.token.getRatings(
         this.project.address
       );
       expect(initAudit.rate).to.equal(projectCfg.initialPrice);
