@@ -96,11 +96,26 @@ const getProjectLastAudit = async projectAddress => {
   return lastAudit;
 };
 
+const updateRate = async (projectAddress, options, from) => {
+  if (!web3.utils.isAddress(projectAddress)) {
+    return Error({
+      name: "params",
+      message: "'projectAddress' field must be a address"
+    });
+  }
+  const auditDBAddress = await getAuditDbAddress(projectAddress);
+  const tx = await errorHandler(
+    projectAuditDB.updateRate(auditDBAddress, options, from)
+  );
+  return tx;
+};
+
 module.exports = {
   getAuditDbAddress,
   getConfigAddress,
   getTokenAddress,
   getProjectTokenPrice,
   getProjectTokenRatings,
-  getProjectLastAudit
+  getProjectLastAudit,
+  updateRate
 };

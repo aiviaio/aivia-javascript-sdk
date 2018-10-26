@@ -46,6 +46,8 @@ module.exports = function SDK() {
     // project audit
     getTokenPrice: address => Project.getProjectTokenPrice(address),
     getTokenRatings: address => Project.getProjectTokenRatings(address),
-    getLastAudit: address => Project.getProjectLastAudit(address)
+    getLastAudit: address => Project.getProjectLastAudit(address),
+    updateRate: (address, options, from) =>
+      Project.updateRate(address, options, from)
   };
 };

@@ -94,6 +94,7 @@ const deployProject = async (
     feesArray,
     custodianAddress
   );
+
   const tx = await errorHandler(
     action.send({
       from,

@@ -82,15 +82,20 @@ const updateRate = async (
       message: "'rate' field must be a number"
     });
   }
-  if (is.not.number(checksum)) {
+  if (is.not.string(checksum)) {
     return Error({
       name: "params",
-      message: "'rate' field must be a string"
+      message: "'checksum' field must be a string"
     });
   }
   const auditDB = new web3.eth.Contract(AuditDB.abi, auditAddress);
-  const action = auditDB.methods.updateRate(rate, timestamp, checksum);
-  const gas = web3.eth.estimateGas(action, { from });
+  const action = auditDB.methods.updateRate(
+    web3.utils.toWei(rate.toString(), "ether"),
+    timestamp,
+    web3.utils.utf8ToHex(checksum)
+  );
+
+  const gas = await action.estimateGas({ from });
 
   const tx = await errorHandler(
     action.send({
