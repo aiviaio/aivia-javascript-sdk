@@ -5,9 +5,9 @@ const getAccounts = require("./helpers/getAccounts");
 
 const SDK = new AIVIA_SDK();
 describe("ProjectRegistry", () => {
-  describe("getProjectList", () => {
+  describe("project.getList", () => {
     it("return project list", async () => {
-      this.projectList = await SDK.getProjectList();
+      this.projectList = await SDK.project.getList();
       assert(Array.isArray(this.projectList));
       assert(this.projectList.length > 0);
       this.projectAddress = this.projectList[this.projectList.length - 1];
@@ -15,18 +15,22 @@ describe("ProjectRegistry", () => {
     });
   });
 
-  describe("getProjectID", () => {
+  describe("project.getID", () => {
     it("return project id", async () => {
-      this.projectID = await SDK.getProjectID(this.projectAddress);
+      this.projectID = await SDK.project.getID(this.projectAddress);
       expect(this.projectID).to.equal(this.projectList.length);
     });
   });
 
-  describe("getProjectByID", () => {
+  describe("project.getAddressByID", () => {
     it("return project id", async () => {
-      const projectInfo = await SDK.getProjectByID(this.projectID);
-      const configAddress = await SDK.getConfigAddress(this.projectAddress);
-      const tokenAddress = await SDK.getTokenAddress(this.projectAddress);
+      const projectInfo = await SDK.project.getAddressByID(this.projectID);
+      const configAddress = await SDK.project.getConfigAddress(
+        this.projectAddress
+      );
+      const tokenAddress = await SDK.project.getTokenAddress(
+        this.projectAddress
+      );
       const ownerAddress = await getAccounts("projectOwner");
       const [
         projectAddress,

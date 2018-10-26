@@ -9,7 +9,7 @@ const SDK = new AIVIA_SDK();
 describe("ProjectAuditDB", () => {
   before("deploy new project", async () => {
     const from = await getAccounts("projectOwner");
-    this.project = await SDK.deployProject(
+    this.project = await SDK.project.deploy(
       {
         projectName: "Best World Project",
         tokenName: "Best World Token",
@@ -35,16 +35,16 @@ describe("ProjectAuditDB", () => {
     expect(owner).to.equal(from);
   });
 
-  describe("getProjectTokenPrice", () => {
+  describe("project.getTokenPrice", () => {
     it("get token price", async () => {
-      const price = await SDK.getProjectTokenPrice(this.project.address);
+      const price = await SDK.project.getTokenPrice(this.project.address);
       expect(price).to.equal(0.03);
     });
   });
 
-  describe("getProjectLastAudit", () => {
+  describe("project.getLastAudit", () => {
     it("get token price", async () => {
-      const { rate, timestamp, checksum } = await SDK.getProjectLastAudit(
+      const { rate, timestamp, checksum } = await SDK.project.getLastAudit(
         this.project.address
       );
       expect(rate).to.equal(0.03);
@@ -54,9 +54,9 @@ describe("ProjectAuditDB", () => {
     });
   });
 
-  describe("getProjectTokenRatings", () => {
+  describe("project.getTokenRatings", () => {
     it("get token price", async () => {
-      const list = await SDK.getProjectTokenRatings(this.project.address);
+      const list = await SDK.project.getTokenRatings(this.project.address);
       console.log(list);
     });
   });

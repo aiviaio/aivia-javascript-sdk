@@ -14,7 +14,7 @@ const getProjectID = async projectAddress => {
   if (!web3.utils.isAddress(projectAddress)) {
     return Error({
       name: "params",
-      message: "'projectAddress' field must be a number"
+      message: "'projectAddress' field must be a address"
     });
   }
 

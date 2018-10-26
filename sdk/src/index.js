@@ -30,23 +30,22 @@ module.exports = function SDK() {
   this.getAssetRate = address => Proxy.getAssetRate(address);
   this.getAssetAddress = name => Proxy.getAssetAddress(name);
 
-  // project deployer
-  this.deployProject = (options, from) =>
-    ProjectDeployer.deployProject(options, from);
+  this.project = {
+    // project deployer
+    deploy: (options, from) => ProjectDeployer.deployProject(options, from),
+    // project
+    getAuditDbAddress: address => Project.getAuditDbAddress(address),
+    getConfigAddress: address => Project.getConfigAddress(address),
+    getTokenAddress: address => Project.getTokenAddress(address),
 
-  // project registry
-  this.getProjectID = address => ProjectRegistry.getProjectID(address);
-  this.getProjectByID = id => ProjectRegistry.getProjectByID(id);
-  this.getProjectList = () => ProjectRegistry.getProjectList();
+    // project registry
+    getID: address => ProjectRegistry.getProjectID(address),
+    getAddressByID: id => ProjectRegistry.getProjectByID(id),
+    getList: () => ProjectRegistry.getProjectList(),
 
-  // project
-  this.getAuditDbAddress = address => Project.getAuditDbAddress(address);
-  this.getConfigAddress = address => Project.getConfigAddress(address);
-  this.getTokenAddress = address => Project.getTokenAddress(address);
-  // ~~~~~~~~~~~~~~~~
-  this.getProjectTokenPrice = address => Project.getProjectTokenPrice(address);
-  this.getProjectTokenRatings = address =>
-    Project.getProjectTokenRatings(address);
-
-  this.getProjectLastAudit = address => Project.getProjectLastAudit(address);
+    // project audit
+    getTokenPrice: address => Project.getProjectTokenPrice(address),
+    getTokenRatings: address => Project.getProjectTokenRatings(address),
+    getLastAudit: address => Project.getProjectLastAudit(address)
+  };
 };
