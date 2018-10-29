@@ -10,6 +10,7 @@ const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
 
 const deployProject = async (
   {
+    projectType,
     projectName,
     tokenName,
     tokenSymbol,
@@ -89,10 +90,10 @@ const deployProject = async (
   }
 
   const action = proxy.methods.deployProject(
+    projectType,
     namesArray,
-    paramsArray,
-    feesArray,
-    custodianAddress
+    [...paramsArray, ...feesArray],
+    [custodianAddress]
   );
 
   const tx = await errorHandler(

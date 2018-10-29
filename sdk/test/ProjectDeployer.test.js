@@ -10,6 +10,7 @@ describe("EntryPoint", () => {
       const from = await getAccounts("projectOwner");
       const project = await SDK.project.deploy(
         {
+          projectType: 1,
           projectName: "This is test project",
           tokenName: "EWT Token",
           tokenSymbol: "EWT",

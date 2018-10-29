@@ -6,8 +6,6 @@ const getAccounts = require("./helpers/getAccounts");
 
 const SDK = new AIVIA_SDK();
 
-console.log(SDK);
-
 const newRate = {
   rate: 0.04,
   timestamp: Date.now(),
@@ -15,6 +13,7 @@ const newRate = {
 };
 
 const projectCfg = {
+  projectType: 1,
   projectName: "Best World Project",
   tokenName: "Best World Token",
   tokenSymbol: "BWT",
