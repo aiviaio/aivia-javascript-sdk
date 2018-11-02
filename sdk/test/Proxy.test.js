@@ -7,8 +7,8 @@ const SDK = new AIVIA_SDK();
 describe("Proxy", () => {
   describe("getContractAddress", () => {
     it("return contract address", async () => {
-      const address = await SDK.getContractAddress("settings");
-      expect(address).to.equal(require("../src/ABI/SettingsRegistry").address);
+      const address = await SDK.getContractAddress("contracts");
+      expect(address).to.equal(require("../src/ABI/ContractsRegistry").address);
     });
 
     it("return error when name isn't string", async () => {
@@ -30,8 +30,8 @@ describe("Proxy", () => {
     });
 
     it("return contract address", async () => {
-      const address = await SDK.getContractAddress("settings", 1);
-      expect(address).to.equal(require("../src/ABI/SettingsRegistry").address);
+      const address = await SDK.getContractAddress("contracts", 1);
+      expect(address).to.equal(require("../src/ABI/ContractsRegistry").address);
     });
   });
 
