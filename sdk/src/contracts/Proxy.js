@@ -14,7 +14,7 @@ const proxy = new web3.eth.Contract(Proxy.abi, Proxy.address);
  * @param {string} version
  * @returns promise
  */
-const getContractAddress = (name, version) => {
+const getRegistryAddress = (name, version) => {
   if (is.not.string(name)) {
     return Error({ name: "params", message: "'name' field must be a string" });
   }
@@ -28,13 +28,13 @@ const getContractAddress = (name, version) => {
   if (version) {
     return errorHandler(
       proxy.methods
-        .getContractAddressSpecificVersion(web3.utils.utf8ToHex(name), version)
+        .getRegistryAddressSpecificVersion(web3.utils.utf8ToHex(name), version)
         .call()
     );
   }
 
   return errorHandler(
-    proxy.methods.getContractAddress(web3.utils.utf8ToHex(name)).call()
+    proxy.methods.getRegistryAddress(web3.utils.utf8ToHex(name)).call()
   );
 };
 
@@ -125,7 +125,7 @@ const getAssetAddress = async name => {
 };
 
 module.exports = {
-  getContractAddress,
+  getRegistryAddress,
   getUserDetails,
   getUsersList,
   getAuditorDetails,

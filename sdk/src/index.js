@@ -10,8 +10,8 @@ module.exports = function SDK() {
   this.getProxyAddress = () => EntryPoint.getProxyAddress();
 
   // Contract Registry
-  this.getContractAddress = (name, version) =>
-    Proxy.getContractAddress(name, version);
+  this.getRegistryAddress = (name, version) =>
+    Proxy.getRegistryAddress(name, version);
 
   // TPL Registry
   this.getUserDetails = address => Proxy.getUserDetails(address);

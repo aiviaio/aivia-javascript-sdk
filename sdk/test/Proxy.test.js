@@ -5,33 +5,33 @@ const getAccounts = require("./helpers/getAccounts");
 const SDK = new AIVIA_SDK();
 
 describe("Proxy", () => {
-  describe("getContractAddress", () => {
+  describe("getRegistryAddress", () => {
     it("return contract address", async () => {
-      const address = await SDK.getContractAddress("contracts");
-      expect(address).to.equal(require("../src/ABI/ContractsRegistry").address);
+      const address = await SDK.getRegistryAddress("contracts");
+      expect(address).to.equal(require("../src/ABI/ProxyRegistry").address);
     });
 
     it("return error when name isn't string", async () => {
-      expect(() => SDK.getContractAddress(666)).to.throw();
+      expect(() => SDK.getRegistryAddress(666)).to.throw();
     });
 
     it("return error when version isn't integer", async () => {
-      expect(() => SDK.getContractAddress("settings", 1.1)).to.throw();
+      expect(() => SDK.getRegistryAddress("settings", 1.1)).to.throw();
     });
 
     it("return zero address when version doesn't exist", async () => {
-      const address = await SDK.getContractAddress("settings", 2);
+      const address = await SDK.getRegistryAddress("settings", 2);
       expect(+address).to.equal(0);
     });
 
     it("return zero address when address with current name doesn't exist", async () => {
-      const address = await SDK.getContractAddress("fakeAddress");
+      const address = await SDK.getRegistryAddress("fakeAddress");
       expect(+address).to.equal(0);
     });
 
     it("return contract address", async () => {
-      const address = await SDK.getContractAddress("contracts", 1);
-      expect(address).to.equal(require("../src/ABI/ContractsRegistry").address);
+      const address = await SDK.getRegistryAddress("contracts", 1);
+      expect(address).to.equal(require("../src/ABI/ProxyRegistry").address);
     });
   });
 
