@@ -38,9 +38,9 @@ const getProjectByID = async ID => {
 };
 
 // get project list
-const getProjectList = async () => {
+const getProjectsList = async () => {
   const projectList = await errorHandler(
-    projectRegistry.methods.getProjectList().call()
+    projectRegistry.methods.getProjectsList().call()
   );
   return projectList;
 };
@@ -48,5 +48,5 @@ const getProjectList = async () => {
 module.exports = {
   getProjectID,
   getProjectByID,
-  getProjectList
+  getProjectsList
 };

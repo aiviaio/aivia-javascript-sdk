@@ -42,7 +42,7 @@ module.exports = function SDK() {
     // project registry
     getID: address => ProjectRegistry.getProjectID(address),
     getAddressByID: id => ProjectRegistry.getProjectByID(id),
-    getList: () => ProjectRegistry.getProjectList()
+    getList: () => ProjectRegistry.getProjectsList()
   };
 
   this.token = {
