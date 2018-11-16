@@ -1,6 +1,7 @@
 const config = require("./config");
 const EntryPoint = require("./contracts/EntryPoint");
 const Proxy = require("./contracts/Proxy");
+const Deployer = require("./contracts/Deployer");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   config.HTTP_PROVIDER = HTTP_PROVIDER;
@@ -10,6 +11,8 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   this.getRegistryAddress = key => Proxy.getRegistryAddress(key);
   this.isDeployer = address => Proxy.isDeployer(address);
   this.isAuditor = (address, type) => Proxy.isAuditor(address, type);
+  this.deployProject = (type, params, options) =>
+    Deployer.deployProject(type, params, options);
 }
 
 module.exports = SDK;
