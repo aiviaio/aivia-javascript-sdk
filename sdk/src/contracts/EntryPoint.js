@@ -1,14 +1,14 @@
 const EntryPoint = require("../ABI/EntryPoint");
-const web3 = require("../core");
+const getInstance = require("../helpers/getInstance");
 const errorHandler = require("../helpers/errorHandler");
-
-const entryPoint = new web3.eth.Contract(EntryPoint.abi, EntryPoint.address);
 
 /**
  * get proxy address
  */
-const getProxyAddress = () =>
-  errorHandler(entryPoint.methods.getProxyAddress().call());
+const getProxyAddress = () => {
+  this.instance = getInstance(EntryPoint.abi);
+  return errorHandler(this.instance.methods.getProxyAddress().call());
+};
 
 module.exports = {
   getProxyAddress

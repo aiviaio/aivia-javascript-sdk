@@ -1,65 +1,11 @@
 const EntryPoint = require("./contracts/EntryPoint");
-const Proxy = require("./contracts/Proxy");
-const ProjectDeployer = require("./contracts/ProjectDeployer");
-const ProjectRegistry = require("./contracts/ProjectRegistry");
-const Project = require("./contracts/Project");
-const ProjectAuditDB = require("./contracts/ProjectAuditDB");
+const config = require("./config");
 
-module.exports = function SDK() {
-  // entry point
+function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
+  // console.log(ENTRY_POINT, HTTP_PROVIDER);
+  config.HTTP_PROVIDER = HTTP_PROVIDER;
+  config.ENTRY_POINT = ENTRY_POINT;
   this.getProxyAddress = () => EntryPoint.getProxyAddress();
+}
 
-  // Contract Registry
-  this.getRegistryAddress = (name, version) =>
-    Proxy.getRegistryAddress(name, version);
-
-  // TPL Registry
-  this.getUserDetails = address => Proxy.getUserDetails(address);
-  this.getUsersList = () => Proxy.getUsersList();
-
-  // Auditors Registry
-  this.getAuditorDetails = address => Proxy.getAuditorDetails(address);
-  this.getAuditorsList = () => Proxy.getAuditorsList();
-  this.isAuditor = address => Proxy.isAuditor(address);
-
-  // Custodian
-  this.getCustodiansList = () => Proxy.getCustodiansList();
-  this.getCustodianName = address => Proxy.getCustodianName(address);
-
-  // Assets Registry
-  this.getAssetsList = () => Proxy.getAssetsList();
-  this.getAssetRate = address => Proxy.getAssetRate(address);
-  this.getAssetAddress = name => Proxy.getAssetAddress(name);
-
-  this.project = {
-    // project deployer
-    deploy: (options, from) => ProjectDeployer.deployProject(options, from),
-    // project
-    getAuditDbAddress: address => ProjectAuditDB.getAuditDbAddress(address),
-    getConfigAddress: address => Project.getConfigAddress(address),
-    getTokenAddress: address => Project.getTokenAddress(address),
-
-    // project registry
-    getID: address => ProjectRegistry.getProjectID(address),
-    getAddressByID: id => ProjectRegistry.getProjectByID(id),
-    getList: () => ProjectRegistry.getProjectsList()
-  };
-
-  this.token = {
-    getAuditDbAddress: address => ProjectAuditDB.getAuditDbAddress(address),
-    getConfigAddress: address => Project.getConfigAddress(address),
-    getRating: address => ProjectAuditDB.getLastPrice(address),
-    getRatings: address => ProjectAuditDB.getRatingsList(address),
-    getLastAudit: address => ProjectAuditDB.getLastAudit(address)
-  };
-
-  this.auditor = {
-    /**
-     
-     * @param {String} address - project or token address
-     * @access only auditor
-     */
-    updateRate: (address, options, from) =>
-      ProjectAuditDB.updateRate(address, options, from)
-  };
-};
+module.exports = SDK;
