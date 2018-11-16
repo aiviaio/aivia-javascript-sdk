@@ -1,13 +1,14 @@
 const EntryPoint = require("../ABI/EntryPoint");
-const getInstance = require("../helpers/getInstance");
+const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
+const config = require("../config");
 
-/**
- * get proxy address
- */
-const getProxyAddress = () => {
-  this.instance = getInstance(EntryPoint.abi);
-  return errorHandler(this.instance.methods.getProxyAddress().call());
+const getProxyAddress = async () => {
+  this.instance = createInstance(EntryPoint.abi, config.ENTRY_POINT, this);
+  const address = await errorHandler(
+    this.instance.methods.getProxyAddress().call()
+  );
+  return address;
 };
 
 module.exports = {

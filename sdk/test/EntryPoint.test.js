@@ -11,9 +11,5 @@ describe("EntryPoint", () => {
       const address = await SDK.getProxyAddress();
       expect(address).to.equal(require("../src/ABI/Proxy").address);
     });
-    it("return PROXY address", async () => {
-      const address = await SDK.getProxyAddress();
-      expect(address).to.equal(require("../src/ABI/Proxy").address);
-    });
   });
 });

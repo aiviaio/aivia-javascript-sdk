@@ -10,12 +10,15 @@ module.exports = async role => {
     DGAddress: accounts[1],
     projectOwner: accounts[2],
     custodian: accounts[3],
-    auditor: accounts[4],
-    user: accounts[5],
-    otherUser: accounts[6],
-    platformWallet: accounts[7],
-    trueUSDOwner: accounts[8],
-    external: accounts[9]
+    user: accounts[4],
+    otherUser: accounts[5],
+    platformWallet: accounts[6],
+    trueUSDOwner: accounts[7],
+    external: accounts[8],
+    auditorAssets: accounts[9],
+    auditorTPL: accounts[10],
+    auditorProject: accounts[11],
+    auditorTest: accounts[12]
   };
   return users[role];
 };
