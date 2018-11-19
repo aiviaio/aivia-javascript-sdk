@@ -10,7 +10,8 @@ const getProjectsList = async () => {
   const length = Number(
     await errorHandler(this.instance.methods.getProjectLength().call())
   );
-  const TMP = new Array(length).fill("");
+
+  const TMP = new Array(length).fill();
 
   const projectsList = await TMP.map(async (value, index) => {
     const project = await this.instance.methods
