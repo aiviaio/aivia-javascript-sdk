@@ -1,31 +1,26 @@
-const Proxy = require("../ABI/Proxy");
+const Tokens = require("../ABI/TokensRegistry");
 const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
-const EntryPoint = require("./EntryPoint");
+const Proxy = require("./Proxy");
 const utils = require("../utils");
 
-const getRegistryAddress = async key => {
-  const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
-  return errorHandler(
-    this.instance.methods.getRegistryAddress(utils.toHex(key)).call()
+const getTokensList = async () => {
+  const registryAddress = await Proxy.getRegistryAddress("tokens");
+
+  this.instance = createInstance(Tokens.abi, registryAddress, this);
+  const addressesList = await errorHandler(
+    this.instance.methods.getTokensList().call()
   );
-};
 
-const isDeployer = async address => {
-  const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
-  return errorHandler(this.instance.methods.isDeployer(address).call());
-};
+  const tokensList = addressesList.map(async address => {
+    const hex = await this.instance.methods.getSymbol(address).call();
+    const symbol = utils.hexToString(hex);
+    return { symbol, address };
+  });
 
-const isAuditor = async (address, type) => {
-  const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
-  return errorHandler(this.instance.methods.isAuditor(address, type).call());
+  return Promise.all(tokensList);
 };
 
 module.exports = {
-  getRegistryAddress,
-  isDeployer,
-  isAuditor
+  getTokensList
 };
