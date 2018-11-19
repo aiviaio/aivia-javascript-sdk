@@ -9,6 +9,9 @@ const networkId = 777;
 if (!fs.existsSync(SDKPath)) {
   fs.mkdirSync(SDKPath);
 }
+fs.writeFile("./test/projects.json", "[]", () =>
+  console.info("successfully clean /test/projects.json")
+);
 
 list.forEach(contract => {
   fs.readFile(path + contract, "utf8", (err, data) => {
