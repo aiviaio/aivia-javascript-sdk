@@ -1,7 +1,6 @@
-const EthereumTx = require("ethereumjs-tx");
 const Proxy = require("../ABI/Proxy");
-const web3 = require("../core");
-// const utils = require("../utils");
+
+const sendSignedTransaction = require("../helpers/sendSignedTransaction");
 const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
@@ -20,39 +19,15 @@ const deployProject = async (type, params, options) => {
 
   const initABI = initAction.encodeABI();
 
-  const sendSignedTransaction = async (
-    { from, privateKey, gasPrice },
-    ABI,
-    gasLimit
-  ) => {
-    const privateKeyBuffer = Buffer.from(privateKey, "hex");
-    const nonce = await web3.eth.getTransactionCount(from);
-    const txParams = {
-      nonce,
-      from,
-      gasLimit: gasLimit || 6721975,
-      gasPrice: gasPrice || 1000000000,
-      to: proxyAddress,
-      data: ABI
-    };
+  await errorHandler(sendSignedTransaction(proxyAddress, options, deployABI));
 
-    const tx = new EthereumTx(txParams);
-    tx.sign(privateKeyBuffer);
-    const serializedTx = tx.serialize();
-
-    const result = await web3.eth.sendSignedTransaction(
-      `0x${serializedTx.toString("hex")}`
-    );
-    return result;
-  };
-
-  await errorHandler(sendSignedTransaction(options, deployABI));
-
-  const tx = await errorHandler(sendSignedTransaction(options, initABI));
+  const { blockNumber } = await errorHandler(
+    sendSignedTransaction(proxyAddress, options, initABI)
+  );
 
   const [{ returnValues }] = await this.instance.getPastEvents("NewProject", {
     filter: { owner: options.from },
-    fromBlock: tx.blockNumber,
+    fromBlock: blockNumber,
     toBlock: "latest"
   });
 

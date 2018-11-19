@@ -44,6 +44,8 @@ describe("Deploy", () => {
         }
       );
 
+      console.log(project);
+
       expect(project.owner).to.equal(projectOwner);
 
       fs.writeFile(
