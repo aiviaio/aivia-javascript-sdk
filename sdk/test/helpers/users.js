@@ -1,3 +1,5 @@
+const web3 = require("web3");
+
 const users = {
   platform: {
     address: "0x6814d2d6f4b568753ff41628df83f800a0b9a483",
@@ -56,7 +58,7 @@ const users = {
 
 module.exports = {
   getAddress(role) {
-    return users[role].address;
+    return web3.utils.toChecksumAddress(users[role].address);
   },
   getKeys() {
     return Object.values(users).map(user => user.key);

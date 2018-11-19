@@ -1,7 +1,7 @@
 const is = require("is_js");
 const utils = require("../utils");
 
-module.exports = ({
+const input = ({
   projectName,
   tokenDetails: {
     tokenName,
@@ -87,3 +87,16 @@ module.exports = ({
     validationRule: rule
   };
 };
+
+const output = event => {
+  const { owner, components } = event;
+  const keys = ["token", "auditDB", "RPC", "custodian", "config"];
+  const project = { owner };
+  keys.forEach((key, index) => {
+    project[key] = components[index];
+  });
+
+  return project;
+};
+
+module.exports = { input, output };
