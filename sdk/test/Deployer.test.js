@@ -1,6 +1,6 @@
 // const { expect } = require("chai");
 const AIVIA_SDK = require("../src");
-const getAccounts = require("./helpers/getAccounts");
+const { getAddress } = require("./helpers/users");
 
 const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
 
@@ -9,8 +9,8 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 describe("Deploy", () => {
   describe("deploy project", () => {
     it("should deploy project", async () => {
-      const projectOwner = await getAccounts("projectOwner");
-      const custodianAddress = await getAccounts("custodian");
+      const projectOwner = await getAddress("projectOwner");
+      const custodianAddress = await getAddress("custodian");
       await SDK.deployProject(
         1,
         {

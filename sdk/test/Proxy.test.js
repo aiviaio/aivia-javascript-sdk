@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const AIVIA_SDK = require("../src");
 const utils = require("./helpers/utils");
-const getAccounts = require("./helpers/getAccounts");
+const { getAddress } = require("./helpers/users");
 
 const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
 
@@ -34,11 +34,11 @@ describe("Proxy", () => {
 
   describe("isAuditor", () => {
     it("return true status", async () => {
-      const status = await SDK.isAuditor(await getAccounts("auditorAssets"), 1);
+      const status = await SDK.isAuditor(getAddress("auditorAssets"), 1);
       expect(status).to.equal(true);
     });
     it("return false status", async () => {
-      const status = await SDK.isAuditor(await getAccounts("auditorAssets"), 2);
+      const status = await SDK.isAuditor(getAddress("auditorAssets"), 2);
       expect(status).to.equal(false);
     });
   });

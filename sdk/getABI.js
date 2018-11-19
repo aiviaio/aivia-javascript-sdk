@@ -5,12 +5,17 @@ const SDKPath = "./src/ABI/";
 
 const list = fs.readdirSync(path);
 const networkId = 777;
+
+if (!fs.existsSync(SDKPath)) {
+  fs.mkdirSync(SDKPath);
+}
+
 list.forEach(contract => {
   fs.readFile(path + contract, "utf8", (err, data) => {
     const object = {};
     const json = JSON.parse(data);
     object.abi = json.abi;
-    if (process.env.MODE == "dev") {
+    if (process.env.MODE === "dev") {
       if (json.networks[networkId]) {
         object.address = json.networks[networkId].address;
       }
