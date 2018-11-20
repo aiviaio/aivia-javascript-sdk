@@ -6,9 +6,9 @@ const input = ({
   tokenDetails: {
     tokenName,
     tokenSymbol,
+    initialPrice,
     maxTokens,
-    maxInvestors,
-    initialPrice
+    maxInvestors
   },
   fees: { platformFee, entryFee, exitFee },
   custodian,
@@ -21,9 +21,9 @@ const input = ({
   };
 
   const params = {
+    initialPrice,
     maxTokens,
-    maxInvestors,
-    initialPrice
+    maxInvestors
   };
 
   const fees = {
@@ -51,7 +51,6 @@ const input = ({
         message: `'${name}' field must be a number`
       });
     }
-
     if (name === "initialPrice") {
       return utils.toWei(element);
     }
@@ -76,7 +75,6 @@ const input = ({
       message: "'custodianAddress' field must be a address"
     });
   }
-
   return {
     type: 1,
     namesArray,

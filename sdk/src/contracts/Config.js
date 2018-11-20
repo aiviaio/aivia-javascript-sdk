@@ -18,6 +18,7 @@ const ABI = [
     type: "function"
   }
 ];
+
 const getConfig = async address => {
   this.instance = createInstance(ABI, address, this);
   const configAddress = await errorHandler(

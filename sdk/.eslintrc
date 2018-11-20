@@ -17,13 +17,13 @@
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "no-underscore-dangle": [1, { "allow": ["_id"] }],
     "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
     "global-require": 0,
     "import/no-extraneous-dependencies": 0,
     "no-prototype-builtins": 0,
     "no-plusplus": 0,
     "no-console": ["error", { "allow": ["info"] }],
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "no-underscore-dangle": 0
   }
 }

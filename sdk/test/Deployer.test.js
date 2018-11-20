@@ -20,9 +20,9 @@ describe("Deploy", () => {
           tokenDetails: {
             tokenName: "Token from SDK",
             tokenSymbol: `SDK${Date.now()}`,
-            maxTokens: 1000000,
-            maxInvestors: 10000,
-            initialPrice: 0.1
+            initialPrice: 0.23,
+            maxTokens: 25000000,
+            maxInvestors: 3000
           },
           fees: {
             // in percent

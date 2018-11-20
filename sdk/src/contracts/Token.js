@@ -1,26 +1,51 @@
-const Tokens = require("../ABI/TokensRegistry");
+const Audit = require("../ABI/ProjectAudit");
 const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
-const Proxy = require("./Proxy");
 const utils = require("../utils");
+const Tokens = require("./Tokens");
+const Config = require("./Config");
 
-const getTokensList = async () => {
-  const registryAddress = await Proxy.getRegistryAddress("tokens");
+const getAuditDBAddress = async key => {
+  if (utils.is.not.string(key) && !utils.isAddress(key)) {
+    Error({
+      name: "params",
+      message: "Acceptable parameters address or symbol token"
+    });
+  }
+  if (utils.isAddress(key)) {
+    this.address = key;
+  } else {
+    this.address = await errorHandler(Tokens.getTokenAddress(key));
+  }
+  const { auditDB } = await errorHandler(Config.getConfig(this.address));
+  return auditDB;
+};
 
-  this.instance = createInstance(Tokens.abi, registryAddress, this);
-  const addressesList = await errorHandler(
-    this.instance.methods.getTokensList().call()
-  );
+const getRPCAddress = async key => {
+  if (utils.is.not.string(key) && !utils.isAddress(key)) {
+    Error({
+      name: "params",
+      message: "Acceptable parameters address or symbol token"
+    });
+  }
+  if (utils.isAddress(key)) {
+    this.address = key;
+  } else {
+    this.address = await errorHandler(Tokens.getTokenAddress(key));
+  }
+  const { RPC } = await errorHandler(Config.getConfig(this.address));
+  return RPC;
+};
 
-  const tokensList = addressesList.map(async address => {
-    const hex = await this.instance.methods.getSymbol(address).call();
-    const symbol = utils.hexToString(hex);
-    return { symbol, address };
-  });
-
-  return Promise.all(tokensList);
+const getTokenPrice = async key => {
+  const auditDB = await errorHandler(getAuditDBAddress(key));
+  this.instance = createInstance(Audit.abi, auditDB, this);
+  const price = await errorHandler(this.instance.methods.getLastPrice().call());
+  return utils.fromWei(price);
 };
 
 module.exports = {
-  getTokensList
+  getTokenPrice,
+  getAuditDBAddress,
+  getRPCAddress
 };

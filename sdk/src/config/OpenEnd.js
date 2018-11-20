@@ -1,12 +1,6 @@
 const utils = require("../utils");
 
-const convertedFields = [
-  "platformFee",
-  "entryFee",
-  "exitFee",
-  "maxInvestors",
-  "initialPrice"
-];
+const convertedFields = ["platformFee", "entryFee", "exitFee", "initialPrice"];
 
 const convertUint = (array, name, value) => {
   if (array.includes(name)) {
