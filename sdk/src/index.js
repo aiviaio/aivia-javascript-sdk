@@ -7,6 +7,7 @@ const Token = require("./contracts/Token");
 const Config = require("./contracts/Config");
 const Projects = require("./contracts/Projects");
 const Assets = require("./contracts/Assets");
+const RPC = require("./contracts/RPC");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   config.HTTP_PROVIDER = HTTP_PROVIDER;
@@ -28,7 +29,9 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     getTokenSymbol: address => Tokens.getTokenSymbol(address),
     getAuditDBAddress: key => Token.getAuditDBAddress(key),
     getRPCAddress: key => Token.getRPCAddress(key),
-    getTokenPrice: key => Token.getTokenPrice(key)
+    getTokenPrice: key => Token.getTokenPrice(key),
+    buy: (value, buyAddress, sellAddress, options) =>
+      RPC.buyToken(value, buyAddress, sellAddress, options)
   };
 
   this.project = {

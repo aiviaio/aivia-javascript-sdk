@@ -1,15 +1,16 @@
 const EthereumTx = require("ethereumjs-tx");
 const web3 = require("../core");
 
-module.exports = async (to, { from, privateKey, gasPrice }, ABI, gasLimit) => {
+module.exports = async (to, { from, privateKey, gasPrice }, ABI, value) => {
   const privateKeyBuffer = Buffer.from(privateKey, "hex");
   const nonce = await web3.eth.getTransactionCount(from);
   const txParams = {
     nonce,
     from,
-    gasLimit: gasLimit || 6721975,
-    gasPrice: gasPrice || 1000000000,
+    value,
     to,
+    gasLimit: 6721975,
+    gasPrice: gasPrice || 1000000000,
     data: ABI
   };
 
