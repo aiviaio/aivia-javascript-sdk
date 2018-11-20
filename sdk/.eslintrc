@@ -23,6 +23,7 @@
     "import/no-extraneous-dependencies": 0,
     "no-prototype-builtins": 0,
     "no-plusplus": 0,
-    "no-console": ["error", { "allow": ["info"] }]
+    "no-console": ["error", { "allow": ["info"] }],
+    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement"]
   }
 }

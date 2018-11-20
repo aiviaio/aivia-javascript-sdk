@@ -22,23 +22,23 @@ describe("Proxy", () => {
   describe("isDeployer", () => {
     it("return true status", async () => {
       const { address } = require("../src/ABI/OpenEndDeployer");
-      const status = await SDK.isDeployer(address);
+      const status = await SDK.utils.isDeployer(address);
       expect(status).to.equal(true);
     });
     it("return false status", async () => {
       const { address } = require("../src/ABI/Proxy");
-      const status = await SDK.isDeployer(address);
+      const status = await SDK.utils.isDeployer(address);
       expect(status).to.equal(false);
     });
   });
 
   describe("isAuditor", () => {
     it("return true status", async () => {
-      const status = await SDK.isAuditor(getAddress("auditorAssets"), 1);
+      const status = await SDK.utils.isAuditor(getAddress("auditorAssets"), 1);
       expect(status).to.equal(true);
     });
     it("return false status", async () => {
-      const status = await SDK.isAuditor(getAddress("auditorAssets"), 2);
+      const status = await SDK.utils.isAuditor(getAddress("auditorAssets"), 2);
       expect(status).to.equal(false);
     });
   });
