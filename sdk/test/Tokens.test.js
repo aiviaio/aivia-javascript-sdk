@@ -24,5 +24,17 @@ describe("Tokens", () => {
       expect(config.owner).to.equal(projectList[0].owner);
       expect(config.custodian).to.equal(projectList[0].custodian);
     });
+
+    it("return token address", async () => {
+      const config = await SDK.token.getConfig(projectList[0].token);
+      const address = await SDK.token.getTokenAddress(config.tokenSymbol);
+      expect(address).to.equal(projectList[0].token);
+    });
+
+    it("return token symbol", async () => {
+      const config = await SDK.token.getConfig(projectList[0].token);
+      const symbol = await SDK.token.getTokenSymbol(projectList[0].token);
+      expect(symbol).to.equal(config.tokenSymbol);
+    });
   });
 });

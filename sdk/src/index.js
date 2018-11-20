@@ -21,7 +21,9 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
 
   this.token = {
     getList: () => Tokens.getTokensList(),
-    getConfig: address => Config.getConfig(address)
+    getConfig: address => Config.getConfig(address),
+    getTokenAddress: symbol => Tokens.getTokenAddress(symbol),
+    getTokenSymbol: address => Tokens.getTokenSymbol(address)
   };
 
   this.project = {

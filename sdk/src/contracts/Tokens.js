@@ -21,6 +21,44 @@ const getTokensList = async () => {
   return Promise.all(tokensList);
 };
 
+const getTokenAddress = async symbol => {
+  if (utils.is.not.string(symbol)) {
+    Error({
+      name: "params",
+      message: "'symbol' must be a string"
+    });
+  }
+
+  const registryAddress = await Proxy.getRegistryAddress("tokens");
+  this.instance = createInstance(Tokens.abi, registryAddress, this);
+
+  const address = await errorHandler(
+    this.instance.methods.getAddress(utils.toHex(symbol)).call()
+  );
+
+  return address;
+};
+
+const getTokenSymbol = async address => {
+  if (!utils.isAddress(address)) {
+    Error({
+      name: "params",
+      message: "'address' must be a address"
+    });
+  }
+
+  const registryAddress = await Proxy.getRegistryAddress("tokens");
+  this.instance = createInstance(Tokens.abi, registryAddress, this);
+
+  const hexSymbol = await errorHandler(
+    this.instance.methods.getSymbol(address).call()
+  );
+
+  return utils.hexToString(hexSymbol);
+};
+
 module.exports = {
-  getTokensList
+  getTokensList,
+  getTokenAddress,
+  getTokenSymbol
 };

@@ -26,16 +26,15 @@ const getAssetsList = async () => {
 };
 
 const getAssetRate = async key => {
-  const registryAddress = await Proxy.getRegistryAddress("assets");
-
-  this.instance = createInstance(Assets.abi, registryAddress, this);
   if (utils.is.not.string(key) && !utils.isAddress(key)) {
     Error({
       name: "params",
-      message:
-        "Invalid parameters! Acceptable parameters address or symbol token."
+      message: "Acceptable parameters address or symbol token"
     });
   }
+
+  const registryAddress = await Proxy.getRegistryAddress("assets");
+  this.instance = createInstance(Assets.abi, registryAddress, this);
 
   if (utils.isAddress(key)) {
     const rate = await errorHandler(
