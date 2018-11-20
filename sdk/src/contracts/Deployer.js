@@ -1,28 +1,28 @@
 const Proxy = require("../ABI/Proxy");
 
-const sendSignedTransaction = require("../helpers/sendSignedTransaction");
+const signedTX = require("../helpers/signedTX");
 const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
-const getReselectData = require("../Projects/getReselectData");
+const ReselectData = require("../projects/ReselectData");
 
 const deployProject = async (type, params, options) => {
   const proxyAddress = await EntryPoint.getProxyAddress();
 
   this.instance = createInstance(Proxy.abi, proxyAddress, this);
 
-  const reselectedParams = getReselectData.input(type, params);
+  const _params = ReselectData.input(type, params);
 
-  const deployAction = this.instance.methods.deployProject(...reselectedParams);
+  const deployAction = this.instance.methods.deployProject(..._params);
   const deployABI = deployAction.encodeABI();
   const initAction = this.instance.methods.initProject();
 
   const initABI = initAction.encodeABI();
 
-  await errorHandler(sendSignedTransaction(proxyAddress, options, deployABI));
+  await errorHandler(signedTX(proxyAddress, options, deployABI));
 
   const { blockNumber } = await errorHandler(
-    sendSignedTransaction(proxyAddress, options, initABI)
+    signedTX(proxyAddress, options, initABI)
   );
 
   const [{ returnValues }] = await this.instance.getPastEvents("NewProject", {
@@ -31,7 +31,7 @@ const deployProject = async (type, params, options) => {
     toBlock: "latest"
   });
 
-  return getReselectData.output(type, returnValues);
+  return ReselectData.output(type, returnValues);
 };
 
 module.exports = {

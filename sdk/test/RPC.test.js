@@ -17,7 +17,7 @@ describe("RPC", () => {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a",
-        gasPrice: 1000000000
+        gasPrice: 100000000000
       });
     });
   });
