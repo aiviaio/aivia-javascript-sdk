@@ -5,6 +5,7 @@ const Deployer = require("./contracts/Deployer");
 const Tokens = require("./contracts/Tokens");
 const Config = require("./contracts/Config");
 const Projects = require("./contracts/Projects");
+const Assets = require("./contracts/Assets");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   config.HTTP_PROVIDER = HTTP_PROVIDER;
@@ -25,11 +26,14 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
 
   this.project = {
     getList: () => Projects.getProjectsList(),
-    getConfig: address => Config.getConfigDirectly(address)
+    getConfig: address => Config.getConfigDirectly(address),
+    deploy: (type, params, options) =>
+      Deployer.deployProject(type, params, options)
   };
-
-  this.deployProject = (type, params, options) =>
-    Deployer.deployProject(type, params, options);
+  this.platform = {
+    getAssetsList: () => Assets.getAssetsList(),
+    getAssetRate: key => Assets.getAssetRate(key)
+  };
 }
 
 module.exports = SDK;

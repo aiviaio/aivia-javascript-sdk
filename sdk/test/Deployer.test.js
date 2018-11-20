@@ -13,7 +13,7 @@ describe("Deploy", () => {
     it("should deploy project", async () => {
       const projectOwner = await getAddress("projectOwner");
       const custodianAddress = await getAddress("custodian");
-      const project = await SDK.deployProject(
+      const project = await SDK.project.deploy(
         1,
         {
           projectName: "Open-End Project",

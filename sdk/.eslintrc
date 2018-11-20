@@ -24,6 +24,6 @@
     "no-prototype-builtins": 0,
     "no-plusplus": 0,
     "no-console": ["error", { "allow": ["info"] }],
-    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement"]
+    "no-restricted-syntax": 0
   }
 }
