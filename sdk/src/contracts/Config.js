@@ -27,6 +27,12 @@ const getConfig = async address => {
   return config;
 };
 
+const getConfigDirectly = async configAddress => {
+  const config = await getConfigDetails(configAddress);
+  return config;
+};
+
 module.exports = {
-  getConfig
+  getConfig,
+  getConfigDirectly
 };

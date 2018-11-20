@@ -73,7 +73,6 @@ const getDetails = async (list, instance) => {
     return oneTypeList;
   });
   const fieldArrays = await Promise.all(promises);
-
   let result = {};
   for (let i = 0; i < fieldArrays.length; i++) {
     const array = fieldArrays[i];
@@ -82,6 +81,8 @@ const getDetails = async (list, instance) => {
       result = { ...result, ...element };
     }
   }
+  const owner = await instance.methods.owner().call();
+  result = { ...result, owner };
   return result;
 };
 

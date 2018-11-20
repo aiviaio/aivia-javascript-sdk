@@ -25,7 +25,7 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
 
   this.project = {
     getList: () => Projects.getProjectsList(),
-    getConfig: address => Config.getConfig(address)
+    getConfig: address => Config.getConfigDirectly(address)
   };
 
   this.deployProject = (type, params, options) =>
