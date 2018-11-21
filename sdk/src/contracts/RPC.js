@@ -10,15 +10,21 @@ const buyToken = async (value, tokenAddress, assetAddress, options) => {
   const RPC = await Token.getRPCAddress(tokenAddress);
   this.instance = createInstance(OpenEndRPC.abi, RPC, this);
   this.token = createInstance(ERC20.abi, assetAddress, this, "token");
-  // const balance = await this.token.methods.balanceOf(options.from).call();
-  // console.info(utils.fromWei(balance));
+  const balance = await this.token.methods.balanceOf(options.from).call();
+  console.info(utils.fromWei(balance));
   const buyAction = this.instance.methods.buyToken(
     utils.toWei(value),
     assetAddress
   );
-  const buyActionABI = buyAction.encodeABI();
   const { blockNumber } = await errorHandler(
-    signedTX(RPC, options, buyActionABI)
+    signedTX({
+      data: buyAction.encodeABI(),
+      from: options.from,
+      to: tokenAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit
+    })
   );
 
   const events = await this.token.getPastEvents("Transfer", {

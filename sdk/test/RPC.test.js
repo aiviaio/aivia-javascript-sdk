@@ -13,11 +13,10 @@ describe("RPC", () => {
     it("should buy token", async () => {
       const user = await getAddress("user");
       const tokenAddress = projectList[0].token;
-      await SDK.token.buy(100, tokenAddress, AIV, {
+      await SDK.token.buy(10 * 10 ** 18, tokenAddress, AIV, {
         from: user,
         privateKey:
-          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a",
-        gasPrice: 100000000000
+          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
     });
   });

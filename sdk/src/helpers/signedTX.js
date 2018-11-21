@@ -1,24 +1,29 @@
 const EthereumTx = require("ethereumjs-tx");
 const web3 = require("../core");
+const errorHandler = require("../helpers/errorHandler");
 
-module.exports = async (to, { from, privateKey, gasPrice }, ABI) => {
-  const privateKeyBuffer = Buffer.from(privateKey, "hex");
+module.exports = async ({ data, from, to, privateKey, gasPrice, gasLimit }) => {
+  const block = await web3.eth.getBlock("latest");
   const nonce = await web3.eth.getTransactionCount(from);
+  const privateKeyBuffer = Buffer.from(privateKey, "hex");
+
   const txParams = {
     nonce,
+    data,
     from,
     to,
-    gasLimit: 6721975,
     gasPrice: gasPrice || 1000000000,
-    data: ABI
+    gasLimit: gasLimit || block.gasLimit
   };
 
-  const tx = new EthereumTx(txParams);
-  tx.sign(privateKeyBuffer);
-  const serializedTx = tx.serialize();
+  const rawTx = new EthereumTx(txParams);
 
-  const result = await web3.eth.sendSignedTransaction(
-    `0x${serializedTx.toString("hex")}`
+  rawTx.sign(privateKeyBuffer);
+
+  const serializedTx = rawTx.serialize();
+
+  const transaction = await errorHandler(
+    web3.eth.sendSignedTransaction(`0x${serializedTx.toString("hex")}`)
   );
-  return result;
+  return transaction;
 };

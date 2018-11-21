@@ -14,15 +14,29 @@ const deployProject = async (type, params, options) => {
   const _params = ReselectData.input(type, params);
 
   const deployAction = this.instance.methods.deployProject(..._params);
-  const deployABI = deployAction.encodeABI();
+
   const initAction = this.instance.methods.initProject();
 
-  const initABI = initAction.encodeABI();
-
-  await errorHandler(signedTX(proxyAddress, options, deployABI));
+  await errorHandler(
+    signedTX({
+      data: deployAction.encodeABI(),
+      from: options.from,
+      to: proxyAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit
+    })
+  );
 
   const { blockNumber } = await errorHandler(
-    signedTX(proxyAddress, options, initABI)
+    signedTX({
+      data: initAction.encodeABI(),
+      from: options.from,
+      to: proxyAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit
+    })
   );
 
   const [{ returnValues }] = await this.instance.getPastEvents("NewProject", {
