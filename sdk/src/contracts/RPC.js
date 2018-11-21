@@ -20,7 +20,7 @@ const buyToken = async (value, tokenAddress, assetAddress, options) => {
     signedTX({
       data: buyAction.encodeABI(),
       from: options.from,
-      to: tokenAddress,
+      to: RPC,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit
