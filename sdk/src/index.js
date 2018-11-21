@@ -8,6 +8,7 @@ const Config = require("./contracts/Config");
 const ProjectsRegistry = require("./contracts/ProjectsRegistry");
 const SCRegistry = require("./contracts/SCRegistry");
 const RPC = require("./contracts/RPC");
+const ERC20 = require("./contracts/ERC20");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   config.HTTP_PROVIDER = HTTP_PROVIDER;
@@ -30,8 +31,9 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     getAuditDBAddress: key => Asset.getAuditDBAddress(key),
     getRPCAddress: key => Asset.getRPCAddress(key),
     getAssetPrice: key => Asset.getAssetPrice(key),
-    buy: (value, buyAddress, sellAddress, options) =>
-      RPC.buyAsset(value, buyAddress, sellAddress, options)
+    buy: (value, assetAddress, cryptoCurrencyAddress, options) =>
+      RPC.buyAsset(value, assetAddress, cryptoCurrencyAddress, options),
+    getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
   };
 
   this.project = {

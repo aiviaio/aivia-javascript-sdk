@@ -26,9 +26,9 @@ const estimateTX = async (value, assetAddress, currencyAddress, options) => {
   const currencyInUSD = currencyPrice * value;
   const feesAmount = (currencyInUSD * (entryFee + platformFee)) / 100;
   const remaining = currencyInUSD - feesAmount;
-  const willMint = (remaining / assetPrice).toFixed(4);
-  const fees = (feesAmount / currencyPrice).toFixed(4);
-  const amount = (remaining / currencyPrice).toFixed(4);
+  const willMint = +(remaining / assetPrice).toFixed(4);
+  const fees = +(feesAmount / currencyPrice).toFixed(4);
+  const amount = +(remaining / currencyPrice).toFixed(4);
 
   return {
     [assetSymbol]: willMint,
