@@ -3,8 +3,21 @@ const fs = require("fs");
 const path = "../protocol/build/contracts/";
 const SDKPath = "./src/ABI/";
 
-const list = fs.readdirSync(path);
 const networkId = 777;
+const list = [
+  "ProjectAudit",
+  "AssetsRegistry",
+  "Proxy",
+  "EntryPoint",
+  "ProjectsRegistry",
+  "SCRegistry",
+  "OpenEndRPC",
+  "ERC20",
+  "ProjectConfig",
+  "PlatformToken",
+  "OpenEndDeployer",
+  "TrueUSD"
+];
 
 if (!fs.existsSync(SDKPath)) {
   fs.mkdirSync(SDKPath);
@@ -14,7 +27,7 @@ fs.writeFile("./test/projects.json", "[]", () =>
 );
 
 list.forEach(contract => {
-  fs.readFile(path + contract, "utf8", (err, data) => {
+  fs.readFile(`${path + contract}.json`, "utf8", (err, data) => {
     const object = {};
     const json = JSON.parse(data);
     object.abi = json.abi;
@@ -23,10 +36,9 @@ list.forEach(contract => {
         object.address = json.networks[networkId].address;
       }
     }
-    const fileName = contract.replace(".json", ".js");
     const text = `module.exports = ${JSON.stringify(object, null, 2)}`;
     const file = new Uint8Array(Buffer.from(text));
-    fs.writeFile(SDKPath + fileName, file, error => {
+    fs.writeFile(`${SDKPath + contract}.js`, file, error => {
       if (error) throw error;
     });
   });

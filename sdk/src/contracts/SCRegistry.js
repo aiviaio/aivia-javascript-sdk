@@ -5,7 +5,7 @@ const Error = require("../helpers/Error");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
-const getList = async () => {
+const getAssetsList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   this.instance = createInstance(Assets.abi, registryAddress, this);
   const addressesList = await errorHandler(
@@ -25,7 +25,7 @@ const getList = async () => {
   return Promise.all(assetsList);
 };
 
-const getRate = async key => {
+const getAssetRate = async key => {
   if (utils.is.not.string(key) && !utils.isAddress(key)) {
     Error({
       name: "params",
@@ -53,6 +53,6 @@ const getRate = async key => {
 };
 
 module.exports = {
-  getList,
-  getRate
+  getAssetsList,
+  getAssetRate
 };

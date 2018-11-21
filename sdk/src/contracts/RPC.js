@@ -1,4 +1,4 @@
-const Token = require("./Token");
+const Token = require("./Asset");
 const OpenEndRPC = require("../ABI/OpenEndRPC");
 const ERC20 = require("../ABI/ERC20");
 const createInstance = require("../helpers/createInstance");
@@ -6,7 +6,7 @@ const signedTX = require("../helpers/signedTX");
 const errorHandler = require("../helpers/errorHandler");
 const utils = require("../utils");
 
-const buyToken = async (value, tokenAddress, assetAddress, options) => {
+const buyAsset = async (value, tokenAddress, assetAddress, options) => {
   const RPC = await Token.getRPCAddress(tokenAddress);
   this.instance = createInstance(OpenEndRPC.abi, RPC, this);
   this.token = createInstance(ERC20.abi, assetAddress, this, "token");
@@ -46,5 +46,5 @@ const buyToken = async (value, tokenAddress, assetAddress, options) => {
 };
 
 module.exports = {
-  buyToken
+  buyAsset
 };

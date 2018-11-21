@@ -1,15 +1,15 @@
-const Tokens = require("../ABI/TokensRegistry");
+const Assets = require("../ABI/AssetsRegistry");
 const createInstance = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
-const getTokensList = async () => {
+const getAssetsList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("tokens");
 
-  this.instance = createInstance(Tokens.abi, registryAddress, this);
+  this.instance = createInstance(Assets.abi, registryAddress, this);
   const addressesList = await errorHandler(
-    this.instance.methods.getTokensList().call()
+    this.instance.methods.getAssetsList().call()
   );
 
   const tokensList = addressesList.map(async address => {
@@ -21,7 +21,7 @@ const getTokensList = async () => {
   return Promise.all(tokensList);
 };
 
-const getTokenAddress = async symbol => {
+const getAssetAddress = async symbol => {
   if (utils.is.not.string(symbol)) {
     Error({
       name: "params",
@@ -30,7 +30,7 @@ const getTokenAddress = async symbol => {
   }
 
   const registryAddress = await Proxy.getRegistryAddress("tokens");
-  this.instance = createInstance(Tokens.abi, registryAddress, this);
+  this.instance = createInstance(Assets.abi, registryAddress, this);
 
   const address = await errorHandler(
     this.instance.methods.getAddress(utils.toHex(symbol)).call()
@@ -39,7 +39,7 @@ const getTokenAddress = async symbol => {
   return address;
 };
 
-const getTokenSymbol = async address => {
+const getAssetSymbol = async address => {
   if (!utils.isAddress(address)) {
     Error({
       name: "params",
@@ -48,7 +48,7 @@ const getTokenSymbol = async address => {
   }
 
   const registryAddress = await Proxy.getRegistryAddress("tokens");
-  this.instance = createInstance(Tokens.abi, registryAddress, this);
+  this.instance = createInstance(Assets.abi, registryAddress, this);
 
   const hexSymbol = await errorHandler(
     this.instance.methods.getSymbol(address).call()
@@ -58,7 +58,7 @@ const getTokenSymbol = async address => {
 };
 
 module.exports = {
-  getTokensList,
-  getTokenAddress,
-  getTokenSymbol
+  getAssetsList,
+  getAssetAddress,
+  getAssetSymbol
 };

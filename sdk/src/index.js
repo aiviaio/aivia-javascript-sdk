@@ -2,10 +2,10 @@ const config = require("./config");
 const EntryPoint = require("./contracts/EntryPoint");
 const Proxy = require("./contracts/Proxy");
 const Deployer = require("./contracts/Deployer");
-const Tokens = require("./contracts/Tokens");
-const Token = require("./contracts/Token");
+const AssetsRegistry = require("./contracts/AssetsRegistry");
+const Asset = require("./contracts/Asset");
 const Config = require("./contracts/Config");
-const Projects = require("./contracts/Projects");
+const ProjectsRegistry = require("./contracts/ProjectsRegistry");
 const SCRegistry = require("./contracts/SCRegistry");
 const RPC = require("./contracts/RPC");
 
@@ -22,20 +22,20 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   this.getRegistryAddress = key => Proxy.getRegistryAddress(key);
 
   // @dev "key" is token symbol or address
-  this.token = {
-    getList: () => Tokens.getTokensList(),
+  this.asset = {
+    getList: () => AssetsRegistry.getAssetsList(),
     getConfig: address => Config.getConfig(address),
-    getTokenAddress: symbol => Tokens.getTokenAddress(symbol),
-    getTokenSymbol: address => Tokens.getTokenSymbol(address),
-    getAuditDBAddress: key => Token.getAuditDBAddress(key),
-    getRPCAddress: key => Token.getRPCAddress(key),
-    getTokenPrice: key => Token.getTokenPrice(key),
+    getAssetAddress: symbol => AssetsRegistry.getAssetAddress(symbol),
+    getAssetSymbol: address => AssetsRegistry.getAssetSymbol(address),
+    getAuditDBAddress: key => Asset.getAuditDBAddress(key),
+    getRPCAddress: key => Asset.getRPCAddress(key),
+    getAssetPrice: key => Asset.getAssetPrice(key),
     buy: (value, buyAddress, sellAddress, options) =>
-      RPC.buyToken(value, buyAddress, sellAddress, options)
+      RPC.buyAsset(value, buyAddress, sellAddress, options)
   };
 
   this.project = {
-    getList: () => Projects.getProjectsList(),
+    getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: address => Config.getConfigDirectly(address),
     deploy: (type, params, options) =>
       Deployer.deployProject(type, params, options)
@@ -43,8 +43,8 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
 
   this.platform = {
     currency: {
-      getList: () => SCRegistry.getList(),
-      getRate: key => SCRegistry.getRate(key)
+      getList: () => SCRegistry.getAssetsList(),
+      getRate: key => SCRegistry.getAssetRate(key)
     }
   };
 }

@@ -6,18 +6,18 @@ const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
-describe("Tokens", () => {
+describe("AssetsRegistry", () => {
   describe("getList", () => {
     it("return tokens list", async () => {
-      const Tokens = await SDK.token.getList();
-      expect(Tokens.length).to.equal(projectList.length);
-      Tokens.forEach((token, index) => {
+      const Assets = await SDK.asset.getList();
+      expect(Assets.length).to.equal(projectList.length);
+      Assets.forEach((token, index) => {
         expect(token.address).to.equal(projectList[index].token);
       });
     });
 
     it("return token details", async () => {
-      const config = await SDK.token.getConfig(projectList[0].token);
+      const config = await SDK.asset.getConfig(projectList[0].token);
       expect(config.token).to.equal(projectList[0].token);
       expect(config.RPC).to.equal(projectList[0].RPC);
       expect(config.auditDB).to.equal(projectList[0].auditDB);
@@ -26,14 +26,14 @@ describe("Tokens", () => {
     });
 
     it("return token address", async () => {
-      const config = await SDK.token.getConfig(projectList[0].token);
-      const address = await SDK.token.getTokenAddress(config.tokenSymbol);
+      const config = await SDK.asset.getConfig(projectList[0].token);
+      const address = await SDK.asset.getAssetAddress(config.tokenSymbol);
       expect(address).to.equal(projectList[0].token);
     });
 
     it("return token symbol", async () => {
-      const config = await SDK.token.getConfig(projectList[0].token);
-      const symbol = await SDK.token.getTokenSymbol(projectList[0].token);
+      const config = await SDK.asset.getConfig(projectList[0].token);
+      const symbol = await SDK.asset.getAssetSymbol(projectList[0].token);
       expect(symbol).to.equal(config.tokenSymbol);
     });
   });

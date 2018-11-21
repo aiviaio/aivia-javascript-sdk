@@ -6,12 +6,12 @@ const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
-describe("Token", () => {
+describe("Asset", () => {
   describe("getAuditDBAddress", () => {
     it("return auditDB address", async () => {
-      const { tokenSymbol } = await SDK.token.getConfig(projectList[0].token);
-      const auditDBBySymbol = await SDK.token.getAuditDBAddress(tokenSymbol);
-      const auditDBByAddress = await SDK.token.getAuditDBAddress(
+      const { tokenSymbol } = await SDK.asset.getConfig(projectList[0].token);
+      const auditDBBySymbol = await SDK.asset.getAuditDBAddress(tokenSymbol);
+      const auditDBByAddress = await SDK.asset.getAuditDBAddress(
         projectList[0].token
       );
       expect(auditDBBySymbol).to.equal(projectList[0].auditDB);
@@ -19,11 +19,11 @@ describe("Token", () => {
     });
 
     it("return token price", async () => {
-      const { initialPrice, tokenSymbol } = await SDK.token.getConfig(
+      const { initialPrice, tokenSymbol } = await SDK.asset.getConfig(
         projectList[projectList.length - 1].token
       );
-      const priceBySymbol = await SDK.token.getTokenPrice(tokenSymbol);
-      const priceByAddress = await SDK.token.getTokenPrice(
+      const priceBySymbol = await SDK.asset.getAssetPrice(tokenSymbol);
+      const priceByAddress = await SDK.asset.getAssetPrice(
         projectList[projectList.length - 1].token
       );
       expect(priceBySymbol).to.equal(initialPrice);
@@ -31,11 +31,11 @@ describe("Token", () => {
     });
 
     it("return RPC address", async () => {
-      const { RPC, tokenSymbol } = await SDK.token.getConfig(
+      const { RPC, tokenSymbol } = await SDK.asset.getConfig(
         projectList[projectList.length - 1].token
       );
-      const RPCBySymbol = await SDK.token.getRPCAddress(tokenSymbol);
-      const RPCByAddress = await SDK.token.getRPCAddress(
+      const RPCBySymbol = await SDK.asset.getRPCAddress(tokenSymbol);
+      const RPCByAddress = await SDK.asset.getRPCAddress(
         projectList[projectList.length - 1].token
       );
       expect(RPCBySymbol).to.equal(RPC);
