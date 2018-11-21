@@ -27,13 +27,22 @@ const buyToken = async (value, tokenAddress, assetAddress, options) => {
     })
   );
 
-  const events = await this.token.getPastEvents("Transfer", {
+  const rawEvents = await this.token.getPastEvents("Transfer", {
     filter: { from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  console.info(events);
+  const eventsAssets = rawEvents.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
+  console.info(eventsAssets);
 };
 
 module.exports = {
