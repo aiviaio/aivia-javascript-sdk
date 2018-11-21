@@ -6,7 +6,7 @@ const Tokens = require("./contracts/Tokens");
 const Token = require("./contracts/Token");
 const Config = require("./contracts/Config");
 const Projects = require("./contracts/Projects");
-const Assets = require("./contracts/Assets");
+const SCRegistry = require("./contracts/SCRegistry");
 const RPC = require("./contracts/RPC");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
@@ -42,8 +42,10 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
   };
 
   this.platform = {
-    getAssetsList: () => Assets.getAssetsList(),
-    getAssetRate: key => Assets.getAssetRate(key)
+    currency: {
+      getList: () => SCRegistry.getList(),
+      getRate: key => SCRegistry.getRate(key)
+    }
   };
 }
 
