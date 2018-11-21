@@ -14,7 +14,7 @@ const getAssetsList = async () => {
 
   const tokensList = addressesList.map(async address => {
     const hex = await this.instance.methods.getSymbol(address).call();
-    const symbol = utils.hexToString(hex);
+    const symbol = utils.toUtf8(hex);
     return { symbol, address };
   });
 
@@ -54,7 +54,7 @@ const getAssetSymbol = async address => {
     this.instance.methods.getSymbol(address).call()
   );
 
-  return utils.hexToString(hexSymbol);
+  return utils.toUtf8(hexSymbol);
 };
 
 module.exports = {

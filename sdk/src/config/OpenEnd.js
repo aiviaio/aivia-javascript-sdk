@@ -18,7 +18,7 @@ const getField = async (key, fields, instance) => {
     bytes: async name => {
       const field = await instance.methods.getBytes(utils.toHex(name)).call();
       return {
-        [name]: utils.hexToString(field)
+        [name]: utils.toUtf8(field)
       };
     },
     constBytes: async name => {
@@ -26,7 +26,7 @@ const getField = async (key, fields, instance) => {
         .getConstBytes(utils.toHex(name))
         .call();
       return {
-        [name]: utils.hexToString(field)
+        [name]: utils.toUtf8(field)
       };
     },
     uint: async name => {

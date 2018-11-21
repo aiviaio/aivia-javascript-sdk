@@ -17,7 +17,7 @@ const getAssetsList = async () => {
       .getAssetByAddress(address)
       .call();
     const [assetsSymbol, assetsRate] = Object.values(assets);
-    const symbol = utils.hexToString(assetsSymbol);
+    const symbol = utils.toUtf8(assetsSymbol);
     const rate = utils.fromWei(assetsRate);
     return { symbol, address, rate };
   });
