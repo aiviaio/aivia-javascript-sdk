@@ -67,7 +67,7 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     toBlock: "latest"
   });
 
-  const lost = spendRawEvents.map(event => {
+  const spend = spendRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -83,7 +83,7 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     toBlock: "latest"
   });
 
-  const received = receivedRawEvents.map(event => {
+  const [received] = receivedRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -93,7 +93,7 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     };
   });
 
-  return { lost, received };
+  return { spend, received };
 };
 const checkBeforeSell = async (value, assetAddress, options) => {
   this.TUSDAddress = await SCRegistry.getAddress("TUSD");
@@ -162,7 +162,7 @@ const sellAsset = async (value, assetAddress, options) => {
     toBlock: "latest"
   });
 
-  const [fees] = feesRawEvents.map(event => {
+  const fees = feesRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
