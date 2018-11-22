@@ -153,7 +153,6 @@ const sellAsset = async (value, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-
   return { lost, received };
 };
 

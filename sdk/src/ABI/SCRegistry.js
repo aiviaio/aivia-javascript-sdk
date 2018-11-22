@@ -135,6 +135,26 @@ module.exports = {
       "constant": true,
       "inputs": [
         {
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "getSymbol",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xc9b2e522"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
           "name": "_symbol",
           "type": "bytes32"
         }
@@ -244,5 +264,5 @@ module.exports = {
       "signature": "0x4a5e42b1"
     }
   ],
-  "address": "0x9f76bfb776d425e3C15690Cf62d442F6f0222e5D"
+  "address": "0x3CaFED420f44B3415229a4222695fBF451a75377"
 }
