@@ -11,7 +11,7 @@ const list = [
   "EntryPoint",
   "ProjectsRegistry",
   "SCRegistry",
-  "OpenEndRPC",
+  "RPC",
   "ERC20",
   "ProjectConfig",
   "PlatformToken",

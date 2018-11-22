@@ -1,7 +1,7 @@
 const Asset = require("./Asset");
 const Config = require("./Config");
 const SCRegistry = require("./SCRegistry");
-const OpenEndRPC = require("../ABI/OpenEndRPC");
+const RPC = require("../ABI/RPC");
 const ERC20 = require("../ABI/ERC20");
 const createInstance = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
@@ -13,7 +13,6 @@ const detectSymbol = require("../helpers/detectSymbol");
 const estimateTX = async (value, assetAddress, currencyAddress, options) => {
   this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
   this.currency = createInstance(ERC20.abi, currencyAddress, this, "currency");
-
   const assetSymbol = await detectSymbol(assetAddress);
   const currencySymbol = await detectSymbol(currencyAddress);
   const balance = await this.currency.methods.balanceOf(options.from).call();
@@ -41,10 +40,9 @@ const estimateTX = async (value, assetAddress, currencyAddress, options) => {
 
 const buyAsset = async (value, assetAddress, currencyAddress, options) => {
   console.info(await estimateTX(value, assetAddress, currencyAddress, options));
-
-  const RPC = await Asset.getRPCAddress(assetAddress);
-  this.instance = createInstance(OpenEndRPC.abi, RPC, this);
-  const buyAction = this.instance.methods.buyToken(
+  const RPCAddress = await Asset.getRPCAddress(assetAddress);
+  this.instance = createInstance(RPC.abi, RPCAddress, this);
+  const buyAction = this.instance.methods.buyAsset(
     utils.toWei(value),
     currencyAddress
   );
@@ -53,7 +51,7 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
     signedTX({
       data: buyAction.encodeABI(),
       from: options.from,
-      to: RPC,
+      to: RPCAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit
