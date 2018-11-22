@@ -97,8 +97,10 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
 };
 const checkBeforeSell = async (value, assetAddress, options) => {
   this.TUSDAddress = await SCRegistry.getAddress("TUSD");
+  this.AIVAddress = await SCRegistry.getAddress("AIV");
   this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
-  this.currency = createInstance(ERC20.abi, this.TUSDAddress, this, "currency");
+  this.TUSD = createInstance(ERC20.abi, this.TUSDAddress, this, "TUSD");
+  this.AIV = createInstance(ERC20.abi, this.AIVAddress, this, "AIV");
   const balance = await this.asset.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
@@ -137,7 +139,8 @@ const sellAsset = async (value, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-  const receivedRawEvents = await this.currency.getPastEvents("Transfer", {
+
+  const receivedRawEvents = await this.TUSD.getPastEvents("Transfer", {
     filter: { to: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -152,7 +155,24 @@ const sellAsset = async (value, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-  return { spend, received };
+
+  const feesRawEvents = await this.AIV.getPastEvents("Transfer", {
+    filter: { from: options.from },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const [fees] = feesRawEvents.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
+
+  return { spend, received, fees };
 };
 
 module.exports = {

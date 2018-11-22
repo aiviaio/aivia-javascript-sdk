@@ -82,7 +82,7 @@ describe("RPC", () => {
 
     it("should sell tokens", async () => {
       const { token, custodian } = projectList[0];
-      const amount = 400;
+      const amount = 200;
       const user = await getAddress("user");
       const trueUSDOwner = getAddress("trueUSDOwner");
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
@@ -95,14 +95,16 @@ describe("RPC", () => {
           "971d073b9f16ea9ddca457bd0128a98457f076736a97dcf261b8e6ad3fd97dfd"
       });
 
-      const { spend, received } = await SDK.trade.sell(amount, token, {
+      const { spend, received, fees } = await SDK.trade.sell(amount, token, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
-      const DIFF = (await SDK.asset.getBalance(TUSD, user)) - TUSD_USER;
+      // console.log({ spend, received, fees });
+      const TUSD_USER_DIFF =
+        (await SDK.asset.getBalance(TUSD, user)) - TUSD_USER;
       expect(spend.value).to.equal(amount);
-      expect(received.value).to.equal(DIFF);
+      expect(received.value).to.equal(TUSD_USER_DIFF);
     });
   });
 });
