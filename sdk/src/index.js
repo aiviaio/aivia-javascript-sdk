@@ -2,11 +2,15 @@ const config = require("./config");
 const EntryPoint = require("./contracts/EntryPoint");
 const Proxy = require("./contracts/Proxy");
 const Deployer = require("./contracts/Deployer");
+
 const AssetsRegistry = require("./contracts/AssetsRegistry");
-const Asset = require("./contracts/Asset");
-const Config = require("./contracts/Config");
 const ProjectsRegistry = require("./contracts/ProjectsRegistry");
 const SCRegistry = require("./contracts/SCRegistry");
+const PlatformRegistry = require("./contracts/PlatformRegistry");
+
+const Asset = require("./contracts/Asset");
+const Config = require("./contracts/Config");
+
 const RPC = require("./contracts/RPC");
 const ERC20 = require("./contracts/ERC20");
 
@@ -47,7 +51,9 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     currency: {
       getList: () => SCRegistry.getAssetsList(),
       getRate: key => SCRegistry.getAssetRate(key)
-    }
+    },
+    wallet: () => PlatformRegistry.getPlatformWallet(),
+    token: () => PlatformRegistry.getPlatformToken()
   };
 }
 

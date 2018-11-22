@@ -4,9 +4,9 @@ const projectList = require("./projects");
 const { getAddress } = require("./helpers/users");
 
 const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
-const AIV = require("../src/ABI/PlatformToken").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
+
 const options = {
   // in percent
   platformFee: 0.2,
@@ -41,12 +41,15 @@ const getEntryFee = value => {
 describe("RPC", () => {
   describe("buyToken", () => {
     it("should buy token", async () => {
+      const AIV = await SDK.platform.token();
+      const platformWallet = await SDK.platform.wallet();
       const user = await getAddress("user");
       const { owner, token } = projectList[0];
-      const userAIVBalance = +(await SDK.asset.getBalance(AIV, user));
-      const ownerBalance = +(await SDK.asset.getBalance(AIV, owner));
-      const userTokenBalance = +(await SDK.asset.getBalance(token, user));
-
+      const userAIVBalance = await SDK.asset.getBalance(AIV, user);
+      const ownerBalance = await SDK.asset.getBalance(AIV, owner);
+      const userTokenBalance = await SDK.asset.getBalance(token, user);
+      const platformBalance = await SDK.asset.getBalance(AIV, platformWallet);
+      console.log(platformBalance);
       const amount = 200;
       await SDK.asset.buy(amount, token, AIV, {
         from: user,

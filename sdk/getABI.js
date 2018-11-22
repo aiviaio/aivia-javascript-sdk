@@ -16,12 +16,15 @@ const list = [
   "ProjectConfig",
   "PlatformToken",
   "OpenEndDeployer",
-  "TrueUSD"
+  "TrueUSD",
+  "PlatformRegistry"
 ];
+process.stdout.write("\x1Bc");
 
 if (!fs.existsSync(SDKPath)) {
   fs.mkdirSync(SDKPath);
 }
+
 fs.writeFile("./test/projects.json", "[]", () =>
   console.info("successfully clean /test/projects.json")
 );

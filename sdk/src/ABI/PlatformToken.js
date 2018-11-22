@@ -451,13 +451,6 @@ module.exports = {
       "signature": "0xf2fde38b"
     },
     {
-      "inputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "constructor",
-      "signature": "constructor"
-    },
-    {
       "anonymous": false,
       "inputs": [],
       "name": "MintingFinished",
@@ -615,5 +608,5 @@ module.exports = {
       "signature": "0xce368990"
     }
   ],
-  "address": "0x3416A309E35eF79290Ba68399a8bcaD5FAc34fA0"
+  "address": "0xC4d5eE58e045385705d3e37EF86BF1df27E6c20c"
 }
