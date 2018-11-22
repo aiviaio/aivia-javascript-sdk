@@ -17,43 +17,52 @@ const options = {
 };
 
 const getTokesAmountWithoutFees = value => {
-  const tokens = (value * options.currencyPrice) / options.tokenPrice;
-  const fees = (tokens * (options.platformFee + options.entryFee)) / 100;
-  const remaining = +(tokens - fees).toFixed(4);
-  return remaining;
+  const inUSD = value * options.currencyPrice;
+  const feesInUSD = (inUSD * (options.platformFee + options.entryFee)) / 100;
+  const remaining = inUSD - feesInUSD;
+  const tokens = +(remaining / options.tokenPrice);
+  return tokens;
 };
 
 const getPlatformFee = value => {
-  const tokens = (value * options.tokenPrice) / options.currencyPrice;
-  const fees = (tokens * (options.platformFee + options.entryFee)) / 100;
-  console.log(fees);
+  const inUSD = value * options.currencyPrice;
+  const feesInUSD = (inUSD * options.platformFee) / 100;
+  const tokens = +(feesInUSD / options.currencyPrice);
+  return tokens;
+};
+
+const getEntryFee = value => {
+  const inUSD = value * options.currencyPrice;
+  const feesInUSD = (inUSD * options.entryFee) / 100;
+  const tokens = +(feesInUSD / options.currencyPrice);
+  return tokens;
 };
 
 describe("RPC", () => {
   describe("buyToken", () => {
     it("should buy token", async () => {
       const user = await getAddress("user");
-      const tokenAddress = projectList[0].token;
-      const userAIVBalance = +(await SDK.asset.getBalance(AIV, user)).toFixed(
-        4
-      );
-      const userTokenBalance = +(await SDK.asset.getBalance(
-        tokenAddress,
-        user
-      )).toFixed(4);
+      const { owner, token } = projectList[0];
+      const userAIVBalance = +(await SDK.asset.getBalance(AIV, user));
+      const ownerBalance = +(await SDK.asset.getBalance(AIV, owner));
+      const userTokenBalance = +(await SDK.asset.getBalance(token, user));
+
       const amount = 200;
-      await SDK.asset.buy(amount, tokenAddress, AIV, {
+      await SDK.asset.buy(amount, token, AIV, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
-      getTokesAmountWithoutFees(amount);
       expect(await SDK.asset.getBalance(AIV, user)).to.equal(
         userAIVBalance - amount
       );
-      getPlatformFee(amount);
-      expect(await SDK.asset.getBalance(tokenAddress, user)).to.equal(
+
+      expect(await SDK.asset.getBalance(token, user)).to.equal(
         userTokenBalance + getTokesAmountWithoutFees(amount)
+      );
+
+      expect(await SDK.asset.getBalance(AIV, owner)).to.equal(
+        ownerBalance + getEntryFee(amount)
       );
     });
   });
