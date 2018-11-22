@@ -1,9 +1,9 @@
 const { expect } = require("chai");
-const AIVIA_SDK = require("../src");
-const projectList = require("./projects");
-const { getAddress } = require("./helpers/users");
-const utils = require("./helpers/utils");
-const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
+const AIVIA_SDK = require("../../src");
+const projectList = require("../projects");
+const { getAddress } = require("../helpers/users");
+const utils = require("../../src/utils");
+const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
@@ -45,10 +45,20 @@ describe("RPC", () => {
       const platformWallet = await SDK.platform.wallet();
       const user = await getAddress("user");
       const { owner, token } = projectList[0];
-      const userAIVBalance = await SDK.asset.getBalance(AIV, user);
-      const ownerBalance = await SDK.asset.getBalance(AIV, owner);
-      const userTokenBalance = await SDK.asset.getBalance(token, user);
-      const platformBalance = await SDK.asset.getBalance(AIV, platformWallet);
+
+      const userAIVBalance = utils.toFixed(
+        await SDK.asset.getBalance(AIV, user)
+      );
+      const ownerBalance = utils.toFixed(
+        await SDK.asset.getBalance(AIV, owner)
+      );
+      const userTokenBalance = utils.toFixed(
+        await SDK.asset.getBalance(token, user)
+      );
+      const platformBalance = utils.toFixed(
+        await SDK.asset.getBalance(AIV, platformWallet)
+      );
+
       const amount = 200;
       await SDK.asset.buy(amount, token, AIV, {
         from: user,

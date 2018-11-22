@@ -1,7 +1,7 @@
 const { expect } = require("chai");
-const AIVIA_SDK = require("../src");
+const AIVIA_SDK = require("../../src");
 
-const ENTRY_POINT = require("../src/ABI/EntryPoint").address;
+const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 describe("SCRegistry", () => {
@@ -12,10 +12,10 @@ describe("SCRegistry", () => {
       expect(this.currencies[0].symbol).to.equal("AIV");
       expect(this.currencies[1].symbol).to.equal("TUSD");
       expect(this.currencies[0].address).to.equal(
-        require("../src/ABI/PlatformToken").address
+        require("../../src/ABI/PlatformToken").address
       );
       expect(this.currencies[1].address).to.equal(
-        require("../src/ABI/TrueUSD").address
+        require("../../src/ABI/TrueUSD").address
       );
     });
 

@@ -12,7 +12,7 @@ const list = [
   "ProjectsRegistry",
   "SCRegistry",
   "RPC",
-  "ERC20",
+  "ERC20Mintable",
   "ProjectConfig",
   "PlatformToken",
   "OpenEndDeployer",

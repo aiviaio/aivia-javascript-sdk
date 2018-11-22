@@ -23,7 +23,7 @@
     "typedarray-to-buffer": "^3.1.5"
   },
   "scripts": {
-    "test": "mocha --timeout=13000",
+    "test": "mocha ./test/index.js --timeout=13000",
     "build": "MODE=dev node ./getABI.js"
   },
   "license": "MIT"

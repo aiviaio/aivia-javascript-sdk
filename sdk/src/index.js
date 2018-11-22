@@ -35,8 +35,8 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     getAuditDBAddress: key => Asset.getAuditDBAddress(key),
     getRPCAddress: key => Asset.getRPCAddress(key),
     getAssetPrice: key => Asset.getAssetPrice(key),
-    buy: (value, assetAddress, cryptoCurrencyAddress, options) =>
-      RPC.buyAsset(value, assetAddress, cryptoCurrencyAddress, options),
+    buy: (value, buyAddress, sellAddress, options) =>
+      RPC.buyAsset(value, buyAddress, sellAddress, options),
     getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
   };
 

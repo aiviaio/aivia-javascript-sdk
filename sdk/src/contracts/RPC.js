@@ -10,12 +10,12 @@ const Error = require("../helpers/Error");
 const utils = require("../utils");
 const detectSymbol = require("../helpers/detectSymbol");
 
-const estimateTX = async (value, assetAddress, currencyAddress) => {
-  const assetSymbol = await detectSymbol(assetAddress);
-  const currencySymbol = await detectSymbol(currencyAddress);
-  const assetPrice = await Asset.getAssetPrice(assetAddress);
-  const { entryFee, platformFee } = await Config.getConfig(assetAddress);
-  const currencyPrice = await SCRegistry.getAssetRate(currencyAddress);
+const estimateTX = async (value, buyAddress, sellAddress) => {
+  const assetSymbol = await detectSymbol(buyAddress);
+  const currencySymbol = await detectSymbol(sellAddress);
+  const assetPrice = await Asset.getAssetPrice(buyAddress);
+  const { entryFee, platformFee } = await Config.getConfig(buyAddress);
+  const currencyPrice = await SCRegistry.getAssetRate(sellAddress);
   const currencyInUSD = currencyPrice * value;
   const feesAmount = (currencyInUSD * (entryFee + platformFee)) / 100;
   const remaining = currencyInUSD - feesAmount;
@@ -32,27 +32,27 @@ const estimateTX = async (value, assetAddress, currencyAddress) => {
   };
 };
 
-const checkTX = async (value, assetAddress, currencyAddress, options) => {
-  this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
-  this.currency = createInstance(ERC20.abi, currencyAddress, this, "currency");
+const checkTX = async (value, buyAddress, sellAddress, options) => {
+  this.asset = createInstance(ERC20.abi, buyAddress, this, "buy");
+  this.currency = createInstance(ERC20.abi, sellAddress, this, "sell");
   const balance = await this.currency.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
 };
 
-const buyAsset = async (value, assetAddress, currencyAddress, options) => {
-  await checkTX(value, assetAddress, currencyAddress, options);
-  const RPCAddress = await Asset.getRPCAddress(assetAddress);
+const buyAsset = async (value, buyAddress, sellAddress, options) => {
+  await checkTX(value, buyAddress, sellAddress, options);
+  const RPCAddress = await Asset.getRPCAddress(buyAddress);
   this.instance = createInstance(RPC.abi, RPCAddress, this);
-  const buyAction = this.instance.methods.buyAsset(
+  const action = this.instance.methods.buyAsset(
     utils.toWei(value),
-    currencyAddress
+    sellAddress
   );
 
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: buyAction.encodeABI(),
+      data: action.encodeABI(),
       from: options.from,
       to: RPCAddress,
       privateKey: options.privateKey,

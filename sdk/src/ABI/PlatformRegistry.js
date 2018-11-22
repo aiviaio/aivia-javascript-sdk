@@ -414,5 +414,5 @@ module.exports = {
       "signature": "0x3e49bed0"
     }
   ],
-  "address": "0xA353D1e2CFdc1F34d054f11A0f3EfD47C607B3ca"
+  "address": "0x42629406c300e430a6d4dAa96D113c9B3d21307b"
 }
