@@ -26,13 +26,13 @@ const mint = async (value, walletAddress, assetAddress, options) => {
     })
   );
 
-  const Events = await this.currency.getPastEvents("Transfer", {
+  const Events = await this.instance.getPastEvents("Transfer", {
     filter: { to: walletAddress, from: utils.ZERO_ADDRESS },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const Event = Events.map(event => {
+  const [Event] = Events.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -41,7 +41,8 @@ const mint = async (value, walletAddress, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-  console.info(Event);
+
+  return Event;
 };
 
 module.exports = {

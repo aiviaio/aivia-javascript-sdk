@@ -66,6 +66,8 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
 
+      expect(userAIVBalance - amount).to.equal(0);
+
       expect(utils.toFixed(await SDK.asset.getBalance(AIV, user))).to.equal(
         userAIVBalance - amount
       );

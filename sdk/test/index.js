@@ -5,5 +5,5 @@ require("./registries/AssetsRegistry.test");
 require("./registries/ProjectsRegistry.test");
 require("./registries/SCRegistry.test");
 require("./asset/Asset.test");
-require("./asset/RPC.test");
 require("./asset/ERC20.test");
+require("./asset/RPC.test");

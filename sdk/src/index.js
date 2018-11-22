@@ -55,6 +55,11 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     wallet: () => PlatformRegistry.getPlatformWallet(),
     token: () => PlatformRegistry.getPlatformToken()
   };
+
+  this.dev = {
+    mint: (value, walletAddress, assetAddress, options) =>
+      ERC20.mint(value, walletAddress, assetAddress, options)
+  };
 }
 
 module.exports = SDK;
