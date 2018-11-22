@@ -61,13 +61,13 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     })
   );
 
-  const lostRawEvents = await this.currency.getPastEvents("Transfer", {
+  const spendRawEvents = await this.currency.getPastEvents("Transfer", {
     filter: { from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const lost = lostRawEvents.map(event => {
+  const lost = spendRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -122,13 +122,13 @@ const sellAsset = async (value, assetAddress, options) => {
     })
   );
 
-  const lostRawEvents = await this.asset.getPastEvents("Transfer", {
-    filter: { from: assetAddress, to: utils.ZERO_ADDRESS },
+  const spendRawEvents = await this.asset.getPastEvents("Transfer", {
+    filter: { from: options.from, to: utils.ZERO_ADDRESS },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const lost = lostRawEvents.map(event => {
+  const [spend] = spendRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -137,14 +137,13 @@ const sellAsset = async (value, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-
-  const receivedRawEvents = await this.asset.getPastEvents("Transfer", {
-    filter: { to: options.from, from: this.TUSDAddress },
+  const receivedRawEvents = await this.currency.getPastEvents("Transfer", {
+    filter: { to: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const received = receivedRawEvents.map(event => {
+  const [received] = receivedRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -153,7 +152,7 @@ const sellAsset = async (value, assetAddress, options) => {
       value: utils.fromWei(_value)
     };
   });
-  return { lost, received };
+  return { spend, received };
 };
 
 module.exports = {

@@ -8,7 +8,6 @@ const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
 const options = {
-  // in percent
   platformFee: 0.2,
   entryFee: 2.2,
   exitFee: 1.2,
@@ -16,26 +15,26 @@ const options = {
   currencyPrice: 0.5
 };
 
-const getTokesAmountWithoutFees = value => {
+const willMint = value => {
   const inUSD = value * options.currencyPrice;
   const feesInUSD = (inUSD * (options.platformFee + options.entryFee)) / 100;
   const remaining = inUSD - feesInUSD;
   const tokens = remaining / options.tokenPrice;
-  return utils.toFixed(tokens);
+  return tokens;
 };
 
-const getPlatformFee = value => {
+const platformFee = value => {
   const inUSD = value * options.currencyPrice;
   const feesInUSD = (inUSD * options.platformFee) / 100;
   const tokens = feesInUSD / options.currencyPrice;
-  return utils.toFixed(tokens);
+  return tokens;
 };
 
-const getEntryFee = value => {
+const entryFee = value => {
   const inUSD = value * options.currencyPrice;
   const feesInUSD = (inUSD * options.entryFee) / 100;
   const tokens = feesInUSD / options.currencyPrice;
-  return utils.toFixed(tokens);
+  return tokens;
 };
 
 describe("RPC", () => {
@@ -47,19 +46,10 @@ describe("RPC", () => {
 
       const { owner, token } = projectList[0];
 
-      const userAIVBalance = utils.toFixed(
-        await SDK.asset.getBalance(AIV, user)
-      );
-      const ownerBalance = utils.toFixed(
-        await SDK.asset.getBalance(AIV, owner)
-      );
-      const userTokenBalance = utils.toFixed(
-        await SDK.asset.getBalance(token, user)
-      );
-
-      const platformBalance = utils.toFixed(
-        await SDK.asset.getBalance(AIV, platformWallet)
-      );
+      const AIV_USER = await SDK.asset.getBalance(AIV, user);
+      const AIV_PROJECT_OWNER = await SDK.asset.getBalance(AIV, owner);
+      const AIV_PLATFORM = await SDK.asset.getBalance(AIV, platformWallet);
+      const TOKEN_USER = await SDK.asset.getBalance(token, user);
 
       const amount = 200;
       await SDK.trade.buy(amount, token, AIV, {
@@ -68,21 +58,26 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
 
-      expect(utils.toFixed(await SDK.asset.getBalance(AIV, user))).to.equal(
-        userAIVBalance - amount
+      const _AIV_USER = await SDK.asset.getBalance(AIV, user);
+      const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(AIV, owner);
+      const _AIV_PLATFORM = await SDK.asset.getBalance(AIV, platformWallet);
+      const _TOKEN_USER = await SDK.asset.getBalance(token, user);
+
+      expect(utils.toFixed(_AIV_USER, 2)).to.equal(
+        utils.toFixed(AIV_USER - amount, 2)
       );
 
-      expect(utils.toFixed(await SDK.asset.getBalance(token, user))).to.equal(
-        userTokenBalance + getTokesAmountWithoutFees(amount)
+      expect(utils.toFixed(_TOKEN_USER, 2)).to.equal(
+        utils.toFixed(TOKEN_USER + willMint(amount), 2)
       );
 
-      expect(utils.toFixed(await SDK.asset.getBalance(AIV, owner))).to.equal(
-        ownerBalance + getEntryFee(amount)
+      expect(utils.toFixed(_AIV_PROJECT_OWNER, 2)).to.equal(
+        utils.toFixed(AIV_PROJECT_OWNER + entryFee(amount), 2)
       );
 
-      expect(
-        utils.toFixed(await SDK.asset.getBalance(AIV, platformWallet))
-      ).to.equal(platformBalance + getPlatformFee(amount));
+      expect(utils.toFixed(_AIV_PLATFORM, 2)).to.equal(
+        utils.toFixed(AIV_PLATFORM + platformFee(amount), 2)
+      );
     });
 
     it("should sell tokens", async () => {
@@ -92,17 +87,22 @@ describe("RPC", () => {
       const trueUSDOwner = getAddress("trueUSDOwner");
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
 
+      const TUSD_USER = await SDK.asset.getBalance(TUSD, user);
+
       await SDK.dev.mint(100, custodian, TUSD, {
         from: trueUSDOwner,
         privateKey:
           "971d073b9f16ea9ddca457bd0128a98457f076736a97dcf261b8e6ad3fd97dfd"
       });
 
-      await SDK.trade.sell(amount, token, {
+      const { spend, received } = await SDK.trade.sell(amount, token, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
+      const DIFF = (await SDK.asset.getBalance(TUSD, user)) - TUSD_USER;
+      expect(spend.value).to.equal(amount);
+      expect(received.value).to.equal(DIFF);
     });
   });
 });

@@ -8,6 +8,6 @@ module.exports = {
   fromWei: value => Number(web3.utils.fromWei(value.toString(), "ether")),
   isAddress: address => web3.utils.isAddress(address),
   toUtf8: hex => web3.utils.toUtf8(hex),
-  toFixed: value => Number(value.toFixed(4)),
+  toFixed: (value, count = 4) => Number(value.toFixed(count)),
   ZERO_ADDRESS: "0x0000000000000000000000000000000000000000"
 };

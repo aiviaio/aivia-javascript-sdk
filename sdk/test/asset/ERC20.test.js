@@ -27,10 +27,6 @@ describe("ERC20", () => {
         userAIVBalance + amount
       );
 
-      expect(utils.toFixed(await SDK.asset.getBalance(AIV, user))).to.equal(
-        amount
-      );
-
       expect(from).to.equal(utils.ZERO_ADDRESS);
       expect(to).to.equal(user);
       expect(value).to.equal(amount);
