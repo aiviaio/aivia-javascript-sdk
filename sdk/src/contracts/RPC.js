@@ -32,9 +32,9 @@ const estimateTX = async (value, buyAddress, sellAddress) => {
   };
 };
 
-const checkTX = async (value, buyAddress, sellAddress, options) => {
-  this.asset = createInstance(ERC20.abi, buyAddress, this, "buy");
-  this.currency = createInstance(ERC20.abi, sellAddress, this, "sell");
+const checkBeforeBuy = async (value, buyAddress, sellAddress, options) => {
+  this.asset = createInstance(ERC20.abi, buyAddress, this, "asset");
+  this.currency = createInstance(ERC20.abi, sellAddress, this, "currency");
   const balance = await this.currency.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
@@ -42,7 +42,7 @@ const checkTX = async (value, buyAddress, sellAddress, options) => {
 };
 
 const buyAsset = async (value, buyAddress, sellAddress, options) => {
-  await checkTX(value, buyAddress, sellAddress, options);
+  await checkBeforeBuy(value, buyAddress, sellAddress, options);
   const RPCAddress = await Asset.getRPCAddress(buyAddress);
   this.instance = createInstance(RPC.abi, RPCAddress, this);
   const action = this.instance.methods.buyAsset(
@@ -61,13 +61,13 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     })
   );
 
-  const soldRawEvents = await this.currency.getPastEvents("Transfer", {
+  const lostRawEvents = await this.currency.getPastEvents("Transfer", {
     filter: { from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const sold = soldRawEvents.map(event => {
+  const lost = lostRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -77,13 +77,13 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     };
   });
 
-  const bothRawEvents = await this.asset.getPastEvents("Transfer", {
+  const receivedRawEvents = await this.asset.getPastEvents("Transfer", {
     filter: { to: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
-  const both = bothRawEvents.map(event => {
+  const received = receivedRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -93,10 +93,72 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     };
   });
 
-  return { sold, both };
+  return { lost, received };
+};
+const checkBeforeSell = async (value, assetAddress, options) => {
+  this.TUSDAddress = await SCRegistry.getAddress("TUSD");
+  this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
+  this.currency = createInstance(ERC20.abi, this.TUSDAddress, this, "currency");
+  const balance = await this.asset.methods.balanceOf(options.from).call();
+  if (balance < value) {
+    Error({ name: "transaction", message: "Not enough funds on balance" });
+  }
+};
+
+const sellAsset = async (value, assetAddress, options) => {
+  await checkBeforeSell(value, assetAddress, options);
+  const RPCAddress = await Asset.getRPCAddress(assetAddress);
+  this.instance = createInstance(RPC.abi, RPCAddress, this);
+  const action = this.instance.methods.sellAsset(utils.toWei(value));
+
+  const { blockNumber } = await errorHandler(
+    signedTX({
+      data: action.encodeABI(),
+      from: options.from,
+      to: RPCAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit
+    })
+  );
+
+  const lostRawEvents = await this.asset.getPastEvents("Transfer", {
+    filter: { from: assetAddress, to: utils.ZERO_ADDRESS },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const lost = lostRawEvents.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
+
+  const receivedRawEvents = await this.asset.getPastEvents("Transfer", {
+    filter: { to: options.from, from: this.TUSDAddress },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const received = receivedRawEvents.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
+
+  return { lost, received };
 };
 
 module.exports = {
   buyAsset,
-  estimateTX
+  estimateTX,
+  sellAsset
 };

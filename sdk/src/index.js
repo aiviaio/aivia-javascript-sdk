@@ -35,9 +35,14 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     getAuditDBAddress: key => Asset.getAuditDBAddress(key),
     getRPCAddress: key => Asset.getRPCAddress(key),
     getAssetPrice: key => Asset.getAssetPrice(key),
+    getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
+  };
+
+  this.trade = {
     buy: (value, buyAddress, sellAddress, options) =>
       RPC.buyAsset(value, buyAddress, sellAddress, options),
-    getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
+    sell: (value, assetAddress, options) =>
+      RPC.sellAsset(value, assetAddress, options)
   };
 
   this.project = {
@@ -49,8 +54,10 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
 
   this.platform = {
     currency: {
-      getList: () => SCRegistry.getAssetsList(),
-      getRate: key => SCRegistry.getAssetRate(key)
+      getList: () => SCRegistry.getList(),
+      getRate: key => SCRegistry.getRate(key),
+      getAddress: symbol => SCRegistry.getAddress(symbol),
+      getSymbol: address => SCRegistry.getSymbol(address)
     },
     wallet: () => PlatformRegistry.getPlatformWallet(),
     token: () => PlatformRegistry.getPlatformToken()
