@@ -10,24 +10,18 @@ const Error = require("../helpers/Error");
 const utils = require("../utils");
 const detectSymbol = require("../helpers/detectSymbol");
 
-const estimateTX = async (value, assetAddress, currencyAddress, options) => {
-  this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
-  this.currency = createInstance(ERC20.abi, currencyAddress, this, "currency");
+const estimateTX = async (value, assetAddress, currencyAddress) => {
   const assetSymbol = await detectSymbol(assetAddress);
   const currencySymbol = await detectSymbol(currencyAddress);
-  const balance = await this.currency.methods.balanceOf(options.from).call();
-  if (balance < value) {
-    Error({ name: "transaction", message: "Not enough funds on balance" });
-  }
   const assetPrice = await Asset.getAssetPrice(assetAddress);
   const { entryFee, platformFee } = await Config.getConfig(assetAddress);
   const currencyPrice = await SCRegistry.getAssetRate(currencyAddress);
   const currencyInUSD = currencyPrice * value;
   const feesAmount = (currencyInUSD * (entryFee + platformFee)) / 100;
   const remaining = currencyInUSD - feesAmount;
-  const willMint = remaining / assetPrice;
-  const fees = feesAmount / currencyPrice;
-  const amount = remaining / currencyPrice;
+  const willMint = utils.toFixed(remaining / assetPrice);
+  const fees = utils.toFixed(feesAmount / currencyPrice);
+  const amount = utils.toFixed(remaining / currencyPrice);
 
   return {
     [assetSymbol]: willMint,
@@ -38,8 +32,17 @@ const estimateTX = async (value, assetAddress, currencyAddress, options) => {
   };
 };
 
+const checkTX = async (value, assetAddress, currencyAddress, options) => {
+  this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
+  this.currency = createInstance(ERC20.abi, currencyAddress, this, "currency");
+  const balance = await this.currency.methods.balanceOf(options.from).call();
+  if (balance < value) {
+    Error({ name: "transaction", message: "Not enough funds on balance" });
+  }
+};
+
 const buyAsset = async (value, assetAddress, currencyAddress, options) => {
-  console.info(await estimateTX(value, assetAddress, currencyAddress, options));
+  await checkTX(value, assetAddress, currencyAddress, options);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   this.instance = createInstance(RPC.abi, RPCAddress, this);
   const buyAction = this.instance.methods.buyAsset(
