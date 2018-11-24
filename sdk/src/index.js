@@ -7,6 +7,7 @@ const AssetsRegistry = require("./contracts/AssetsRegistry");
 const ProjectsRegistry = require("./contracts/ProjectsRegistry");
 const SCRegistry = require("./contracts/SCRegistry");
 const PlatformRegistry = require("./contracts/PlatformRegistry");
+const TPLRegistry = require("./contracts/TPLRegistry");
 
 const Asset = require("./contracts/Asset");
 const Config = require("./contracts/Config");
@@ -61,6 +62,17 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
     },
     wallet: () => PlatformRegistry.getPlatformWallet(),
     token: () => PlatformRegistry.getPlatformToken()
+  };
+
+  this.auditors = {
+    addUser: (walletAddress, countryID, walletType, expirationDate, options) =>
+      TPLRegistry.addUser(
+        walletAddress,
+        countryID,
+        walletType,
+        expirationDate,
+        options
+      )
   };
 
   this.dev = {

@@ -1,3 +1,4 @@
+require("./registries/TPLRegistry.test");
 require("./proxy/EntryPoint.test");
 require("./proxy/Proxy.test");
 require("./deploy/Deployer.test");
