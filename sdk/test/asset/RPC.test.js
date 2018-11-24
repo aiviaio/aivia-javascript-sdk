@@ -52,12 +52,11 @@ describe("RPC", () => {
       const TOKEN_USER = await SDK.asset.getBalance(token, user);
 
       const amount = 200;
-      const { spend, received } = await SDK.trade.buy(amount, token, AIV, {
+      await SDK.trade.buy(amount, token, AIV, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
-      console.info({ spend, received });
 
       const _AIV_USER = await SDK.asset.getBalance(AIV, user);
       const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(AIV, owner);
@@ -96,16 +95,17 @@ describe("RPC", () => {
           "971d073b9f16ea9ddca457bd0128a98457f076736a97dcf261b8e6ad3fd97dfd"
       });
 
-      const { spend, received, fees } = await SDK.trade.sell(amount, token, {
+      const { spend, received } = await SDK.trade.sell(amount, token, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
-      console.info({ spend, received, fees });
       const TUSD_USER_DIFF =
         (await SDK.asset.getBalance(TUSD, user)) - TUSD_USER;
       expect(spend.value).to.equal(amount);
-      expect(received.value).to.equal(TUSD_USER_DIFF);
+      expect(utils.toFixed(received.value, 4)).to.equal(
+        utils.toFixed(TUSD_USER_DIFF, 4)
+      );
     });
   });
 });
