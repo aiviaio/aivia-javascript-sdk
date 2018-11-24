@@ -17,8 +17,10 @@ const list = [
   "PlatformToken",
   "OpenEndDeployer",
   "TrueUSD",
-  "PlatformRegistry"
+  "PlatformRegistry",
+  "TPLRegistry"
 ];
+
 process.stdout.write("\x1Bc");
 
 if (!fs.existsSync(SDKPath)) {
