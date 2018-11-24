@@ -9,8 +9,9 @@ describe("TPLRegistry", () => {
   describe("addUser", () => {
     it("should add user", async () => {
       const user = await getAddress("user");
+      const DGAddress = await getAddress("DGAddress");
       await SDK.auditors.addUser(user, 1, 1, 0, {
-        from: "0xf82a4e23696f999c9836a598d8f341bed0cc9c32",
+        from: DGAddress,
         privateKey:
           "8129dd9c4013b5b6070cdbeae3f9eb9ffdc2bfb06d69ce22f8cee15b5ff111b6"
       });
