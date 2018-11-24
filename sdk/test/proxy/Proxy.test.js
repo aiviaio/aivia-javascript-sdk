@@ -36,11 +36,11 @@ describe("Proxy", () => {
 
   describe("isAuditor", () => {
     it("return true status", async () => {
-      const status = await SDK.utils.isAuditor(getAddress("auditorAssets"), 1);
+      const status = await SDK.utils.isAuditor(getAddress("DGAddress"), 1);
       expect(status).to.equal(true);
     });
     it("return false status", async () => {
-      const status = await SDK.utils.isAuditor(getAddress("auditorAssets"), 2);
+      const status = await SDK.utils.isAuditor(getAddress("user"), 2);
       expect(status).to.equal(false);
     });
   });

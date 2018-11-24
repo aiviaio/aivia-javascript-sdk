@@ -30,22 +30,20 @@ const addUser = async (
       gasLimit: options.gasLimit
     })
   );
-  const Events = await this.instance.getPastEvents("Add", {
-    filter: {},
+  const Events = await this.instance.getPastEvents("registryEvent", {
+    filter: { eventName: "Add" },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
+    const [eventName, address] = Object.values(returnValues);
     return {
-      from,
-      to,
-      value: utils.fromWei(_value)
+      eventName: utils.toUtf8(eventName),
+      address
     };
   });
-
   return Event;
 };
 

@@ -3,21 +3,6 @@ module.exports = {
     {
       "constant": true,
       "inputs": [],
-      "name": "isMaster",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function",
-      "signature": "0x6f791d29"
-    },
-    {
-      "constant": true,
-      "inputs": [],
       "name": "isDGAddress",
       "outputs": [
         {
@@ -29,6 +14,26 @@ module.exports = {
       "stateMutability": "view",
       "type": "function",
       "signature": "0xe25a37b4"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "isMaster",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xf720f80b"
     },
     {
       "inputs": [
@@ -88,5 +93,5 @@ module.exports = {
       "signature": "0x43a73d9a"
     }
   ],
-  "address": "0x0A483a6679BB86eF1c7b7eb1C4e4794221836Ff7"
+  "address": "0xDcFDC80dC7cB30d498d47d09F66Ec836B5f51C45"
 }
