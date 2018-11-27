@@ -15,10 +15,11 @@ const Config = require("./contracts/Config");
 const RPC = require("./contracts/RPC");
 const ERC20 = require("./contracts/ERC20");
 
-function SDK(ENTRY_POINT, HTTP_PROVIDER = "http://127.0.0.1:8545") {
-  config.HTTP_PROVIDER = HTTP_PROVIDER;
-  config.ENTRY_POINT = ENTRY_POINT;
-
+function SDK(ENTRY_POINT, HTTP_PROVIDER) {
+  (() => {
+    config.HTTP_PROVIDER = HTTP_PROVIDER;
+    config.ENTRY_POINT = ENTRY_POINT;
+  })();
   this.utils = {
     isDeployer: address => Proxy.isDeployer(address),
     isAuditor: (address, type) => Proxy.isAuditor(address, type)

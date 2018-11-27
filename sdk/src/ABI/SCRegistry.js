@@ -269,5 +269,5 @@ module.exports = {
       "signature": "0x4a5e42b1"
     }
   ],
-  "address": "0x4c90E5D4291dfC994725B1078dd6C79f4408dfA4"
+  "address": "0xe8b2E878a04dE1223F9FE2CB54FBD9d9Bafb9104"
 }
