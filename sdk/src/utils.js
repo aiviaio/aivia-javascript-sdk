@@ -1,5 +1,5 @@
 const is = require("is_js");
-const web3 = require("./core");
+const web3 = require("web3");
 
 module.exports = {
   is,

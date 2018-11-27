@@ -16,20 +16,20 @@ const RPC = require("./contracts/RPC");
 const ERC20 = require("./contracts/ERC20");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER) {
-  (() => {
-    config.HTTP_PROVIDER = HTTP_PROVIDER;
-    config.ENTRY_POINT = ENTRY_POINT;
-  })();
-  this.utils = {
+  config.init(ENTRY_POINT, HTTP_PROVIDER);
+}
+
+SDK.prototype = {
+  utils: {
     isDeployer: address => Proxy.isDeployer(address),
     isAuditor: (address, type) => Proxy.isAuditor(address, type)
-  };
+  },
 
-  this.getProxyAddress = () => EntryPoint.getProxyAddress();
-  this.getRegistryAddress = key => Proxy.getRegistryAddress(key);
+  getProxyAddress: () => EntryPoint.getProxyAddress(),
+  getRegistryAddress: key => Proxy.getRegistryAddress(key),
 
   // @dev "key" is token symbol or address
-  this.asset = {
+  asset: {
     getList: () => AssetsRegistry.getAssetsList(),
     getConfig: address => Config.getConfig(address),
     getAssetAddress: symbol => AssetsRegistry.getAssetAddress(symbol),
@@ -38,23 +38,23 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER) {
     getRPCAddress: key => Asset.getRPCAddress(key),
     getAssetPrice: key => Asset.getAssetPrice(key),
     getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
-  };
+  },
 
-  this.trade = {
+  trade: {
     buy: (value, buyAddress, sellAddress, options) =>
       RPC.buyAsset(value, buyAddress, sellAddress, options),
     sell: (value, assetAddress, options) =>
       RPC.sellAsset(value, assetAddress, options)
-  };
+  },
 
-  this.project = {
+  project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: address => Config.getConfigDirectly(address),
     deploy: (type, params, options) =>
       Deployer.deployProject(type, params, options)
-  };
+  },
 
-  this.platform = {
+  platform: {
     currency: {
       getList: () => SCRegistry.getList(),
       getRate: key => SCRegistry.getRate(key),
@@ -63,9 +63,9 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER) {
     },
     wallet: () => PlatformRegistry.getPlatformWallet(),
     token: () => PlatformRegistry.getPlatformToken()
-  };
+  },
 
-  this.auditors = {
+  auditors: {
     addUser: (walletAddress, countryID, walletType, expirationDate, options) =>
       TPLRegistry.addUser(
         walletAddress,
@@ -74,12 +74,12 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER) {
         expirationDate,
         options
       )
-  };
+  },
 
-  this.dev = {
+  dev: {
     mint: (value, walletAddress, assetAddress, options) =>
       ERC20.mint(value, walletAddress, assetAddress, options)
-  };
-}
+  }
+};
 
 module.exports = SDK;
