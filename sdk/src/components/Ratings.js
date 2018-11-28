@@ -11,10 +11,6 @@ const getRatingsList = async () => {
     const investors = Number(await Asset.getInvestorsCount(address));
     return { symbol, address, investors, price };
   });
-<<<<<<< HEAD
-=======
-  console.info(await Promise.all(tokensList));
->>>>>>> cc8ef9743b70d5c59e03001cdeab9ad2e3ac588d
   return Promise.all(tokensList);
 };
 module.exports = {
