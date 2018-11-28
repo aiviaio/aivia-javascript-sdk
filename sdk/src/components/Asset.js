@@ -13,12 +13,13 @@ const getAuditDBAddress = async key => {
       message: "Acceptable parameters address or symbol token"
     });
   }
+  let address = null;
   if (utils.isAddress(key)) {
-    this.address = key;
+    address = key;
   } else {
-    this.address = await errorHandler(AssetsRegistry.getAssetAddress(key));
+    address = await errorHandler(AssetsRegistry.getAssetAddress(key));
   }
-  const { auditDB } = await errorHandler(Config.getConfig(this.address));
+  const { auditDB } = await errorHandler(Config.getConfig(address));
   return auditDB;
 };
 
@@ -29,27 +30,29 @@ const getRPCAddress = async key => {
       message: "Acceptable parameters address or symbol token"
     });
   }
+
+  let address = null;
   if (utils.isAddress(key)) {
-    this.address = key;
+    address = key;
   } else {
-    this.address = await errorHandler(AssetsRegistry.getAssetAddress(key));
+    address = await errorHandler(AssetsRegistry.getAssetAddress(key));
   }
-  const { RPC } = await errorHandler(Config.getConfig(this.address));
+  const { RPC } = await Config.getConfig(address);
   return RPC;
 };
 
 const getAssetPrice = async key => {
   const auditDB = await errorHandler(getAuditDBAddress(key));
-  this.instance = createInstance(Audit.abi, auditDB, this, "Audit");
-  const price = await errorHandler(this.instance.methods.getLastPrice().call());
+  const instance = createInstance(Audit.abi, auditDB);
+  const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
 };
 
 const getInvestorsCount = async address => {
   const RPC = await errorHandler(getRPCAddress(address));
-  this.instance = createInstance(RPC_ABI.abi, RPC, this, "RPC");
+  const instance = createInstance(RPC_ABI.abi, RPC);
   const investors = await errorHandler(
-    this.instance.methods.getInvestorsCount().call()
+    instance.methods.getInvestorsCount().call()
   );
   return investors;
 };

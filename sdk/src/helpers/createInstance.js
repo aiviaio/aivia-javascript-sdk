@@ -3,16 +3,14 @@ const config = require("../config");
 
 let provider = null;
 
-const createInstance = (ABI, address, component, name = "instance") => {
+const createInstance = (ABI, address) => {
   if (!provider) {
     provider = new Web3(
       new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
     );
   }
-  if (!component[name] || component[name]._address !== address) {
-    return new provider.eth.Contract(ABI, address);
-  }
-  return component[name];
+
+  return new provider.eth.Contract(ABI, address);
 };
 
 const getProvider = () => {

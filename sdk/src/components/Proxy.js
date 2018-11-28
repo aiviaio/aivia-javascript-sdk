@@ -6,22 +6,22 @@ const utils = require("../utils");
 
 const getRegistryAddress = async key => {
   const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
+  const instance = createInstance(Proxy.abi, proxyAddress);
   return errorHandler(
-    this.instance.methods.getRegistryAddress(utils.toHex(key)).call()
+    instance.methods.getRegistryAddress(utils.toHex(key)).call()
   );
 };
 
 const isDeployer = async address => {
   const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
-  return errorHandler(this.instance.methods.isDeployer(address).call());
+  const instance = createInstance(Proxy.abi, proxyAddress);
+  return errorHandler(instance.methods.isDeployer(address).call());
 };
 
 const isAuditor = async (address, type) => {
   const proxyAddress = await EntryPoint.getProxyAddress();
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
-  return errorHandler(this.instance.methods.isAuditor(address, type).call());
+  const instance = createInstance(Proxy.abi, proxyAddress);
+  return errorHandler(instance.methods.isAuditor(address, type).call());
 };
 
 module.exports = {

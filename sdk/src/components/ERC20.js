@@ -6,9 +6,9 @@ const utils = require("../utils");
 
 const getBalance = async (wallet, address) => {
   if (address && utils.isAddress(address)) {
-    this.instance = createInstance(ERC20.abi, address, this);
+    const instance = createInstance(ERC20.abi, address);
     const balance = await errorHandler(
-      await this.instance.methods.balanceOf(wallet).call()
+      await instance.methods.balanceOf(wallet).call()
     );
     return utils.fromWei(balance);
   }
@@ -18,16 +18,14 @@ const getBalance = async (wallet, address) => {
 };
 
 const totalSupply = async address => {
-  this.instance = createInstance(ERC20.abi, address, this);
-  const total = await errorHandler(
-    await this.instance.methods.totalSupply().call()
-  );
+  const instance = createInstance(ERC20.abi, address);
+  const total = await errorHandler(await instance.methods.totalSupply().call());
   return utils.fromWei(total);
 };
 
 const mint = async (value, walletAddress, assetAddress, options) => {
-  this.instance = createInstance(ERC20.abi, assetAddress, this);
-  const action = this.instance.methods.mint(walletAddress, utils.toWei(value));
+  const instance = createInstance(ERC20.abi, assetAddress);
+  const action = instance.methods.mint(walletAddress, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
@@ -39,7 +37,7 @@ const mint = async (value, walletAddress, assetAddress, options) => {
     })
   );
 
-  const Events = await this.instance.getPastEvents("Transfer", {
+  const Events = await instance.getPastEvents("Transfer", {
     filter: { to: walletAddress, from: utils.ZERO_ADDRESS },
     fromBlock: blockNumber,
     toBlock: "latest"

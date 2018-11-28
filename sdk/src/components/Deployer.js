@@ -9,13 +9,13 @@ const ReselectData = require("../projects/ReselectData");
 const deployProject = async (type, params, options) => {
   const proxyAddress = await EntryPoint.getProxyAddress();
 
-  this.instance = createInstance(Proxy.abi, proxyAddress, this);
+  const instance = createInstance(Proxy.abi, proxyAddress);
 
   const _params = ReselectData.input(type, params);
 
-  const deployAction = this.instance.methods.deployProject(..._params);
+  const deployAction = instance.methods.deployProject(..._params);
 
-  const initAction = this.instance.methods.initProject();
+  const initAction = instance.methods.initProject();
 
   await errorHandler(
     signedTX({
@@ -39,7 +39,7 @@ const deployProject = async (type, params, options) => {
     })
   );
 
-  const [{ returnValues }] = await this.instance.getPastEvents("NewProject", {
+  const [{ returnValues }] = await instance.getPastEvents("NewProject", {
     filter: { owner: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"

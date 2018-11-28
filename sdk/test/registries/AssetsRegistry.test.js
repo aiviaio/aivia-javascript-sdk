@@ -38,8 +38,7 @@ describe("AssetsRegistry", () => {
     });
 
     // it("return ratings list", async () => {
-    //   const list = await SDK.asset.getRatingsList();
-    //   console.info(list);
+    //   await SDK.asset.getRatingsList();
     // });
   });
 });

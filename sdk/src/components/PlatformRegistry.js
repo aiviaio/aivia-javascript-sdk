@@ -6,18 +6,18 @@ const Proxy = require("./Proxy");
 
 const getPlatformWallet = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
-  this.instance = createInstance(PlatformRegistry.abi, registryAddress, this);
+  const instance = createInstance(PlatformRegistry.abi, registryAddress);
   const address = await errorHandler(
-    this.instance.methods.getAddress(utils.toHex("platformWallet")).call()
+    instance.methods.getAddress(utils.toHex("platformWallet")).call()
   );
   return address;
 };
 
 const getPlatformToken = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
-  this.instance = createInstance(PlatformRegistry.abi, registryAddress, this);
+  const instance = createInstance(PlatformRegistry.abi, registryAddress);
   const address = await errorHandler(
-    this.instance.methods.getAddress(utils.toHex("platformToken")).call()
+    instance.methods.getAddress(utils.toHex("platformToken")).call()
   );
   return address;
 };

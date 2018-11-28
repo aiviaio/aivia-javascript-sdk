@@ -13,8 +13,8 @@ const addUser = async (
   options
 ) => {
   const registryAddress = await Proxy.getRegistryAddress("tpl");
-  this.instance = createInstance(TPLRegistry.abi, registryAddress, this);
-  const action = this.instance.methods.addUser(
+  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const action = instance.methods.addUser(
     walletAddress,
     countryID,
     walletType,
@@ -30,7 +30,7 @@ const addUser = async (
       gasLimit: options.gasLimit
     })
   );
-  const Events = await this.instance.getPastEvents("registryEvent", {
+  const Events = await instance.getPastEvents("registryEvent", {
     filter: { eventName: "Add" },
     fromBlock: blockNumber,
     toBlock: "latest"

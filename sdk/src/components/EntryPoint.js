@@ -4,14 +4,8 @@ const errorHandler = require("../helpers/errorHandler");
 const config = require("../config");
 
 const getProxyAddress = async () => {
-  this.instance = createInstance(
-    EntryPoint.abi,
-    config.get("ENTRY_POINT"),
-    this
-  );
-  const address = await errorHandler(
-    this.instance.methods.getProxyAddress().call()
-  );
+  const instance = createInstance(EntryPoint.abi, config.get("ENTRY_POINT"));
+  const address = await errorHandler(instance.methods.getProxyAddress().call());
   return address;
 };
 

@@ -4,13 +4,11 @@ const { createInstance } = require("../helpers/createInstance");
 const utils = require("../utils");
 
 module.exports = async configAddress => {
-  this.instance = createInstance(Config.abi, configAddress, this);
-  const type = await this.instance.methods
-    .getConstUint(utils.toHex("type"))
-    .call();
+  const instance = createInstance(Config.abi, configAddress);
+  const type = await instance.methods.getConstUint(utils.toHex("type")).call();
 
   const list = {
-    1: await OpenEnd(this.instance)
+    1: await OpenEnd(instance)
   };
   return list[type];
 };

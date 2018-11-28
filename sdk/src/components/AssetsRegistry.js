@@ -7,13 +7,13 @@ const utils = require("../utils");
 const getAssetsList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("tokens");
 
-  this.instance = createInstance(AssetsRegistry.abi, registryAddress, this);
+  const instance = createInstance(AssetsRegistry.abi, registryAddress);
   const addressesList = await errorHandler(
-    this.instance.methods.getAssetsList().call()
+    instance.methods.getAssetsList().call()
   );
 
   const tokensList = addressesList.map(async address => {
-    const hex = await this.instance.methods.getSymbol(address).call();
+    const hex = await instance.methods.getSymbol(address).call();
     const symbol = utils.toUtf8(hex);
     return { symbol, address };
   });
@@ -30,10 +30,9 @@ const getAssetAddress = async symbol => {
   }
 
   const registryAddress = await Proxy.getRegistryAddress("tokens");
-  this.instance = createInstance(AssetsRegistry.abi, registryAddress, this);
-
+  const instance = createInstance(AssetsRegistry.abi, registryAddress);
   const address = await errorHandler(
-    this.instance.methods.getAddress(utils.toHex(symbol)).call()
+    instance.methods.getAddress(utils.toHex(symbol)).call()
   );
 
   return address;
@@ -48,10 +47,10 @@ const getAssetSymbol = async address => {
   }
 
   const registryAddress = await Proxy.getRegistryAddress("tokens");
-  this.instance = createInstance(AssetsRegistry.abi, registryAddress, this);
+  const instance = createInstance(AssetsRegistry.abi, registryAddress);
 
   const hexSymbol = await errorHandler(
-    this.instance.methods.getSymbol(address).call()
+    instance.methods.getSymbol(address).call()
   );
 
   return utils.toUtf8(hexSymbol);

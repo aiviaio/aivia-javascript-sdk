@@ -33,8 +33,8 @@ const estimateTX = async (value, buyAddress, sellAddress) => {
 };
 
 const checkBeforeBuy = async (value, buyAddress, sellAddress, options) => {
-  this.asset = createInstance(ERC20.abi, buyAddress, this, "asset");
-  this.currency = createInstance(ERC20.abi, sellAddress, this, "currency");
+  this.asset = createInstance(ERC20.abi, buyAddress);
+  this.currency = createInstance(ERC20.abi, sellAddress);
   const balance = await this.currency.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
@@ -44,11 +44,8 @@ const checkBeforeBuy = async (value, buyAddress, sellAddress, options) => {
 const buyAsset = async (value, buyAddress, sellAddress, options) => {
   await checkBeforeBuy(value, buyAddress, sellAddress, options);
   const RPCAddress = await Asset.getRPCAddress(buyAddress);
-  this.instance = createInstance(RPC.abi, RPCAddress, this);
-  const action = this.instance.methods.buyAsset(
-    utils.toWei(value),
-    sellAddress
-  );
+  const instance = createInstance(RPC.abi, RPCAddress);
+  const action = instance.methods.buyAsset(utils.toWei(value), sellAddress);
 
   const { blockNumber } = await errorHandler(
     signedTX({
@@ -105,9 +102,9 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
 const checkBeforeSell = async (value, assetAddress, options) => {
   this.TUSDAddress = await SCRegistry.getAddress("TUSD");
   this.AIVAddress = await SCRegistry.getAddress("AIV");
-  this.asset = createInstance(ERC20.abi, assetAddress, this, "asset");
-  this.TUSD = createInstance(ERC20.abi, this.TUSDAddress, this, "TUSD");
-  this.AIV = createInstance(ERC20.abi, this.AIVAddress, this, "AIV");
+  this.asset = createInstance(ERC20.abi, assetAddress);
+  this.TUSD = createInstance(ERC20.abi, this.TUSDAddress);
+  this.AIV = createInstance(ERC20.abi, this.AIVAddress);
   const balance = await this.asset.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
@@ -117,8 +114,8 @@ const checkBeforeSell = async (value, assetAddress, options) => {
 const sellAsset = async (value, assetAddress, options) => {
   await checkBeforeSell(value, assetAddress, options);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
-  this.instance = createInstance(RPC.abi, RPCAddress, this);
-  const action = this.instance.methods.sellAsset(utils.toWei(value));
+  const instance = createInstance(RPC.abi, RPCAddress);
+  const action = instance.methods.sellAsset(utils.toWei(value));
 
   const { blockNumber } = await errorHandler(
     signedTX({

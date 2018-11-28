@@ -4,10 +4,8 @@ const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");
 
 const getConfig = async address => {
-  this.instance = createInstance(ABI.config, address, this);
-  const configAddress = await errorHandler(
-    this.instance.methods.config().call()
-  );
+  const instance = createInstance(ABI.config, address);
+  const configAddress = await errorHandler(instance.methods.config().call());
   const config = await getConfigDetails(configAddress);
   return config;
 };
