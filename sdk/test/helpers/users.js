@@ -1,5 +1,6 @@
 const web3 = require("web3");
 
+// demo users forum rifle frozen rifle lift pony endorse festival grunt curve evoke iron
 const users = {
   platform: {
     address: "0x6814d2d6f4b568753ff41628df83f800a0b9a483",
