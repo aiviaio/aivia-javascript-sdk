@@ -1,6 +1,6 @@
 const OpenEnd = require("./OpenEnd");
 const Config = require("../ABI/ProjectConfig");
-const createInstance = require("../helpers/createInstance");
+const { createInstance } = require("../helpers/createInstance");
 const utils = require("../utils");
 
 module.exports = async configAddress => {

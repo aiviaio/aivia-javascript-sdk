@@ -1,19 +1,21 @@
 const config = require("./config");
-const EntryPoint = require("./contracts/EntryPoint");
-const Proxy = require("./contracts/Proxy");
-const Deployer = require("./contracts/Deployer");
+const EntryPoint = require("./components/EntryPoint");
+const Proxy = require("./components/Proxy");
+const Deployer = require("./components/Deployer");
 
-const AssetsRegistry = require("./contracts/AssetsRegistry");
-const ProjectsRegistry = require("./contracts/ProjectsRegistry");
-const SCRegistry = require("./contracts/SCRegistry");
-const PlatformRegistry = require("./contracts/PlatformRegistry");
-const TPLRegistry = require("./contracts/TPLRegistry");
+const AssetsRegistry = require("./components/AssetsRegistry");
+const ProjectsRegistry = require("./components/ProjectsRegistry");
+const SCRegistry = require("./components/SCRegistry");
+const PlatformRegistry = require("./components/PlatformRegistry");
+const TPLRegistry = require("./components/TPLRegistry");
 
-const Asset = require("./contracts/Asset");
-const Config = require("./contracts/Config");
+const Asset = require("./components/Asset");
+const Config = require("./components/Config");
 
-const RPC = require("./contracts/RPC");
-const ERC20 = require("./contracts/ERC20");
+const Ratings = require("./components/Ratings");
+
+const RPC = require("./components/RPC");
+const ERC20 = require("./components/ERC20");
 
 function SDK(ENTRY_POINT, HTTP_PROVIDER) {
   config.init(ENTRY_POINT, HTTP_PROVIDER);
@@ -37,7 +39,9 @@ SDK.prototype = {
     getAuditDBAddress: key => Asset.getAuditDBAddress(key),
     getRPCAddress: key => Asset.getRPCAddress(key),
     getAssetPrice: key => Asset.getAssetPrice(key),
-    getBalance: (address, wallet) => ERC20.getBalance(address, wallet)
+    getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
+    getRatingsList: () => Ratings.getRatingsList(),
+    totalSupply: address => ERC20.totalSupply(address)
   },
 
   trade: {

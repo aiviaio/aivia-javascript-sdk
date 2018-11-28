@@ -46,10 +46,10 @@ describe("RPC", () => {
 
       const { owner, token } = projectList[0];
 
-      const AIV_USER = await SDK.asset.getBalance(AIV, user);
-      const AIV_PROJECT_OWNER = await SDK.asset.getBalance(AIV, owner);
-      const AIV_PLATFORM = await SDK.asset.getBalance(AIV, platformWallet);
-      const TOKEN_USER = await SDK.asset.getBalance(token, user);
+      const AIV_USER = await SDK.asset.getBalance(user, AIV);
+      const AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
+      const AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
+      const TOKEN_USER = await SDK.asset.getBalance(user, token);
 
       const amount = 200;
       await SDK.trade.buy(amount, token, AIV, {
@@ -58,10 +58,10 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
 
-      const _AIV_USER = await SDK.asset.getBalance(AIV, user);
-      const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(AIV, owner);
-      const _AIV_PLATFORM = await SDK.asset.getBalance(AIV, platformWallet);
-      const _TOKEN_USER = await SDK.asset.getBalance(token, user);
+      const _AIV_USER = await SDK.asset.getBalance(user, AIV);
+      const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
+      const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
+      const _TOKEN_USER = await SDK.asset.getBalance(user, token);
 
       expect(utils.toFixed(_AIV_USER, 2)).to.equal(
         utils.toFixed(AIV_USER - amount, 2)
@@ -87,7 +87,7 @@ describe("RPC", () => {
       const trueUSDOwner = getAddress("trueUSDOwner");
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
 
-      const TUSD_USER = await SDK.asset.getBalance(TUSD, user);
+      const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
 
       await SDK.dev.mint(100, custodian, TUSD, {
         from: trueUSDOwner,
@@ -101,7 +101,7 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
       const TUSD_USER_DIFF =
-        (await SDK.asset.getBalance(TUSD, user)) - TUSD_USER;
+        (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
       expect(spend.value).to.equal(amount);
       expect(utils.toFixed(received.value, 4)).to.equal(
         utils.toFixed(TUSD_USER_DIFF, 4)

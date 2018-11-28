@@ -1,8 +1,7 @@
 const Audit = require("../ABI/ProjectAudit");
-
-const createInstance = require("../helpers/createInstance");
+const RPC_ABI = require("../ABI/RPC");
+const { createInstance } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
-
 const AssetsRegistry = require("./AssetsRegistry");
 const Config = require("./Config");
 const utils = require("../utils");
@@ -41,13 +40,23 @@ const getRPCAddress = async key => {
 
 const getAssetPrice = async key => {
   const auditDB = await errorHandler(getAuditDBAddress(key));
-  this.instance = createInstance(Audit.abi, auditDB, this);
+  this.instance = createInstance(Audit.abi, auditDB, this, "Audit");
   const price = await errorHandler(this.instance.methods.getLastPrice().call());
   return utils.fromWei(price);
+};
+
+const getInvestorsCount = async address => {
+  const RPC = await errorHandler(getRPCAddress(address));
+  this.instance = createInstance(RPC_ABI.abi, RPC, this, "RPC");
+  const investors = await errorHandler(
+    this.instance.methods.getInvestorsCount().call()
+  );
+  return investors;
 };
 
 module.exports = {
   getAssetPrice,
   getAuditDBAddress,
-  getRPCAddress
+  getRPCAddress,
+  getInvestorsCount
 };

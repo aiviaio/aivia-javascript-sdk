@@ -36,5 +36,10 @@ describe("AssetsRegistry", () => {
       const symbol = await SDK.asset.getAssetSymbol(projectList[0].token);
       expect(symbol).to.equal(config.tokenSymbol);
     });
+
+    // it("return ratings list", async () => {
+    //   const list = await SDK.asset.getRatingsList();
+    //   console.info(list);
+    // });
   });
 });

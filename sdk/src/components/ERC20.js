@@ -1,15 +1,27 @@
 const ERC20 = require("../ABI/ERC20Mintable");
-const createInstance = require("../helpers/createInstance");
+const { createInstance, web3 } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
-const getBalance = async (address, wallet) => {
+const getBalance = async (wallet, address) => {
+  if (address && utils.isAddress(address)) {
+    this.instance = createInstance(ERC20.abi, address, this);
+    const balance = await errorHandler(
+      await this.instance.methods.balanceOf(wallet).call()
+    );
+    return utils.fromWei(balance);
+  }
+
+  return utils.fromWei(await web3().eth.getBalance(wallet));
+};
+
+const totalSupply = async address => {
   this.instance = createInstance(ERC20.abi, address, this);
-  const balance = await errorHandler(
-    await this.instance.methods.balanceOf(wallet).call()
+  const total = await errorHandler(
+    await this.instance.methods.totalSupply().call()
   );
-  return utils.fromWei(balance);
+  return utils.fromWei(total);
 };
 
 const mint = async (value, walletAddress, assetAddress, options) => {
@@ -47,5 +59,6 @@ const mint = async (value, walletAddress, assetAddress, options) => {
 
 module.exports = {
   getBalance,
+  totalSupply,
   mint
 };

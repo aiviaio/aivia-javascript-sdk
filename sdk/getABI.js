@@ -26,10 +26,11 @@ process.stdout.write("\x1Bc");
 if (!fs.existsSync(SDKPath)) {
   fs.mkdirSync(SDKPath);
 }
-
-fs.writeFile("./test/projects.json", "[]", () =>
-  console.info("successfully clean /test/projects.json")
-);
+if (process.env.MODE === "dev") {
+  fs.writeFile("./test/projects.json", "[]", () =>
+    console.info("successfully clean /test/projects.json")
+  );
+}
 
 list.forEach(contract => {
   fs.readFile(`${path + contract}.json`, "utf8", (err, data) => {

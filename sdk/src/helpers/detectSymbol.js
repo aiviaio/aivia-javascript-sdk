@@ -1,6 +1,6 @@
 const utils = require("../utils");
 const ABI = require("./utility-abi");
-const createInstance = require("./createInstance");
+const { createInstance } = require("./createInstance");
 
 module.exports = async address => {
   const _this = {};

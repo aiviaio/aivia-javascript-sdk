@@ -1,5 +1,5 @@
 const Proxy = require("../ABI/Proxy");
-const createInstance = require("../helpers/createInstance");
+const { createInstance } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const utils = require("../utils");

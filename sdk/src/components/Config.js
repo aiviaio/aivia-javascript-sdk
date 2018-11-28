@@ -1,4 +1,4 @@
-const createInstance = require("../helpers/createInstance");
+const { createInstance } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");

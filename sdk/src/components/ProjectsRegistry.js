@@ -1,5 +1,5 @@
 const Projects = require("../ABI/ProjectsRegistry");
-const createInstance = require("../helpers/createInstance");
+const { createInstance } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 
