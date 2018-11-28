@@ -37,8 +37,8 @@ describe("AssetsRegistry", () => {
       expect(symbol).to.equal(config.tokenSymbol);
     });
 
-    // it("return ratings list", async () => {
-    //   await SDK.asset.getRatingsList();
-    // });
+    it("return ratings list", async () => {
+      await SDK.asset.getRatingsList();
+    });
   });
 });

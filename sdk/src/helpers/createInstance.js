@@ -3,14 +3,23 @@ const config = require("../config");
 
 let provider = null;
 
+const list = {};
+
 const createInstance = (ABI, address) => {
   if (!provider) {
     provider = new Web3(
       new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
     );
   }
+  const key = address + ABI.length;
 
-  return new provider.eth.Contract(ABI, address);
+  if (list[key]) {
+    return list[key];
+  }
+
+  const instance = new provider.eth.Contract(ABI, address);
+  list[key] = instance;
+  return instance;
 };
 
 const getProvider = () => {
