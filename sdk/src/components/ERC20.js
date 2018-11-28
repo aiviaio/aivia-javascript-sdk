@@ -1,5 +1,5 @@
 const ERC20 = require("../ABI/ERC20Mintable");
-const { createInstance, web3 } = require("../helpers/createInstance");
+const { createInstance, getProvider } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
@@ -12,8 +12,9 @@ const getBalance = async (wallet, address) => {
     );
     return utils.fromWei(balance);
   }
+  const web3 = getProvider();
 
-  return utils.fromWei(await web3().eth.getBalance(wallet));
+  return utils.fromWei(await web3.eth.getBalance(wallet));
 };
 
 const totalSupply = async address => {

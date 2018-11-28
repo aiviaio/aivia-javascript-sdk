@@ -1,31 +1,31 @@
 const Web3 = require("web3");
 const config = require("../config");
 
-let web3Instance = null;
+let provider = null;
 
 const createInstance = (ABI, address, component, name = "instance") => {
-  if (!web3Instance) {
-    web3Instance = new Web3(
+  if (!provider) {
+    provider = new Web3(
       new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
     );
   }
   if (!component[name] || component[name]._address !== address) {
-    return new web3Instance.eth.Contract(ABI, address);
+    return new provider.eth.Contract(ABI, address);
   }
   return component[name];
 };
 
-const web3 = () => {
-  if (!web3Instance) {
-    web3Instance = new Web3(
+const getProvider = () => {
+  if (!provider) {
+    provider = new Web3(
       new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
     );
-    return web3Instance;
+    return provider;
   }
-  return web3Instance;
+  return provider;
 };
 
 module.exports = {
   createInstance,
-  web3
+  getProvider
 };
