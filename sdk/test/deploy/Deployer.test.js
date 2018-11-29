@@ -25,7 +25,7 @@ describe("Deploy", () => {
             maxInvestors: 3000
           },
           fees: {
-            // in percent
+            // in %
             platformFee: 0.2,
             entryFee: 2.2,
             exitFee: 1.2
