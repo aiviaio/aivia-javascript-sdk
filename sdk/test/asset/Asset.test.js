@@ -22,8 +22,8 @@ describe("Asset", () => {
       const { initialPrice, tokenSymbol } = await SDK.asset.getConfig(
         projectList[projectList.length - 1].token
       );
-      const priceBySymbol = await SDK.asset.getAssetPrice(tokenSymbol);
-      const priceByAddress = await SDK.asset.getAssetPrice(
+      const priceBySymbol = await SDK.asset.getRate(tokenSymbol);
+      const priceByAddress = await SDK.asset.getRate(
         projectList[projectList.length - 1].token
       );
       expect(priceBySymbol).to.equal(initialPrice);

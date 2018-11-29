@@ -41,7 +41,7 @@ const getRPCAddress = async key => {
   return RPC;
 };
 
-const getAssetPrice = async key => {
+const getRate = async key => {
   const auditDB = await errorHandler(getAuditDBAddress(key));
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
@@ -58,7 +58,7 @@ const getInvestorsCount = async address => {
 };
 
 module.exports = {
-  getAssetPrice,
+  getRate,
   getAuditDBAddress,
   getRPCAddress,
   getInvestorsCount

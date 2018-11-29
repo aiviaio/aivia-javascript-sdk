@@ -13,7 +13,7 @@ const detectSymbol = require("../helpers/detectSymbol");
 const estimateTX = async (value, buyAddress, sellAddress) => {
   const assetSymbol = await detectSymbol(buyAddress);
   const currencySymbol = await detectSymbol(sellAddress);
-  const assetPrice = await Asset.getAssetPrice(buyAddress);
+  const assetPrice = await Asset.getRate(buyAddress);
   const { entryFee, platformFee } = await Config.getConfig(buyAddress);
   const currencyPrice = await SCRegistry.getAssetRate(sellAddress);
   const currencyInUSD = currencyPrice * value;
