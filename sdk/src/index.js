@@ -42,7 +42,11 @@ SDK.prototype = {
     getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
     getRatingsList: () => Ratings.getRatingsList(),
     totalSupply: address => ERC20.totalSupply(address),
-    getInvestors: address => Asset.getInvestorsCount(address)
+    getInvestors: address => Asset.getInvestorsCount(address),
+    approve: (address, spender, value, options) =>
+      ERC20.approve(address, spender, value, options),
+    allowance: (address, owner, spender) =>
+      ERC20.allowance(address, owner, spender)
   },
 
   trade: {

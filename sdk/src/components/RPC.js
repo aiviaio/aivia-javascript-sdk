@@ -1,8 +1,9 @@
 const Asset = require("./Asset");
+const ERC20 = require("./ERC20");
 const Config = require("./Config");
 const SCRegistry = require("./SCRegistry");
 const RPC = require("../ABI/RPC");
-const ERC20 = require("../ABI/ERC20Mintable");
+const ERC20_ABI = require("../ABI/ERC20Mintable").abi;
 const { createInstance } = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
 const errorHandler = require("../helpers/errorHandler");
@@ -32,9 +33,17 @@ const estimateTX = async (value, buyAddress, sellAddress) => {
   };
 };
 
+const createCurrenciesInstances = async () => {
+  this.TUSDAddress = this.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
+  this.AIVAddress = this.AIVAddress || (await SCRegistry.getAddress("AIV"));
+  this.TUSD = this.TUSD || createInstance(ERC20_ABI, this.TUSDAddress);
+  this.AIV = this.AIV || createInstance(ERC20_ABI, this.AIVAddress);
+};
+
 const checkBeforeBuy = async (value, buyAddress, sellAddress, options) => {
-  this.asset = createInstance(ERC20.abi, buyAddress);
-  this.currency = createInstance(ERC20.abi, sellAddress);
+  await createCurrenciesInstances();
+  this.asset = createInstance(ERC20_ABI, buyAddress);
+  this.currency = createInstance(ERC20_ABI, sellAddress);
   const balance = await this.currency.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
@@ -47,6 +56,17 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), sellAddress);
 
+  if (sellAddress === this.TUSDAddress) {
+    try {
+      await ERC20.approve(this.TUSDAddress, RPCAddress, value, options);
+    } catch (error) {
+      Error({
+        name: "transaction",
+        message: "Not enough funds or not allowed to withdraw them"
+      });
+    }
+  }
+
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
@@ -57,6 +77,21 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
       gasLimit: options.gasLimit
     })
   );
+  const feesRawEvents = await this.AIV.getPastEvents("Transfer", {
+    filter: { from: options.from },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const [manager, platform] = feesRawEvents.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
 
   const spendRawEvents = await this.currency.getPastEvents("Transfer", {
     filter: { from: options.from },
@@ -64,7 +99,7 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     toBlock: "latest"
   });
 
-  const [manager, platform, spend] = spendRawEvents.map(event => {
+  const [spend] = spendRawEvents.map(event => {
     const { returnValues } = event;
     const [from, to, _value] = Object.values(returnValues);
     return {
@@ -99,12 +134,10 @@ const buyAsset = async (value, buyAddress, sellAddress, options) => {
     received
   };
 };
+
 const checkBeforeSell = async (value, assetAddress, options) => {
-  this.TUSDAddress = await SCRegistry.getAddress("TUSD");
-  this.AIVAddress = await SCRegistry.getAddress("AIV");
-  this.asset = createInstance(ERC20.abi, assetAddress);
-  this.TUSD = createInstance(ERC20.abi, this.TUSDAddress);
-  this.AIV = createInstance(ERC20.abi, this.AIVAddress);
+  await createCurrenciesInstances();
+  this.asset = createInstance(ERC20_ABI, assetAddress);
   const balance = await this.asset.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });

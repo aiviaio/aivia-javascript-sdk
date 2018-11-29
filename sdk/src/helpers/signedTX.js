@@ -17,7 +17,7 @@ module.exports = async params => {
     data,
     from,
     to,
-    gasPrice: gasPrice || 1000000000,
+    gasPrice: gasPrice || 40000000000,
     gasLimit: gasLimit || block.gasLimit
   };
 
