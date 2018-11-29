@@ -8,7 +8,7 @@ const getRatingsList = async () => {
   const tokensList = addressesList.map(async ({ address }) => {
     const symbol = await AssetsRegistry.getAssetSymbol(address);
     const price = await Asset.getRate(address);
-    const investors = Number(await Asset.getInvestorsCount(address));
+    const investors = await Asset.getInvestorsCount(address);
     return { symbol, address, investors, price };
   });
 

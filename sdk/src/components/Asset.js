@@ -54,7 +54,7 @@ const getInvestorsCount = async address => {
   const investors = await errorHandler(
     instance.methods.getInvestorsCount().call()
   );
-  return investors;
+  return Number(investors);
 };
 
 module.exports = {
