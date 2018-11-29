@@ -112,5 +112,17 @@ describe("RPC", () => {
         utils.toFixed(TUSD_USER_DIFF, 4)
       );
     });
+
+    it("should buy token TUSD", async () => {
+      const user = await getAddress("user");
+      const amount = 20;
+      const { token } = projectList[0];
+      const TUSD = await SDK.platform.currency.getAddress("TUSD");
+      await SDK.trade.buy(amount, token, TUSD, {
+        from: user,
+        privateKey:
+          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
+      });
+    });
   });
 });
