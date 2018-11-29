@@ -52,16 +52,21 @@ describe("RPC", () => {
       const TOKEN_USER = await SDK.asset.getBalance(user, token);
 
       const amount = 200;
+
       await SDK.trade.buy(amount, token, AIV, {
         from: user,
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
 
+      const investors = await SDK.asset.getInvestors(token);
+
       const _AIV_USER = await SDK.asset.getBalance(user, AIV);
       const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
       const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
       const _TOKEN_USER = await SDK.asset.getBalance(user, token);
+
+      expect(investors).to.equal(1);
 
       expect(utils.toFixed(_AIV_USER, 2)).to.equal(
         utils.toFixed(AIV_USER - amount, 2)
