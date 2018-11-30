@@ -124,5 +124,11 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
     });
+
+    it("should return NET", async () => {
+      const { token } = projectList[0];
+      const NET = await SDK.asset.NET(token);
+      expect(NET).to.not.equal(0);
+    });
   });
 });

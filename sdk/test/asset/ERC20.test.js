@@ -32,7 +32,7 @@ describe("ERC20", () => {
       });
 
       expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
-        userAIVBalance + amount
+        utils.toFixed(userAIVBalance + amount, 4)
       );
 
       expect(from).to.equal(utils.ZERO_ADDRESS);
