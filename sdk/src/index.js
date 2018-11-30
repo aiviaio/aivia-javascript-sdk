@@ -46,7 +46,9 @@ SDK.prototype = {
     approve: (address, spender, value, options) =>
       ERC20.approve(address, spender, value, options),
     allowance: (address, owner, spender) =>
-      ERC20.allowance(address, owner, spender)
+      ERC20.allowance(address, owner, spender),
+    deltaNET: key => Asset.deltaNET(key),
+    NET: key => Asset.NET(key)
   },
 
   trade: {
