@@ -11,7 +11,7 @@ const createInstance = (ABI, address) => {
       new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
     );
   }
-  const key = address + ABI.length;
+  const key = JSON.stringify(ABI) + address;
 
   if (list[key]) {
     return list[key];

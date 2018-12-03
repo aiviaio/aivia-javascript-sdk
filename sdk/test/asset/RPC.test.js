@@ -59,6 +59,8 @@ describe("RPC", () => {
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
 
+      console.info(await SDK.trade.estimate(amount, token, AIV));
+
       const investors = await SDK.asset.getInvestors(token);
 
       const _AIV_USER = await SDK.asset.getBalance(user, AIV);

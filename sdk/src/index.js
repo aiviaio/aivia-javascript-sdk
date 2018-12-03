@@ -52,10 +52,12 @@ SDK.prototype = {
   },
 
   trade: {
-    buy: (value, buyAddress, sellAddress, options) =>
-      RPC.buyAsset(value, buyAddress, sellAddress, options),
+    buy: (value, assetAddress, currencyAddress, options) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, options),
     sell: (value, assetAddress, options) =>
-      RPC.sellAsset(value, assetAddress, options)
+      RPC.sellAsset(value, assetAddress, options),
+    estimate: (value, assetAddress, currencyAddress) =>
+      RPC.estimateTX(value, assetAddress, currencyAddress)
   },
 
   project: {
