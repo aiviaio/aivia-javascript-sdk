@@ -1,4 +1,4 @@
-// const { expect } = require("chai");
+const { expect } = require("chai");
 const AIVIA_SDK = require("../../src");
 const { getAddress } = require("../helpers/users");
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
@@ -18,8 +18,9 @@ describe("TPLRegistry", () => {
     });
 
     it("should return users list", async () => {
+      const user = await getAddress("user");
       const userList = await SDK.auditors.getUsersList();
-      console.info(userList);
+      expect(userList[0].address).to.equal(user);
     });
   });
 });
