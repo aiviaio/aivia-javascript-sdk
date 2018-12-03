@@ -47,6 +47,39 @@ const addUser = async (
   return Event;
 };
 
+const getUserDetails = async address => {
+  const registryAddress = await Proxy.getRegistryAddress("tpl");
+  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const userDetails = await errorHandler(
+    instance.methods.getUserDetails(address).call()
+  );
+  return userDetails;
+};
+
+const getUsersList = async short => {
+  const registryAddress = await Proxy.getRegistryAddress("tpl");
+  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const addressList = await errorHandler(
+    instance.methods.getUsersList().call()
+  );
+  if (short) {
+    return addressList;
+  }
+  const userList = addressList.map(async address => {
+    const userDetails = await getUserDetails(address);
+    const [country, walletType, expirationDate] = Object.values(userDetails);
+    return {
+      address,
+      country: Number(country),
+      walletType: Number(walletType),
+      expirationDate: Number(expirationDate)
+    };
+  });
+  return Promise.all(userList);
+};
+
 module.exports = {
-  addUser
+  addUser,
+  getUsersList,
+  getUserDetails
 };

@@ -84,7 +84,9 @@ SDK.prototype = {
         walletType,
         expirationDate,
         options
-      )
+      ),
+    getUsersList: (short = false) => TPLRegistry.getUsersList(short),
+    getUserDetails: address => TPLRegistry.getUserDetails(address)
   },
 
   dev: {
