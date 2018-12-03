@@ -16,5 +16,10 @@ describe("TPLRegistry", () => {
           "8129dd9c4013b5b6070cdbeae3f9eb9ffdc2bfb06d69ce22f8cee15b5ff111b6"
       });
     });
+
+    it("should return users list", async () => {
+      const userList = await SDK.auditors.getUsersList();
+      console.info(userList);
+    });
   });
 });
