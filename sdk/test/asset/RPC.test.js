@@ -91,9 +91,7 @@ describe("RPC", () => {
       const user = await getAddress("user");
       const trueUSDOwner = getAddress("trueUSDOwner");
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
-
       const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
-
       await SDK.dev.mint(100, custodian, TUSD, {
         from: trueUSDOwner,
         privateKey:
@@ -105,6 +103,7 @@ describe("RPC", () => {
         privateKey:
           "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
       });
+
       const TUSD_USER_DIFF =
         (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
       expect(spend.value).to.equal(amount);
@@ -118,7 +117,6 @@ describe("RPC", () => {
       const amount = 20;
       const { token } = projectList[0];
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
-      console.info(await SDK.trade.estimate(amount, token, TUSD));
       await SDK.trade.buy(amount, token, TUSD, {
         from: user,
         privateKey:
