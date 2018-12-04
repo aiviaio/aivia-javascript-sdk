@@ -1,6 +1,6 @@
 const { expect } = require("chai");
 const AIVIA_SDK = require("../../src");
-const { getAddress } = require("../helpers/users");
+const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
 
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
@@ -8,36 +8,55 @@ const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
 describe("ERC20", () => {
-  describe("mint", () => {
-    it("should return totalSupply", async () => {
-      const AIV = await SDK.platform.token();
-      const totalSupply = await SDK.asset.totalSupply(AIV);
-      expect(totalSupply).that.is.a("number");
-    });
+  it("should return totalSupply", async () => {
+    const AIV = await SDK.platform.token();
+    const totalSupply = await SDK.asset.totalSupply(AIV);
+    expect(totalSupply).that.is.a("number");
+  });
 
-    it("should mint AIV to user", async () => {
-      const user = await getAddress("user");
-      const platformWallet = await getAddress("platformWallet");
-      const AIV = await SDK.platform.token();
+  it("should mint AIV to user", async () => {
+    const user = await getAddress("user");
 
-      const userAIVBalance = utils.toFixed(
-        await SDK.asset.getBalance(user, AIV),
-        4
-      );
-      const amount = 250;
-      const { from, to, value } = await SDK.dev.mint(amount, user, AIV, {
-        from: platformWallet,
-        privateKey:
-          "e99b8405af796e858fc0f51d22aa5ce3d678a7e652b028e0836c684d475137f5"
-      });
+    const AIV = await SDK.platform.token();
 
-      expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
-        utils.toFixed(userAIVBalance + amount, 4)
-      );
+    const userAIVBalance = utils.toFixed(
+      await SDK.asset.getBalance(user, AIV),
+      4
+    );
+    const amount = 250;
+    const { from, to, value } = await SDK.dev.mint(
+      amount,
+      user,
+      AIV,
+      getUser("platformWallet")
+    );
 
-      expect(from).to.equal(utils.ZERO_ADDRESS);
-      expect(to).to.equal(user);
-      expect(value).to.equal(amount);
-    });
+    expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
+      utils.toFixed(userAIVBalance + amount, 4)
+    );
+
+    expect(from).to.equal(utils.ZERO_ADDRESS);
+    expect(to).to.equal(user);
+    expect(value).to.equal(amount);
+  });
+
+  it("should transfer AIV to other", async () => {
+    const AIV = await SDK.platform.token();
+    const amount = 9.44413;
+    const AIV_BALANCE = await SDK.asset.getBalance(
+      getAddress("otherUser"),
+      AIV
+    );
+    await SDK.asset.transfer(
+      AIV,
+      getAddress("otherUser"),
+      amount,
+      getUser("user")
+    );
+    const _AIV_BALANCE = await SDK.asset.getBalance(
+      getAddress("otherUser"),
+      AIV
+    );
+    expect(utils.toFixed(_AIV_BALANCE - AIV_BALANCE, 6)).to.equal(amount);
   });
 });

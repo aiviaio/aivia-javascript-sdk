@@ -1,7 +1,7 @@
 const fs = require("fs");
 const { expect } = require("chai");
 const AIVIA_SDK = require("../../src");
-const { getAddress } = require("../helpers/users");
+const { getAddress, getUser } = require("../helpers/users");
 const projectList = require("../projects");
 
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
@@ -37,12 +37,7 @@ describe("Deploy", () => {
             rule: false
           }
         },
-        {
-          from: projectOwner,
-          privateKey:
-            "6a552a54757c78facd4c5d9d8f72803e79fe50a9f8e89195e2100eb94a0bd7e6",
-          gasPrice: 1000000000
-        }
+        getUser("projectOwner")
       );
       expect(project.owner).to.equal(projectOwner);
       projectList.push(project);

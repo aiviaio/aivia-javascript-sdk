@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const AIVIA_SDK = require("../../src");
 const projectList = require("../projects");
-const { getAddress } = require("../helpers/users");
+const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 
@@ -53,11 +53,7 @@ describe("RPC", () => {
 
       const amount = 200;
 
-      await SDK.trade.buy(amount, token, AIV, {
-        from: user,
-        privateKey:
-          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
-      });
+      await SDK.trade.buy(amount, token, AIV, getUser("user"));
 
       const investors = await SDK.asset.getInvestors(token);
 
@@ -89,20 +85,15 @@ describe("RPC", () => {
       const { token, custodian } = projectList[0];
       const amount = 200;
       const user = await getAddress("user");
-      const trueUSDOwner = getAddress("trueUSDOwner");
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
       const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
-      await SDK.dev.mint(100, custodian, TUSD, {
-        from: trueUSDOwner,
-        privateKey:
-          "971d073b9f16ea9ddca457bd0128a98457f076736a97dcf261b8e6ad3fd97dfd"
-      });
+      await SDK.dev.mint(100, custodian, TUSD, getUser("trueUSDOwner"));
 
-      const { spend, received } = await SDK.trade.sell(amount, token, {
-        from: user,
-        privateKey:
-          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
-      });
+      const { spend, received } = await SDK.trade.sell(
+        amount,
+        token,
+        getUser("user")
+      );
 
       const TUSD_USER_DIFF =
         (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
@@ -113,15 +104,10 @@ describe("RPC", () => {
     });
 
     it("should buy token TUSD", async () => {
-      const user = await getAddress("user");
       const amount = 20;
       const { token } = projectList[0];
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
-      await SDK.trade.buy(amount, token, TUSD, {
-        from: user,
-        privateKey:
-          "4948e1d0b910f1abcf5bf362709d536c466f3aec324d1685a7d6ecdf889c1c3a"
-      });
+      await SDK.trade.buy(amount, token, TUSD, getUser("user"));
     });
 
     it("should return NET", async () => {
