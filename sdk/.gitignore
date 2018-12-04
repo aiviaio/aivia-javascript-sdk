@@ -1,4 +1,4 @@
 node_modules
-test/projects.json
+test/*.json
 ABI
 dist

@@ -97,10 +97,54 @@ const mint = async (value, walletAddress, assetAddress, options) => {
   return Event;
 };
 
+/**
+ *
+ * @param {String} address Asset address
+ * @param {String} wallet ERC20 wallet address
+ * @param {Float} value value
+ * @param {Object} options { from, privateKey, gasPrice}
+ * @param {String} options.from,
+ * @param {String} options.privateKey,
+ * @param {Integer} options.gasPrice
+ */
+const transfer = async (address, wallet, value, options) => {
+  const instance = createInstance(ERC20.abi, address);
+  const action = instance.methods.transfer(wallet, utils.toWei(value));
+  const { blockNumber } = await errorHandler(
+    signedTX({
+      data: action.encodeABI(),
+      from: options.from,
+      to: address,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit
+    })
+  );
+
+  const Events = await instance.getPastEvents("Transfer", {
+    filter: { to: wallet, from: options.from },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const [Event] = Events.map(event => {
+    const { returnValues } = event;
+    const [from, to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to,
+      value: utils.fromWei(_value)
+    };
+  });
+
+  return Event;
+};
+
 module.exports = {
   getBalance,
   totalSupply,
   mint,
   allowance,
-  approve
+  approve,
+  transfer
 };

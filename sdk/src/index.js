@@ -12,6 +12,7 @@ const TPLRegistry = require("./components/TPLRegistry");
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
 const estimateTX = require("./helpers/estimateTX");
+const { getProvider } = require("./helpers/createInstance");
 const Ratings = require("./components/Ratings");
 
 const RPC = require("./components/RPC");
@@ -24,31 +25,43 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER) {
 SDK.prototype = {
   utils: {
     isDeployer: address => Proxy.isDeployer(address),
-    isAuditor: (address, type) => Proxy.isAuditor(address, type)
+    isAuditor: (address, type) => Proxy.isAuditor(address, type),
+    provider: () => getProvider()
   },
 
   getProxyAddress: () => EntryPoint.getProxyAddress(),
   getRegistryAddress: key => Proxy.getRegistryAddress(key),
 
   // @dev "key" is token symbol or address
+  // @dev options = { from: walletAddress, privateKey: privateKey, gasPrice: gasPrice }
   asset: {
-    getList: () => AssetsRegistry.getAssetsList(),
     getConfig: address => Config.getConfig(address),
+    getRatingsList: () => Ratings.getRatingsList(),
+
+    // AssetsRegistry
+    getList: () => AssetsRegistry.getAssetsList(),
     getAssetAddress: symbol => AssetsRegistry.getAssetAddress(symbol),
     getAssetSymbol: address => AssetsRegistry.getAssetSymbol(address),
+
+    // Asset
     getAuditDBAddress: key => Asset.getAuditDBAddress(key),
     getRPCAddress: key => Asset.getRPCAddress(key),
     getRate: key => Asset.getRate(key),
-    getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
-    getRatingsList: () => Ratings.getRatingsList(),
-    totalSupply: address => ERC20.totalSupply(address),
     getInvestors: address => Asset.getInvestorsCount(address),
+
+    // NET
+    deltaNET: key => Asset.deltaNET(key),
+    NET: key => Asset.NET(key),
+
+    // ERC20
+    getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
+    totalSupply: address => ERC20.totalSupply(address),
     approve: (address, spender, value, options) =>
       ERC20.approve(address, spender, value, options),
     allowance: (address, owner, spender) =>
       ERC20.allowance(address, owner, spender),
-    deltaNET: key => Asset.deltaNET(key),
-    NET: key => Asset.NET(key)
+    transfer: (address, wallet, value, options) =>
+      ERC20.transfer(address, wallet, value, options)
   },
 
   trade: {
