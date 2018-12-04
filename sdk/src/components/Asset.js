@@ -63,9 +63,7 @@ const getInvestorsCount = async address => {
   }
   const RPC = await errorHandler(getRPCAddress(address));
   const instance = createInstance(RPC_ABI.abi, RPC);
-  const investors = await errorHandler(
-    instance.methods.getInvestorsCount().call()
-  );
+  const investors = await errorHandler(instance.methods.getInvestorsCount().call());
   return Number(investors);
 };
 

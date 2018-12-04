@@ -7,9 +7,7 @@ const getProjectsList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("projects");
 
   const instance = createInstance(Projects.abi, registryAddress);
-  const length = Number(
-    await errorHandler(instance.methods.getProjectLength().call())
-  );
+  const length = Number(await errorHandler(instance.methods.getProjectLength().call()));
 
   const TMP = new Array(length).fill();
 

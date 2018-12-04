@@ -11,7 +11,7 @@ const TPLRegistry = require("./components/TPLRegistry");
 
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
-const estimateTX = require("./helpers/estimateTX");
+const { estimateTX } = require("./helpers/estimateTX");
 const { getProvider } = require("./helpers/createInstance");
 const Ratings = require("./components/Ratings");
 
@@ -56,19 +56,16 @@ SDK.prototype = {
     // ERC20
     getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
     totalSupply: address => ERC20.totalSupply(address),
-    approve: (address, spender, value, options) =>
-      ERC20.approve(address, spender, value, options),
-    allowance: (address, owner, spender) =>
-      ERC20.allowance(address, owner, spender),
-    transfer: (address, wallet, value, options) =>
-      ERC20.transfer(address, wallet, value, options)
+    approve: (address, spender, value, options) => ERC20.approve(address, spender, value, options),
+    allowance: (address, owner, spender) => ERC20.allowance(address, owner, spender),
+    transfer: (address, wallet, value, options) => ERC20.transfer(address, wallet, value, options)
   },
 
   trade: {
-    buy: (value, assetAddress, currencyAddress, options) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, options),
-    sell: (value, assetAddress, options) =>
-      RPC.sellAsset(value, assetAddress, options),
+    buy: (value, assetAddress, currencyAddress, options, resolve) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, options, resolve),
+    sell: (value, assetAddress, options, resolve) =>
+      RPC.sellAsset(value, assetAddress, options, resolve),
     estimate: (value, assetAddress, currencyAddress) =>
       estimateTX(value, assetAddress, currencyAddress)
   },
@@ -76,8 +73,7 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: address => Config.getConfigDirectly(address),
-    deploy: (type, params, options) =>
-      Deployer.deployProject(type, params, options)
+    deploy: (type, params, options) => Deployer.deployProject(type, params, options)
   },
 
   platform: {
@@ -93,13 +89,7 @@ SDK.prototype = {
 
   auditors: {
     addUser: (walletAddress, countryID, walletType, expirationDate, options) =>
-      TPLRegistry.addUser(
-        walletAddress,
-        countryID,
-        walletType,
-        expirationDate,
-        options
-      ),
+      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, options),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
     getUserDetails: address => TPLRegistry.getUserDetails(address)
   },

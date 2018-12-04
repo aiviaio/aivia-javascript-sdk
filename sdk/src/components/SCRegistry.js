@@ -8,9 +8,7 @@ const utils = require("../utils");
 const getList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-  const addressesList = await errorHandler(
-    instance.methods.getAssetsList().call()
-  );
+  const addressesList = await errorHandler(instance.methods.getAssetsList().call());
 
   const assetsList = addressesList.map(async address => {
     const assets = await instance.methods.getAssetByAddress(address).call();
@@ -42,9 +40,7 @@ const getRate = async key => {
   const assetAddress = await errorHandler(
     instance.methods.getAssetAddress(utils.toHex(key)).call()
   );
-  const rate = await errorHandler(
-    instance.methods.getAssetRate(assetAddress).call()
-  );
+  const rate = await errorHandler(instance.methods.getAssetRate(assetAddress).call());
   return utils.fromWei(rate);
 };
 
@@ -73,9 +69,7 @@ const getSymbol = async address => {
   }
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-  const hexSymbol = await errorHandler(
-    instance.methods.getSymbol(address).call()
-  );
+  const hexSymbol = await errorHandler(instance.methods.getSymbol(address).call());
 
   return utils.toUtf8(hexSymbol);
 };

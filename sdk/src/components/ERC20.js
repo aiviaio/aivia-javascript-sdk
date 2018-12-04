@@ -7,9 +7,7 @@ const utils = require("../utils");
 const getBalance = async (wallet, address) => {
   if (address && utils.isAddress(address)) {
     const instance = createInstance(ERC20.abi, address);
-    const balance = await errorHandler(
-      await instance.methods.balanceOf(wallet).call()
-    );
+    const balance = await errorHandler(await instance.methods.balanceOf(wallet).call());
     return utils.fromWei(balance);
   }
   const web3 = getProvider();
@@ -25,9 +23,7 @@ const totalSupply = async address => {
 
 const allowance = async (address, owner, spender) => {
   const instance = createInstance(ERC20.abi, address);
-  const value = await errorHandler(
-    await instance.methods.allowance(owner, spender).call()
-  );
+  const value = await errorHandler(await instance.methods.allowance(owner, spender).call());
   return utils.fromWei(value);
 };
 

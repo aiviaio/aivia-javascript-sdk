@@ -7,9 +7,7 @@ const utils = require("../utils");
 const getRegistryAddress = async key => {
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
-  return errorHandler(
-    instance.methods.getRegistryAddress(utils.toHex(key)).call()
-  );
+  return errorHandler(instance.methods.getRegistryAddress(utils.toHex(key)).call());
 };
 
 const isDeployer = async address => {
