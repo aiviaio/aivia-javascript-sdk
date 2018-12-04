@@ -11,7 +11,7 @@ const TPLRegistry = require("./components/TPLRegistry");
 
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
-
+const estimateTX = require("./helpers/estimateTX");
 const Ratings = require("./components/Ratings");
 
 const RPC = require("./components/RPC");
@@ -57,7 +57,7 @@ SDK.prototype = {
     sell: (value, assetAddress, options) =>
       RPC.sellAsset(value, assetAddress, options),
     estimate: (value, assetAddress, currencyAddress) =>
-      RPC.estimateTX(value, assetAddress, currencyAddress)
+      estimateTX(value, assetAddress, currencyAddress)
   },
 
   project: {

@@ -53,7 +53,13 @@ const getUserDetails = async address => {
   const userDetails = await errorHandler(
     instance.methods.getUserDetails(address).call()
   );
-  return userDetails;
+  const [country, walletType, expirationDate] = Object.values(userDetails);
+  return {
+    address,
+    country: Number(country),
+    walletType: Number(walletType),
+    expirationDate: Number(expirationDate)
+  };
 };
 
 const getUsersList = async short => {
@@ -67,13 +73,7 @@ const getUsersList = async short => {
   }
   const userList = addressList.map(async address => {
     const userDetails = await getUserDetails(address);
-    const [country, walletType, expirationDate] = Object.values(userDetails);
-    return {
-      address,
-      country: Number(country),
-      walletType: Number(walletType),
-      expirationDate: Number(expirationDate)
-    };
+    return userDetails;
   });
   return Promise.all(userList);
 };

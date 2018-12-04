@@ -6,37 +6,29 @@ const AssetsRegistry = require("./AssetsRegistry");
 const Config = require("./Config");
 const utils = require("../utils");
 
-const getAuditDBAddress = async key => {
+const getAddressWithKey = async key => {
   if (utils.is.not.string(key) && !utils.isAddress(key)) {
     Error({
       name: "params",
       message: "Acceptable parameters address or symbol token"
     });
   }
-  let address = null;
+
   if (utils.isAddress(key)) {
-    address = key;
-  } else {
-    address = await errorHandler(AssetsRegistry.getAssetAddress(key));
+    return key;
   }
+  const address = await errorHandler(AssetsRegistry.getAssetAddress(key));
+  return address;
+};
+
+const getAuditDBAddress = async key => {
+  const address = await getAddressWithKey(key);
   const { auditDB } = await errorHandler(Config.getConfig(address));
   return auditDB;
 };
 
 const getRPCAddress = async key => {
-  if (utils.is.not.string(key) && !utils.isAddress(key)) {
-    Error({
-      name: "params",
-      message: "Acceptable parameters address or symbol token"
-    });
-  }
-
-  let address = null;
-  if (utils.isAddress(key)) {
-    address = key;
-  } else {
-    address = await errorHandler(AssetsRegistry.getAssetAddress(key));
-  }
+  const address = await getAddressWithKey(key);
   const { RPC } = await Config.getConfig(address);
   return RPC;
 };
@@ -63,6 +55,12 @@ const deltaNET = async key => {
 };
 
 const getInvestorsCount = async address => {
+  if (!utils.isAddress(address)) {
+    Error({
+      name: "params",
+      message: "'address' is not valid address"
+    });
+  }
   const RPC = await errorHandler(getRPCAddress(address));
   const instance = createInstance(RPC_ABI.abi, RPC);
   const investors = await errorHandler(

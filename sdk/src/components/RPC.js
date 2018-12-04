@@ -1,7 +1,7 @@
 const Asset = require("./Asset");
+const SCRegistry = require("./SCRegistry");
 const ERC20 = require("./ERC20");
 const Config = require("./Config");
-const SCRegistry = require("./SCRegistry");
 const RPC = require("../ABI/RPC");
 const ERC20ABI = require("../ABI/ERC20Mintable").abi;
 const { createInstance } = require("../helpers/createInstance");
@@ -9,29 +9,6 @@ const signedTX = require("../helpers/signedTX");
 const errorHandler = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
-const detectSymbol = require("../helpers/detectSymbol");
-
-const estimateTX = async (value, assetAddress, currencyAddress) => {
-  const assetSymbol = await detectSymbol(assetAddress);
-  const currencySymbol = await detectSymbol(currencyAddress);
-  const assetPrice = await Asset.getRate(assetAddress);
-  const AIVPrice = await Asset.getRate("AIV");
-  const { entryFee, platformFee } = await Config.getConfig(assetAddress);
-  const currencyPrice = await SCRegistry.getRate(currencyAddress);
-  const currencyInUSD = currencyPrice * value;
-  const feesAmount = (currencyInUSD * (entryFee + platformFee)) / 100;
-  const remaining = currencyInUSD - feesAmount;
-  const willMint = utils.toFixed(remaining / assetPrice);
-  const fees = utils.toFixed(feesAmount / AIVPrice);
-  const amount = utils.toFixed(remaining / AIVPrice);
-  return {
-    [assetSymbol]: willMint,
-    [currencySymbol]: {
-      amount
-    },
-    AIV: fees
-  };
-};
 
 const createCurrenciesInstances = async () => {
   this.TUSDAddress = this.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
@@ -211,6 +188,5 @@ const sellAsset = async (value, assetAddress, options) => {
 
 module.exports = {
   buyAsset,
-  estimateTX,
   sellAsset
 };
