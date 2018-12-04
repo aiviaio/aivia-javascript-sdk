@@ -10,11 +10,14 @@ const errorHandler = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
 
+const _this = {};
+
 const createCurrenciesInstances = async () => {
-  this.TUSDAddress = this.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
-  this.AIVAddress = this.AIVAddress || (await SCRegistry.getAddress("AIV"));
-  this.TUSD = this.TUSD || createInstance(ERC20ABI, this.TUSDAddress);
-  this.AIV = this.AIV || createInstance(ERC20ABI, this.AIVAddress);
+  _this.TUSDAddress =
+    _this.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
+  _this.AIVAddress = _this.AIVAddress || (await SCRegistry.getAddress("AIV"));
+  _this.TUSD = _this.TUSD || createInstance(ERC20ABI, _this.TUSDAddress);
+  _this.AIV = _this.AIV || createInstance(ERC20ABI, _this.AIVAddress);
 };
 
 const checkBeforeBuy = async (
@@ -24,9 +27,9 @@ const checkBeforeBuy = async (
   options
 ) => {
   await createCurrenciesInstances();
-  this.asset = createInstance(ERC20ABI, assetAddress);
-  this.currency = createInstance(ERC20ABI, currencyAddress);
-  const balance = await this.currency.methods.balanceOf(options.from).call();
+  _this.asset = createInstance(ERC20ABI, assetAddress);
+  _this.currency = createInstance(ERC20ABI, currencyAddress);
+  const balance = await _this.currency.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
@@ -38,9 +41,9 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
   const { custodian } = await Config.getConfig(assetAddress);
-  if (currencyAddress === this.TUSDAddress) {
+  if (currencyAddress === _this.TUSDAddress) {
     try {
-      await ERC20.approve(this.TUSDAddress, RPCAddress, value, options);
+      await ERC20.approve(_this.TUSDAddress, RPCAddress, value, options);
     } catch (error) {
       Error({
         name: "transaction",
@@ -59,7 +62,7 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
       gasLimit: options.gasLimit
     })
   );
-  const feesRawEvents = await this.AIV.getPastEvents("Transfer", {
+  const feesRawEvents = await _this.AIV.getPastEvents("Transfer", {
     filter: { from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -70,7 +73,7 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
     return utils.fromWei(returnValues.value);
   });
 
-  const spendRawEvents = await this.currency.getPastEvents("Transfer", {
+  const spendRawEvents = await _this.currency.getPastEvents("Transfer", {
     filter: { from: options.from, to: custodian },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -81,7 +84,7 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
     return utils.fromWei(returnValues.value);
   });
 
-  const receivedRawEvents = await this.asset.getPastEvents("Transfer", {
+  const receivedRawEvents = await _this.asset.getPastEvents("Transfer", {
     filter: { to: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -104,8 +107,8 @@ const buyAsset = async (value, assetAddress, currencyAddress, options) => {
 
 const checkBeforeSell = async (value, assetAddress, options) => {
   await createCurrenciesInstances();
-  this.asset = createInstance(ERC20ABI, assetAddress);
-  const balance = await this.asset.methods.balanceOf(options.from).call();
+  _this.asset = createInstance(ERC20ABI, assetAddress);
+  const balance = await _this.asset.methods.balanceOf(options.from).call();
   if (balance < value) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
@@ -128,7 +131,7 @@ const sellAsset = async (value, assetAddress, options) => {
     })
   );
 
-  const spendRawEvents = await this.asset.getPastEvents("Transfer", {
+  const spendRawEvents = await _this.asset.getPastEvents("Transfer", {
     filter: { from: options.from, to: utils.ZERO_ADDRESS },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -144,7 +147,7 @@ const sellAsset = async (value, assetAddress, options) => {
     };
   });
 
-  const receivedRawEvents = await this.TUSD.getPastEvents("Transfer", {
+  const receivedRawEvents = await _this.TUSD.getPastEvents("Transfer", {
     filter: { to: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
@@ -160,7 +163,7 @@ const sellAsset = async (value, assetAddress, options) => {
     };
   });
 
-  const feesRawEvents = await this.AIV.getPastEvents("Transfer", {
+  const feesRawEvents = await _this.AIV.getPastEvents("Transfer", {
     filter: { from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"

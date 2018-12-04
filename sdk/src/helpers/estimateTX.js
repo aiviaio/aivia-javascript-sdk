@@ -4,15 +4,16 @@ const Asset = require("../components/Asset");
 const SCRegistry = require("../components/SCRegistry");
 const Config = require("../components/Config");
 
+const _this = {};
 const estimateBuy = async (value, assetAddress, currencyAddress) => {
   const estimate = {};
   const { entryFee, platformFee } = await Config.getConfig(assetAddress);
 
-  this.TUSD = this.TUSD || (await SCRegistry.getAddress("TUSD"));
-  this.AIV = this.AIV || (await SCRegistry.getAddress("AIV"));
+  _this.TUSD = _this.TUSD || (await SCRegistry.getAddress("TUSD"));
+  _this.AIV = _this.AIV || (await SCRegistry.getAddress("AIV"));
   const assetSymbol = await detectSymbol(assetAddress);
   const assetRate = await Asset.getRate(assetAddress);
-  const AIVRate = await SCRegistry.getRate(this.AIV);
+  const AIVRate = await SCRegistry.getRate(_this.AIV);
 
   const currencySymbol = await detectSymbol(currencyAddress);
   const currencyRate = await SCRegistry.getRate(currencyAddress);
@@ -23,7 +24,7 @@ const estimateBuy = async (value, assetAddress, currencyAddress) => {
 
   const remaining = inUSD - (platformFeeAmount + entryFeeAmount);
 
-  if (currencyAddress !== this.AIV) {
+  if (currencyAddress !== _this.AIV) {
     estimate[currencySymbol] = value;
   } else {
     estimate[currencySymbol] = utils.toFixed(remaining / AIVRate);
@@ -41,11 +42,11 @@ const estimateBuy = async (value, assetAddress, currencyAddress) => {
 
 const estimateSell = async (value, assetAddress) => {
   const estimate = {};
-  this.TUSD = this.TUSD || (await SCRegistry.getAddress("TUSD"));
-  this.AIV = this.AIV || (await SCRegistry.getAddress("AIV"));
+  _this.TUSD = _this.TUSD || (await SCRegistry.getAddress("TUSD"));
+  _this.AIV = _this.AIV || (await SCRegistry.getAddress("AIV"));
   const { exitFee, platformFee } = await Config.getConfig(assetAddress);
-  const AIVRate = await SCRegistry.getRate(this.AIV);
-  const TUSDRate = await SCRegistry.getRate(this.TUSD);
+  const AIVRate = await SCRegistry.getRate(_this.AIV);
+  const TUSDRate = await SCRegistry.getRate(_this.TUSD);
   const assetSymbol = await detectSymbol(assetAddress);
   const assetRate = await Asset.getRate(assetAddress);
   const inUSD = assetRate * value;
@@ -61,7 +62,6 @@ const estimateSell = async (value, assetAddress) => {
     platform: utils.toFixed(platformFeeAmount / AIVRate),
     exit: utils.toFixed(exitFeeAmount / AIVRate)
   };
-
   return estimate;
 };
 
