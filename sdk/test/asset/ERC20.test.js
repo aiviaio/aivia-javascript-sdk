@@ -19,17 +19,9 @@ describe("ERC20", () => {
 
     const AIV = await SDK.platform.token();
 
-    const userAIVBalance = utils.toFixed(
-      await SDK.asset.getBalance(user, AIV),
-      4
-    );
+    const userAIVBalance = utils.toFixed(await SDK.asset.getBalance(user, AIV), 4);
     const amount = 250;
-    const { from, to, value } = await SDK.dev.mint(
-      amount,
-      user,
-      AIV,
-      getUser("platformWallet")
-    );
+    const { from, to, value } = await SDK.dev.mint(amount, user, AIV, getUser("platformWallet"));
 
     expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
       utils.toFixed(userAIVBalance + amount, 4)
@@ -43,20 +35,9 @@ describe("ERC20", () => {
   it("should transfer AIV to other", async () => {
     const AIV = await SDK.platform.token();
     const amount = 9.44413;
-    const AIV_BALANCE = await SDK.asset.getBalance(
-      getAddress("otherUser"),
-      AIV
-    );
-    await SDK.asset.transfer(
-      AIV,
-      getAddress("otherUser"),
-      amount,
-      getUser("user")
-    );
-    const _AIV_BALANCE = await SDK.asset.getBalance(
-      getAddress("otherUser"),
-      AIV
-    );
+    const AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
+    await SDK.asset.transfer(AIV, getAddress("otherUser"), amount, getUser("user"));
+    const _AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
     expect(utils.toFixed(_AIV_BALANCE - AIV_BALANCE, 6)).to.equal(amount);
   });
 });

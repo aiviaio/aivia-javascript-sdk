@@ -120,5 +120,35 @@ describe("RPC", () => {
       const NET = await SDK.asset.NET(token);
       expect(NET).to.not.equal(0);
     });
+
+    it("should update rate", async () => {
+      const { token } = projectList[0];
+      const value = 0.26;
+      const auditor = getAddress("DGAddress");
+      const rate = await SDK.asset.getRate(token);
+
+      expect(utils.toFixed(rate)).to.equal(options.tokenPrice);
+
+      const tx = await SDK.asset.updateRate(
+        token,
+        value,
+        Date.now(),
+        "c72b9698fa1927e1dd12d3cf26ed84b2",
+        getUser("DGAddress")
+      );
+
+      expect(utils.toFixed(tx.rate)).to.equal(value);
+      expect(tx.auditor).to.equal(auditor);
+
+      await SDK.asset.updateRate(
+        token,
+        options.tokenPrice,
+        Date.now(),
+        "a72b9698fa1927e1dd12d3cf26ed84b1",
+        getUser("DGAddress")
+      );
+      const backupRate = await SDK.asset.getRate(token);
+      expect(utils.toFixed(backupRate)).to.equal(options.tokenPrice);
+    });
   });
 });

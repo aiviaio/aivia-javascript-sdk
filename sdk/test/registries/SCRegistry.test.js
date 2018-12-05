@@ -11,21 +11,13 @@ describe("SCRegistry", () => {
       expect(this.currencies.length).to.equal(2);
       expect(this.currencies[0].symbol).to.equal("AIV");
       expect(this.currencies[1].symbol).to.equal("TUSD");
-      expect(this.currencies[0].address).to.equal(
-        require("../../src/ABI/PlatformToken").address
-      );
-      expect(this.currencies[1].address).to.equal(
-        require("../../src/ABI/TrueUSD").address
-      );
+      expect(this.currencies[0].address).to.equal(require("../../src/ABI/PlatformToken").address);
+      expect(this.currencies[1].address).to.equal(require("../../src/ABI/TrueUSD").address);
     });
 
     it("return asset rate", async () => {
-      const rateByAddress = await SDK.platform.currency.getRate(
-        this.currencies[0].address
-      );
-      const rateBySymbol = await SDK.platform.currency.getRate(
-        this.currencies[1].symbol
-      );
+      const rateByAddress = await SDK.platform.currency.getRate(this.currencies[0].address);
+      const rateBySymbol = await SDK.platform.currency.getRate(this.currencies[1].symbol);
       expect(rateByAddress).to.equal(this.currencies[0].rate);
       expect(rateBySymbol).to.equal(this.currencies[1].rate);
     });
