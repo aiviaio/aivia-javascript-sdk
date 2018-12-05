@@ -4,6 +4,7 @@ const { createInstance } = require("../helpers/createInstance");
 const errorHandler = require("../helpers/errorHandler");
 const AssetsRegistry = require("./AssetsRegistry");
 const Config = require("./Config");
+const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
 const getAddressWithKey = async key => {
@@ -40,6 +41,42 @@ const getRate = async key => {
   return utils.fromWei(price);
 };
 
+const updateRate = async (address, rate, timestamp, checksum, options) => {
+  const auditDB = await errorHandler(getAuditDBAddress(address));
+  const instance = createInstance(Audit.abi, auditDB);
+  const action = await errorHandler(
+    instance.methods.updateRate(utils.toWei(rate), timestamp, utils.toHex(checksum))
+  );
+
+  const transaction = signedTX({
+    data: action.encodeABI(),
+    from: options.from,
+    to: auditDB,
+    privateKey: options.privateKey,
+    gasPrice: options.gasPrice,
+    gasLimit: options.gasLimit
+  });
+
+  const { blockNumber } = await errorHandler(transaction);
+
+  const Events = await instance.getPastEvents("updateAudit", {
+    filter: { to: auditDB, from: options.from },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const [Event] = Events.map(event => {
+    const { returnValues } = event;
+    const [_price, _auditor] = Object.values(returnValues);
+    return {
+      rate: utils.fromWei(_price),
+      auditor: _auditor
+    };
+  });
+
+  return Event;
+};
+
 const NET = async key => {
   const auditDB = await errorHandler(getAuditDBAddress(key));
   const instance = createInstance(Audit.abi, auditDB);
@@ -72,6 +109,7 @@ module.exports = {
   getAuditDBAddress,
   getRPCAddress,
   getInvestorsCount,
+  updateRate,
   deltaNET,
   NET
 };

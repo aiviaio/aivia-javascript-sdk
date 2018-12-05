@@ -49,6 +49,10 @@ SDK.prototype = {
     getRate: key => Asset.getRate(key),
     getInvestors: address => Asset.getInvestorsCount(address),
 
+    // audit DB
+    updateRate: (address, rate, timestamp, checksum, options) =>
+      Asset.updateRate(address, rate, timestamp, checksum, options),
+
     // NET
     deltaNET: key => Asset.deltaNET(key),
     NET: key => Asset.NET(key),
