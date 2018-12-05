@@ -62,10 +62,11 @@ SDK.prototype = {
   },
 
   trade: {
-    buy: (value, assetAddress, currencyAddress, options, resolve) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, options, resolve),
-    sell: (value, assetAddress, options, resolve) =>
-      RPC.sellAsset(value, assetAddress, options, resolve),
+    // @dev callback return tx hash
+    buy: (value, assetAddress, currencyAddress, options, callback) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback),
+    sell: (value, assetAddress, options, callback) =>
+      RPC.sellAsset(value, assetAddress, options, callback),
     estimate: (value, assetAddress, currencyAddress) =>
       estimateTX(value, assetAddress, currencyAddress)
   },

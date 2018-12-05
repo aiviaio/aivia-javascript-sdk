@@ -64,9 +64,7 @@ describe("RPC", () => {
 
       expect(investors).to.equal(1);
 
-      expect(utils.toFixed(_AIV_USER, 2)).to.equal(
-        utils.toFixed(AIV_USER - amount, 2)
-      );
+      expect(utils.toFixed(_AIV_USER, 2)).to.equal(utils.toFixed(AIV_USER - amount, 2));
 
       expect(utils.toFixed(_TOKEN_USER, 2)).to.equal(
         utils.toFixed(TOKEN_USER + willMint(amount), 2)
@@ -89,25 +87,32 @@ describe("RPC", () => {
       const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
       await SDK.dev.mint(100, custodian, TUSD, getUser("trueUSDOwner"));
 
-      const { spend, received } = await SDK.trade.sell(
-        amount,
-        token,
-        getUser("user")
-      );
+      const { spend, received } = await SDK.trade.sell(amount, token, getUser("user"));
 
-      const TUSD_USER_DIFF =
-        (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
+      const TUSD_USER_DIFF = (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
       expect(spend.value).to.equal(amount);
-      expect(utils.toFixed(received.value, 4)).to.equal(
-        utils.toFixed(TUSD_USER_DIFF, 4)
-      );
+      expect(utils.toFixed(received.value, 4)).to.equal(utils.toFixed(TUSD_USER_DIFF, 4));
     });
 
     it("should buy token TUSD", async () => {
       const amount = 20;
       const { token } = projectList[0];
+      const user = await getAddress("user");
+      const platformWallet = await SDK.platform.wallet();
+      const AIV = await SDK.platform.token();
+      const AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
       const TUSD = await SDK.platform.currency.getAddress("TUSD");
+      const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
+      const TOKEN_USER = await SDK.asset.getBalance(user, token);
+      const estimate = await SDK.trade.estimate(amount, token, TUSD);
+      const [_TUSD, _FEES, _TOKEN] = Object.values(estimate);
       await SDK.trade.buy(amount, token, TUSD, getUser("user"));
+      const _TUSD_USER = await SDK.asset.getBalance(user, TUSD);
+      const _TOKEN_USER = await SDK.asset.getBalance(user, token);
+      const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
+      expect(utils.toFixed(TUSD_USER - _TUSD_USER)).to.equal(_TUSD);
+      expect(utils.toFixed(_TOKEN_USER - TOKEN_USER)).to.equal(utils.toFixed(_TOKEN));
+      expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + _FEES.platform));
     });
 
     it("should return NET", async () => {

@@ -1,9 +1,8 @@
 const EthereumTx = require("ethereumjs-tx");
-const errorHandler = require("../helpers/errorHandler");
 const { getProvider } = require("../helpers/createInstance");
 
 module.exports = async params => {
-  const { data, from, to, privateKey, gasPrice, gasLimit } = params;
+  const { data, from, to, privateKey, gasPrice, gasLimit, callback } = params;
   const web3 = getProvider();
   const block = await web3.eth.getBlock("latest");
   const nonce = await web3.eth.getTransactionCount(from);
@@ -31,9 +30,13 @@ module.exports = async params => {
   TMP.serializedTx = TMP.rawTx.serialize();
   delete TMP.rawTx;
 
-  const transaction = await errorHandler(
-    web3.eth.sendSignedTransaction(`0x${TMP.serializedTx.toString("hex")}`)
-  );
+  const transaction = web3.eth.sendSignedTransaction(`0x${TMP.serializedTx.toString("hex")}`);
+
+  transaction.on("transactionHash", hash => {
+    if (callback) {
+      callback(hash);
+    }
+  });
 
   delete TMP.serializedTx;
 

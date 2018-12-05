@@ -29,7 +29,7 @@ const checkBeforeBuy = async (value, assetAddress, currencyAddress, options) => 
   }
 };
 
-const buyAsset = async (value, assetAddress, currencyAddress, options, resolve) => {
+const buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
   await checkBeforeBuy(value, assetAddress, currencyAddress, options);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
@@ -46,17 +46,17 @@ const buyAsset = async (value, assetAddress, currencyAddress, options, resolve) 
     }
   }
 
-  const { blockNumber } = await errorHandler(
-    signedTX({
-      data: action.encodeABI(),
-      from: options.from,
-      to: RPCAddress,
-      privateKey: options.privateKey,
-      gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit,
-      resolve
-    })
-  );
+  const transaction = signedTX({
+    data: action.encodeABI(),
+    from: options.from,
+    to: RPCAddress,
+    privateKey: options.privateKey,
+    gasPrice: options.gasPrice,
+    gasLimit: options.gasLimit,
+    callback
+  });
+
+  const { blockNumber } = await errorHandler(transaction);
 
   const feesRawEvents = await storage.AIV.getPastEvents("Transfer", {
     filter: { from: options.from },
@@ -110,23 +110,23 @@ const checkBeforeSell = async (value, assetAddress, options) => {
   }
 };
 
-const sellAsset = async (value, assetAddress, options, resolve) => {
+const sellAsset = async (value, assetAddress, options, callback) => {
   await checkBeforeSell(value, assetAddress, options);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.sellAsset(utils.toWei(value));
 
-  const { blockNumber } = await errorHandler(
-    signedTX({
-      data: action.encodeABI(),
-      from: options.from,
-      to: RPCAddress,
-      privateKey: options.privateKey,
-      gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit,
-      resolve
-    })
-  );
+  const transaction = signedTX({
+    data: action.encodeABI(),
+    from: options.from,
+    to: RPCAddress,
+    privateKey: options.privateKey,
+    gasPrice: options.gasPrice,
+    gasLimit: options.gasLimit,
+    callback
+  });
+
+  const { blockNumber } = await errorHandler(transaction);
 
   const spendRawEvents = await storage.asset.getPastEvents("Transfer", {
     filter: { from: options.from, to: utils.ZERO_ADDRESS },
