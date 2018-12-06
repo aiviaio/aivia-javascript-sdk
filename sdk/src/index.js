@@ -2,13 +2,11 @@ const config = require("./config");
 const EntryPoint = require("./components/EntryPoint");
 const Proxy = require("./components/Proxy");
 const Deployer = require("./components/Deployer");
-
 const AssetsRegistry = require("./components/AssetsRegistry");
 const ProjectsRegistry = require("./components/ProjectsRegistry");
 const SCRegistry = require("./components/SCRegistry");
 const PlatformRegistry = require("./components/PlatformRegistry");
 const TPLRegistry = require("./components/TPLRegistry");
-
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
 const { estimateTX } = require("./helpers/estimateTX");
