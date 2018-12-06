@@ -30,6 +30,17 @@ if (process.env.MODE === "dev") {
   fs.writeFile("./test/projects.json", "[]", () =>
     console.info("successfully clean /test/projects.json")
   );
+  fs.writeFile(
+    "./test/logs.json",
+    `[{
+    "AUM": 0,
+    "totalSupply": 0,
+    "PL": 0,
+    "NET": 0,
+    "rate": 0.25
+  }]`,
+    () => console.info("successfully clean /test/logs.json")
+  );
 }
 
 list.forEach(contract => {

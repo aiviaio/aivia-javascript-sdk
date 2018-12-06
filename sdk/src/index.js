@@ -49,8 +49,11 @@ SDK.prototype = {
     getRate: key => Asset.getRate(key),
     getInvestors: address => Asset.getInvestorsCount(address),
 
+    // audit DB
+    updateRate: (address, AUM, checksum, options) =>
+      Asset.updateRate(address, AUM, checksum, options),
+
     // NET
-    deltaNET: key => Asset.deltaNET(key),
     NET: key => Asset.NET(key),
 
     // ERC20

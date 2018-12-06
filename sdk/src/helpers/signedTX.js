@@ -32,7 +32,7 @@ module.exports = async params => {
 
   const transaction = web3.eth.sendSignedTransaction(`0x${TMP.serializedTx.toString("hex")}`);
 
-  transaction.on("transactionHash", hash => {
+  transaction.once("transactionHash", hash => {
     if (callback) {
       callback(hash);
     }
