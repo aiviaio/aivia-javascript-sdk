@@ -1,25 +1,26 @@
 const { expect } = require("chai");
+const fs = require("fs");
 const AIVIA_SDK = require("../../src");
 const projectList = require("../projects");
 const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
+const logs = require("../logs");
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
 const options = {
   platformFee: 0.2,
   entryFee: 2.2,
-  exitFee: 1.2,
-  tokenPrice: 0.25,
+  exitFee: 3.1,
   currencyPrice: 0.5
 };
 
-const willMint = value => {
+const willMint = (value, rate) => {
   const inUSD = value * options.currencyPrice;
   const feesInUSD = (inUSD * (options.platformFee + options.entryFee)) / 100;
   const remaining = inUSD - feesInUSD;
-  const tokens = remaining / options.tokenPrice;
+  const tokens = remaining / rate;
   return tokens;
 };
 
@@ -45,16 +46,14 @@ describe("RPC", () => {
       const user = await getAddress("user");
 
       const { owner, token } = projectList[0];
-
       const AIV_USER = await SDK.asset.getBalance(user, AIV);
       const AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
       const AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
       const TOKEN_USER = await SDK.asset.getBalance(user, token);
-
+      const rate = await SDK.asset.getRate(token);
       const amount = 200;
 
       await SDK.trade.buy(amount, token, AIV, getUser("user"));
-
       const investors = await SDK.asset.getInvestors(token);
 
       const _AIV_USER = await SDK.asset.getBalance(user, AIV);
@@ -67,7 +66,7 @@ describe("RPC", () => {
       expect(utils.toFixed(_AIV_USER, 2)).to.equal(utils.toFixed(AIV_USER - amount, 2));
 
       expect(utils.toFixed(_TOKEN_USER, 2)).to.equal(
-        utils.toFixed(TOKEN_USER + willMint(amount), 2)
+        utils.toFixed(TOKEN_USER + willMint(amount, rate), 2)
       );
 
       expect(utils.toFixed(_AIV_PROJECT_OWNER, 2)).to.equal(
@@ -123,32 +122,36 @@ describe("RPC", () => {
 
     it("should update rate", async () => {
       const { token } = projectList[0];
-      const value = 0.26;
       const auditor = getAddress("DGAddress");
-      const rate = await SDK.asset.getRate(token);
-
-      expect(utils.toFixed(rate)).to.equal(options.tokenPrice);
-
+      const totalSupply = await SDK.asset.totalSupply(token);
+      const NET = await SDK.asset.NET(token);
+      const PL = 100;
+      const AUM = NET + PL;
       const tx = await SDK.asset.updateRate(
         token,
-        value,
-        Date.now(),
+        AUM,
         "c72b9698fa1927e1dd12d3cf26ed84b2",
         getUser("DGAddress")
       );
 
-      expect(utils.toFixed(tx.rate)).to.equal(value);
-      expect(tx.auditor).to.equal(auditor);
+      logs.push({
+        AUM,
+        PL,
+        NET,
+        totalSupply,
+        rate: tx.rate
+      });
 
-      await SDK.asset.updateRate(
-        token,
-        options.tokenPrice,
-        Date.now(),
-        "a72b9698fa1927e1dd12d3cf26ed84b1",
-        getUser("DGAddress")
+      fs.writeFile(
+        "./test/logs.json",
+        new Uint8Array(Buffer.from(JSON.stringify(logs, null, 2))),
+        error => {
+          if (error) throw error;
+        }
       );
-      const backupRate = await SDK.asset.getRate(token);
-      expect(utils.toFixed(backupRate)).to.equal(options.tokenPrice);
+
+      expect(utils.toFixed(tx.rate)).to.equal(utils.toFixed(AUM / totalSupply));
+      expect(tx.auditor).to.equal(auditor);
     });
   });
 });

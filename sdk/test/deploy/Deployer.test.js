@@ -28,7 +28,7 @@ describe("Deploy", () => {
             // in %
             platformFee: 0.2,
             entryFee: 2.2,
-            exitFee: 1.2
+            exitFee: 3.1
           },
           custodian: custodianAddress,
           permissions: {
