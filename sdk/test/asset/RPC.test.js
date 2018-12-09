@@ -11,9 +11,9 @@ const history = require("../history");
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
 
 const amount = {
-  AIV: 100,
+  AIV: 0,
   TUSD: 0,
-  TOKEN: 1,
+  TOKEN: 193.61264244,
   PL: 0
 };
 
@@ -98,8 +98,8 @@ describe("RPC", () => {
     console.info({ sell: tx });
     const { spend, received } = tx;
     const TUSD_USER_DIFF = (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
-    expect(spend.value).to.equal(amount.TOKEN);
-    expect(utils.toFixed(received.value, 4)).to.equal(utils.toFixed(TUSD_USER_DIFF, 4));
+    expect(spend).to.equal(amount.TOKEN);
+    expect(utils.toFixed(received, 4)).to.equal(utils.toFixed(TUSD_USER_DIFF, 4));
   });
 
   it("should buy token TUSD", async () => {

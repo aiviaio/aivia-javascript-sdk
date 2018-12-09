@@ -136,12 +136,7 @@ const sellAsset = async (value, assetAddress, options, callback) => {
 
   const [spend] = spendRawEvents.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
-    return {
-      from,
-      to,
-      value: utils.fromWei(_value)
-    };
+    return utils.fromWei(returnValues.value);
   });
 
   const receivedRawEvents = await storage.TUSD.getPastEvents("Transfer", {
@@ -152,12 +147,7 @@ const sellAsset = async (value, assetAddress, options, callback) => {
 
   const [received] = receivedRawEvents.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
-    return {
-      from,
-      to,
-      value: utils.fromWei(_value)
-    };
+    return utils.fromWei(returnValues.value);
   });
 
   const feesRawEvents = await storage.AIV.getPastEvents("Transfer", {
@@ -168,12 +158,7 @@ const sellAsset = async (value, assetAddress, options, callback) => {
 
   const [manager, platform] = feesRawEvents.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
-    return {
-      from,
-      to,
-      value: utils.fromWei(_value)
-    };
+    return utils.fromWei(returnValues.value);
   });
 
   return {
