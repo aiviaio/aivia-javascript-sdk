@@ -42,11 +42,12 @@ const getRate = async key => {
 };
 
 const updateRate = async (address, AUM, checksum, options) => {
+  const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
   const auditDB = await errorHandler(getAuditDBAddress(address));
   const instance = createInstance(Audit.abi, auditDB);
   const timestamp = Math.floor(Date.now() / 1000);
   const action = await errorHandler(
-    instance.methods.updateRate(utils.toWei(AUM), timestamp, utils.toHex(checksum))
+    instance.methods.updateRate(_AUM, timestamp, utils.toHex(checksum))
   );
 
   const transaction = signedTX({
@@ -82,7 +83,7 @@ const NET = async key => {
   const auditDB = await errorHandler(getAuditDBAddress(key));
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
-  return utils.fromWei(value);
+  return utils.toFixed(utils.fromWei(value));
 };
 
 const getInvestorsCount = async address => {

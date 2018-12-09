@@ -31,7 +31,7 @@ if (process.env.MODE === "dev") {
     console.info("successfully clean /test/projects.json")
   );
   fs.writeFile(
-    "./test/logs.json",
+    "./test/history.json",
     `[{
     "AUM": 0,
     "totalSupply": 0,
@@ -39,7 +39,7 @@ if (process.env.MODE === "dev") {
     "NET": 0,
     "rate": 0.25
   }]`,
-    () => console.info("successfully clean /test/logs.json")
+    () => console.info("successfully clean /test/history.json")
   );
 }
 

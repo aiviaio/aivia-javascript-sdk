@@ -8,6 +8,15 @@ const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "https://127.0.0.1:8545");
 
+const options = {
+  fees: {
+    platformFee: 1,
+    entryFee: 1,
+    exitFee: 1
+  },
+  initialPrice: 0.25
+};
+
 describe("Deploy", () => {
   describe("deploy project", () => {
     it("should deploy project", async () => {
@@ -20,16 +29,11 @@ describe("Deploy", () => {
           tokenDetails: {
             tokenName: "Token from SDK",
             tokenSymbol: `SDK${Date.now()}`,
-            initialPrice: 0.25,
+            initialPrice: options.initialPrice,
             maxTokens: 25000000,
             maxInvestors: 3000
           },
-          fees: {
-            // in %
-            platformFee: 0.2,
-            entryFee: 2.2,
-            exitFee: 3.1
-          },
+          fees: options.fees,
           custodian: custodianAddress,
           permissions: {
             countries: [],
@@ -52,3 +56,5 @@ describe("Deploy", () => {
     });
   });
 });
+
+module.exports = options;
