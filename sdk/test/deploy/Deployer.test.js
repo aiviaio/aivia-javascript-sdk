@@ -10,9 +10,9 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, "https://127.0.0.1:8545");
 
 const options = {
   fees: {
-    platformFee: 1,
-    entryFee: 1,
-    exitFee: 1
+    platformFee: 0.5,
+    entryFee: 2.1,
+    exitFee: 2.3
   },
   initialPrice: 0.25
 };
