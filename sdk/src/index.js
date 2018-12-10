@@ -104,7 +104,9 @@ SDK.prototype = {
 
   dev: {
     mint: (value, walletAddress, assetAddress, options) =>
-      ERC20.mint(value, walletAddress, assetAddress, options)
+      ERC20.mint(value, walletAddress, assetAddress, options),
+    updatePermission: (address, countryID, walletTypes, options, callback) =>
+      Config.updatePermission(address, countryID, walletTypes, options, callback)
   }
 };
 

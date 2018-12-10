@@ -46,5 +46,25 @@ module.exports = {
       stateMutability: "view",
       type: "function"
     }
+  ],
+  updatePermission: [
+    {
+      constant: false,
+      inputs: [
+        {
+          name: "_country",
+          type: "uint8"
+        },
+        {
+          name: "_walletTypes",
+          type: "uint8[]"
+        }
+      ],
+      name: "updatePermissionByCountry",
+      outputs: [],
+      payable: false,
+      stateMutability: "nonpayable",
+      type: "function"
+    }
   ]
 };
