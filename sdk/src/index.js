@@ -3,6 +3,7 @@ const EntryPoint = require("./components/EntryPoint");
 const Proxy = require("./components/Proxy");
 const Deployer = require("./components/Deployer");
 const AssetsRegistry = require("./components/AssetsRegistry");
+const CustodiansRegistry = require("./components/CustodiansRegistry");
 const ProjectsRegistry = require("./components/ProjectsRegistry");
 const SCRegistry = require("./components/SCRegistry");
 const PlatformRegistry = require("./components/PlatformRegistry");
@@ -89,11 +90,16 @@ SDK.prototype = {
     token: () => PlatformRegistry.getPlatformToken()
   },
 
-  auditors: {
+  auditor: {
     addUser: (walletAddress, countryID, walletType, expirationDate, options) =>
       TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, options),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
     getUserDetails: address => TPLRegistry.getUserDetails(address)
+  },
+
+  custodian: {
+    getList: () => CustodiansRegistry.getList(),
+    getDetails: address => CustodiansRegistry.getDetails(address)
   },
 
   dev: {

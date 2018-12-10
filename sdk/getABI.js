@@ -18,7 +18,8 @@ const list = [
   "OpenEndDeployer",
   "TrueUSD",
   "PlatformRegistry",
-  "TPLRegistry"
+  "TPLRegistry",
+  "CustodiansRegistry"
 ];
 
 process.stdout.write("\x1Bc");
