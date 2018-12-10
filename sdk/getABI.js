@@ -37,7 +37,7 @@ if (process.env.MODE === "dev") {
     "totalSupply": 0,
     "PL": 0,
     "NET": 0,
-    "rate": 0.25
+    "rate": 0.025
   }]`,
     () => console.info("successfully clean /test/history.json")
   );

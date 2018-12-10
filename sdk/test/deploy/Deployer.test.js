@@ -14,7 +14,7 @@ const options = {
     entryFee: 2.1,
     exitFee: 2.3
   },
-  initialPrice: 0.25
+  initialPrice: 0.025
 };
 
 describe("Deploy", () => {
