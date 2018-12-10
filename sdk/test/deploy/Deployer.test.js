@@ -36,8 +36,8 @@ describe("Deploy", () => {
           fees: options.fees,
           custodian: custodianAddress,
           permissions: {
-            countries: [],
-            walletTypes: [],
+            countries: [1],
+            walletTypes: [1],
             rule: false
           }
         },
