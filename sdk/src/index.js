@@ -61,8 +61,8 @@ SDK.prototype = {
     approve: (address, spender, value, options, callback) =>
       ERC20.approve(address, spender, value, options, callback),
     allowance: (address, owner, spender) => ERC20.allowance(address, owner, spender),
-    transfer: (wallet, value, contractAddress, options, callback) =>
-      ERC20.transfer(wallet, value, contractAddress, options, callback),
+    transfer: (to, value, contractAddress, options, callback) =>
+      ERC20.transfer(to, value, contractAddress, options, callback),
     transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback)
   },
 

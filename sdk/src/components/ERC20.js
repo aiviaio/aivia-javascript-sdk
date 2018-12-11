@@ -105,7 +105,7 @@ const mint = async (value, walletAddress, assetAddress, options, callback) => {
  * @param {String} options.privateKey,
  * @param {Integer} options.gasPrice
  */
-const transfer = async (contractAddress, wallet, value, options, callback) => {
+const transfer = async (wallet, value, contractAddress, options, callback) => {
   const instance = createInstance(ERC20.abi, contractAddress);
   const action = instance.methods.transfer(wallet, utils.toWei(value));
   const { blockNumber } = await errorHandler(
