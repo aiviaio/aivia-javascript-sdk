@@ -36,7 +36,7 @@ describe("ERC20", () => {
     const AIV = await SDK.platform.token();
     const amount = 9.44413;
     const AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
-    await SDK.asset.transfer(AIV, getAddress("otherUser"), amount, getUser("user"));
+    await SDK.asset.transfer(getAddress("otherUser"), amount, AIV, getUser("user"));
     const _AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
     expect(utils.toFixed(_AIV_BALANCE - AIV_BALANCE, 6)).to.equal(amount);
   });
