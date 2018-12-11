@@ -1,6 +1,7 @@
 const AssetsRegistry = require("../ABI/AssetsRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
+const Error = require("../helpers/Error");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 

@@ -1,6 +1,6 @@
 const PlatformRegistry = require("../ABI/PlatformRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const utils = require("../utils");
 const Proxy = require("./Proxy");
 

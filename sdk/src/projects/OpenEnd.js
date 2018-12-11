@@ -1,5 +1,6 @@
 const is = require("is_js");
 const utils = require("../utils");
+const Error = require("../helpers/Error");
 
 const input = ({
   projectName,

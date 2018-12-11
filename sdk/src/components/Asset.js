@@ -1,7 +1,7 @@
 const Audit = require("../ABI/ProjectAudit");
 const RPC_ABI = require("../ABI/RPC");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const AssetsRegistry = require("./AssetsRegistry");
 const Config = require("./Config");
 const signedTX = require("../helpers/signedTX");

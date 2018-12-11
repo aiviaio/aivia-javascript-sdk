@@ -1,6 +1,6 @@
 const EntryPoint = require("../ABI/EntryPoint");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const config = require("../config");
 
 const getProxyAddress = async () => {

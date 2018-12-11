@@ -1,6 +1,6 @@
 const AssetsRegistry = require("./AssetsRegistry");
 const Asset = require("./Asset");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 
 const getRatingsList = async () => {
   const addressesList = await errorHandler(AssetsRegistry.getAssetsList());

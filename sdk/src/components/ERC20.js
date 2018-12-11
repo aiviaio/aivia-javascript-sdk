@@ -1,6 +1,6 @@
 const ERC20 = require("../ABI/ERC20Mintable");
 const { createInstance, getProvider } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 

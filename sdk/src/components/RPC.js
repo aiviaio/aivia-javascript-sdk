@@ -6,7 +6,7 @@ const RPC = require("../ABI/RPC");
 const ERC20ABI = require("../ABI/ERC20Mintable").abi;
 const { createInstance } = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
 

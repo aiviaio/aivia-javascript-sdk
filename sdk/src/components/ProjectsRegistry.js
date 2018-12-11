@@ -1,6 +1,6 @@
 const Projects = require("../ABI/ProjectsRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 
 const getProjectsList = async () => {

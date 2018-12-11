@@ -2,7 +2,7 @@ const Proxy = require("../ABI/Proxy");
 
 const signedTX = require("../helpers/signedTX");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 

@@ -1,6 +1,6 @@
 const CustodiansRegistry = require("../ABI/CustodiansRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const errorHandler = require("../helpers/errorHandler");
+const { errorHandler } = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
