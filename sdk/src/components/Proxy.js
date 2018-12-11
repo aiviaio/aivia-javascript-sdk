@@ -4,10 +4,10 @@ const errorHandler = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const utils = require("../utils");
 
-const getRegistryAddress = async key => {
+const getRegistryAddress = async addressOrSymbol => {
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
-  return errorHandler(instance.methods.getRegistryAddress(utils.toHex(key)).call());
+  return errorHandler(instance.methods.getRegistryAddress(utils.toHex(addressOrSymbol)).call());
 };
 
 const isDeployer = async address => {

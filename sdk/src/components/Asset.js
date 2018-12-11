@@ -7,35 +7,35 @@ const Config = require("./Config");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
-const getAddressWithKey = async key => {
-  if (utils.is.not.string(key) && !utils.isAddress(key)) {
+const getAddressWithKey = async addressOrSymbol => {
+  if (utils.is.not.string(addressOrSymbol) && !utils.isAddress(addressOrSymbol)) {
     Error({
       name: "params",
       message: "Acceptable parameters address or symbol token"
     });
   }
 
-  if (utils.isAddress(key)) {
-    return key;
+  if (utils.isAddress(addressOrSymbol)) {
+    return addressOrSymbol;
   }
-  const address = await errorHandler(AssetsRegistry.getAssetAddress(key));
+  const address = await errorHandler(AssetsRegistry.getAssetAddress(addressOrSymbol));
   return address;
 };
 
-const getAuditDBAddress = async key => {
-  const address = await getAddressWithKey(key);
+const getAuditDBAddress = async addressOrSymbol => {
+  const address = await getAddressWithKey(addressOrSymbol);
   const { auditDB } = await errorHandler(Config.getConfig(address));
   return auditDB;
 };
 
-const getRPCAddress = async key => {
-  const address = await getAddressWithKey(key);
+const getRPCAddress = async addressOrSymbol => {
+  const address = await getAddressWithKey(addressOrSymbol);
   const { RPC } = await Config.getConfig(address);
   return RPC;
 };
 
-const getRate = async key => {
-  const auditDB = await errorHandler(getAuditDBAddress(key));
+const getRate = async addressOrSymbol => {
+  const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
@@ -79,8 +79,8 @@ const updateRate = async (address, AUM, checksum, options) => {
   return Event;
 };
 
-const NET = async key => {
-  const auditDB = await errorHandler(getAuditDBAddress(key));
+const NET = async addressOrSymbol => {
+  const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));

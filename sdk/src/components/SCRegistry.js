@@ -21,8 +21,8 @@ const getList = async () => {
   return Promise.all(assetsList);
 };
 
-const getRate = async key => {
-  if (utils.is.not.string(key) && !utils.isAddress(key)) {
+const getRate = async addressOrSymbol => {
+  if (utils.is.not.string(addressOrSymbol) && !utils.isAddress(addressOrSymbol)) {
     Error({
       name: "params",
       message: "Acceptable parameters address or symbol token"
@@ -32,13 +32,13 @@ const getRate = async key => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
 
-  if (utils.isAddress(key)) {
-    const rate = await errorHandler(instance.methods.getAssetRate(key).call());
+  if (utils.isAddress(addressOrSymbol)) {
+    const rate = await errorHandler(instance.methods.getAssetRate(addressOrSymbol).call());
     return utils.fromWei(rate);
   }
 
   const assetAddress = await errorHandler(
-    instance.methods.getAssetAddress(utils.toHex(key)).call()
+    instance.methods.getAssetAddress(utils.toHex(addressOrSymbol)).call()
   );
   const rate = await errorHandler(instance.methods.getAssetRate(assetAddress).call());
   return utils.fromWei(rate);
