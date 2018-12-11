@@ -1,19 +1,20 @@
 const Audit = require("../ABI/ProjectAudit");
 const RPC_ABI = require("../ABI/RPC");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddressOrSymbol,
+  isAddress,
+  isString,
+  isNumber
+} = require("../helpers/errorHandler");
 const AssetsRegistry = require("./AssetsRegistry");
 const Config = require("./Config");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
 const getAddressWithKey = async addressOrSymbol => {
-  if (utils.is.not.string(addressOrSymbol) && !utils.isAddress(addressOrSymbol)) {
-    Error({
-      name: "params",
-      message: "Acceptable parameters address or symbol token"
-    });
-  }
+  isAddressOrSymbol(addressOrSymbol);
 
   if (utils.isAddress(addressOrSymbol)) {
     return addressOrSymbol;
@@ -23,18 +24,21 @@ const getAddressWithKey = async addressOrSymbol => {
 };
 
 const getAuditDBAddress = async addressOrSymbol => {
+  isAddressOrSymbol(addressOrSymbol);
   const address = await getAddressWithKey(addressOrSymbol);
   const { auditDB } = await errorHandler(Config.getConfig(address));
   return auditDB;
 };
 
 const getRPCAddress = async addressOrSymbol => {
+  isAddressOrSymbol(addressOrSymbol);
   const address = await getAddressWithKey(addressOrSymbol);
   const { RPC } = await Config.getConfig(address);
   return RPC;
 };
 
 const getRate = async addressOrSymbol => {
+  isAddressOrSymbol(addressOrSymbol);
   const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
@@ -42,6 +46,10 @@ const getRate = async addressOrSymbol => {
 };
 
 const updateRate = async (address, AUM, checksum, options) => {
+  isAddress(address);
+  isNumber(AUM, "AUM");
+  isString(checksum, "checksum");
+  isAddress(options.from, "from");
   const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
   const auditDB = await errorHandler(getAuditDBAddress(address));
   const instance = createInstance(Audit.abi, auditDB);
@@ -80,6 +88,7 @@ const updateRate = async (address, AUM, checksum, options) => {
 };
 
 const NET = async addressOrSymbol => {
+  isAddressOrSymbol(addressOrSymbol);
   const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
@@ -87,12 +96,7 @@ const NET = async addressOrSymbol => {
 };
 
 const getInvestorsCount = async address => {
-  if (!utils.isAddress(address)) {
-    Error({
-      name: "params",
-      message: "'address' is not valid address"
-    });
-  }
+  isAddress(address);
   const RPC = await errorHandler(getRPCAddress(address));
   const instance = createInstance(RPC_ABI.abi, RPC);
   const investors = await errorHandler(instance.methods.getInvestorsCount().call());

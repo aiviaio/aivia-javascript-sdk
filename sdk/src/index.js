@@ -31,7 +31,7 @@ SDK.prototype = {
   },
 
   getProxyAddress: () => EntryPoint.getProxyAddress(),
-  getRegistryAddress: addressOrSymbol => Proxy.getRegistryAddress(addressOrSymbol),
+  getRegistryAddress: key => Proxy.getRegistryAddress(key),
 
   asset: {
     getConfig: address => Config.getConfig(address),

@@ -1,13 +1,14 @@
 const Proxy = require("../ABI/Proxy");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isInteger } = require("../helpers/errorHandler");
+const { errorHandler, isAddress, isInteger, isString } = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const utils = require("../utils");
 
-const getRegistryAddress = async addressOrSymbol => {
+const getRegistryAddress = async key => {
+  isString(key, "key");
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
-  return errorHandler(instance.methods.getRegistryAddress(utils.toHex(addressOrSymbol)).call());
+  return errorHandler(instance.methods.getRegistryAddress(utils.toHex(key)).call());
 };
 
 const isDeployer = async address => {

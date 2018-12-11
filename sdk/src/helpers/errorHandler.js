@@ -22,7 +22,34 @@ const isInteger = (params, name, message) => {
   if (utils.is.not.integer(params)) {
     Error({
       name: "params",
-      message: message || `${name || "address"} must be a integer`
+      message: message || `${name || "address"} must be integer`
+    });
+  }
+};
+
+const isAddressOrSymbol = (params, name, message) => {
+  if (utils.is.not.string(params) && !utils.isAddress(params)) {
+    Error({
+      name: "params",
+      message: message || `${name || "addressOrSymbol"} must be a address or symbol token`
+    });
+  }
+};
+
+const isString = (params, name, message) => {
+  if (utils.is.not.string(params)) {
+    Error({
+      name: "params",
+      message: message || `${name || "string"} must be a string`
+    });
+  }
+};
+
+const isNumber = (params, name, message) => {
+  if (utils.is.not.number(params)) {
+    Error({
+      name: "params",
+      message: message || `${name || "value"} must be a number`
     });
   }
 };
@@ -30,5 +57,8 @@ const isInteger = (params, name, message) => {
 module.exports = {
   errorHandler,
   isAddress,
-  isInteger
+  isInteger,
+  isAddressOrSymbol,
+  isString,
+  isNumber
 };
