@@ -27,7 +27,7 @@ const allowance = async (address, owner, spender) => {
   return utils.fromWei(value);
 };
 
-const approve = async (address, spender, value, options) => {
+const approve = async (address, spender, value, options, callback) => {
   const instance = createInstance(ERC20.abi, address);
   const action = instance.methods.approve(spender, utils.toWei(value));
   const { blockNumber } = await errorHandler(
@@ -37,7 +37,8 @@ const approve = async (address, spender, value, options) => {
       to: address,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
 
@@ -60,7 +61,7 @@ const approve = async (address, spender, value, options) => {
   return Event;
 };
 
-const mint = async (value, walletAddress, assetAddress, options) => {
+const mint = async (value, walletAddress, assetAddress, options, callback) => {
   const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.mint(walletAddress, utils.toWei(value));
   const { blockNumber } = await errorHandler(
@@ -70,7 +71,8 @@ const mint = async (value, walletAddress, assetAddress, options) => {
       to: assetAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
 

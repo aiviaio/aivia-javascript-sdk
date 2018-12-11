@@ -5,7 +5,7 @@ const Proxy = require("./Proxy");
 const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
 
-const addUser = async (walletAddress, countryID, walletType, expirationDate, options) => {
+const addUser = async (walletAddress, countryID, walletType, expirationDate, options, callback) => {
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
   const action = instance.methods.addUser(walletAddress, countryID, walletType, expirationDate);
@@ -16,7 +16,8 @@ const addUser = async (walletAddress, countryID, walletType, expirationDate, opt
       to: registryAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
   const Events = await instance.getPastEvents("registryEvent", {

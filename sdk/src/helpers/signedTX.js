@@ -1,5 +1,6 @@
 const EthereumTx = require("ethereumjs-tx");
 const { getProvider } = require("../helpers/createInstance");
+const config = require("../config");
 
 module.exports = async params => {
   const { data, from, to, privateKey, gasPrice, gasLimit, callback, value } = params;
@@ -16,7 +17,7 @@ module.exports = async params => {
     from,
     to,
     value,
-    gasPrice: gasPrice || 40000000000,
+    gasPrice: gasPrice || config.get("DEFAULT_GAS_PRICE"),
     gasLimit: gasLimit || block.gasLimit
   };
 

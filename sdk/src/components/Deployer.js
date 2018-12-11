@@ -6,7 +6,7 @@ const errorHandler = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 
-const deployProject = async (type, params, options) => {
+const deployProject = async (type, params, options, callback) => {
   const proxyAddress = await EntryPoint.getProxyAddress();
 
   const instance = createInstance(Proxy.abi, proxyAddress);
@@ -24,7 +24,8 @@ const deployProject = async (type, params, options) => {
       to: proxyAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
 
@@ -35,7 +36,8 @@ const deployProject = async (type, params, options) => {
       to: proxyAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
 

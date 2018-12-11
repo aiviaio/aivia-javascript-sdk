@@ -17,9 +17,11 @@ const Ratings = require("./components/Ratings");
 const RPC = require("./components/RPC");
 const ERC20 = require("./components/ERC20");
 
-function SDK(ENTRY_POINT, HTTP_PROVIDER) {
-  config.init(ENTRY_POINT, HTTP_PROVIDER);
+function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 30000000000) {
+  config.init(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE);
 }
+
+// @dev options = {from: "address", privateKey: "private key", gasPrice: "gas price"}
 
 SDK.prototype = {
   utils: {
@@ -56,21 +58,20 @@ SDK.prototype = {
     // ERC20
     getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
     totalSupply: address => ERC20.totalSupply(address),
-    approve: (address, spender, value, { from, privateKey, gasPrice }) =>
-      ERC20.approve(address, spender, value, { from, privateKey, gasPrice }),
+    approve: (address, spender, value, options, callback) =>
+      ERC20.approve(address, spender, value, options, callback),
     allowance: (address, owner, spender) => ERC20.allowance(address, owner, spender),
-    transfer: (wallet, value, contractAddress, { from, privateKey, gasPrice }) =>
-      ERC20.transfer(wallet, value, contractAddress, { from, privateKey, gasPrice }),
-    transferETH: (to, value, { from, privateKey, gasPrice }) =>
-      ERC20.transferETH(to, value, { from, privateKey, gasPrice })
+    transfer: (wallet, value, contractAddress, options, callback) =>
+      ERC20.transfer(wallet, value, contractAddress, options, callback),
+    transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback)
   },
 
   trade: {
     // @dev callback return tx hash
-    buy: (value, assetAddress, currencyAddress, { from, privateKey, gasPrice }, callback) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, { from, privateKey, gasPrice }, callback),
-    sell: (value, assetAddress, { from, privateKey, gasPrice }, callback) =>
-      RPC.sellAsset(value, assetAddress, { from, privateKey, gasPrice }, callback),
+    buy: (value, assetAddress, currencyAddress, options, callback) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback),
+    sell: (value, assetAddress, options, callback) =>
+      RPC.sellAsset(value, assetAddress, options, callback),
     estimate: (value, assetAddress, currencyAddress) =>
       estimateTX(value, assetAddress, currencyAddress)
   },
@@ -78,8 +79,8 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: address => Config.getConfigDirectly(address),
-    deploy: (type, params, { from, privateKey, gasPrice }) =>
-      Deployer.deployProject(type, params, { from, privateKey, gasPrice })
+    deploy: (type, params, options, callback) =>
+      Deployer.deployProject(type, params, options, callback)
   },
 
   platform: {
@@ -94,18 +95,8 @@ SDK.prototype = {
   },
 
   auditor: {
-    addUser: (
-      walletAddress,
-      countryID,
-      walletType,
-      expirationDate,
-      { from, privateKey, gasPrice }
-    ) =>
-      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, {
-        from,
-        privateKey,
-        gasPrice
-      }),
+    addUser: (walletAddress, countryID, walletType, expirationDate, options, callback) =>
+      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, options, callback),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
     getUserDetails: address => TPLRegistry.getUserDetails(address)
   },
@@ -116,16 +107,10 @@ SDK.prototype = {
   },
 
   dev: {
-    mint: (value, walletAddress, assetAddress, { from, privateKey, gasPrice }) =>
-      ERC20.mint(value, walletAddress, assetAddress, { from, privateKey, gasPrice }),
-    updatePermission: (address, countryID, walletTypes, { from, privateKey, gasPrice }, callback) =>
-      Config.updatePermission(
-        address,
-        countryID,
-        walletTypes,
-        { from, privateKey, gasPrice },
-        callback
-      )
+    mint: (value, walletAddress, assetAddress, options, callback) =>
+      ERC20.mint(value, walletAddress, assetAddress, options, callback),
+    updatePermission: (address, countryID, walletTypes, options, callback) =>
+      Config.updatePermission(address, countryID, walletTypes, options, callback)
   }
 };
 
