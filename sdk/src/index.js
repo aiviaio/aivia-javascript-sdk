@@ -29,10 +29,8 @@ SDK.prototype = {
   },
 
   getProxyAddress: () => EntryPoint.getProxyAddress(),
-  getRegistryAddress: key => Proxy.getRegistryAddress(key),
+  getRegistryAddress: addressOrSymbol => Proxy.getRegistryAddress(addressOrSymbol),
 
-  // @dev "key" is token symbol or address
-  // @dev options = { from: walletAddress, privateKey: privateKey, gasPrice: gasPrice }
   asset: {
     getConfig: address => Config.getConfig(address),
     getRatingsList: () => Ratings.getRatingsList(),
@@ -43,9 +41,9 @@ SDK.prototype = {
     getAssetSymbol: address => AssetsRegistry.getAssetSymbol(address),
 
     // Asset
-    getAuditDBAddress: key => Asset.getAuditDBAddress(key),
-    getRPCAddress: key => Asset.getRPCAddress(key),
-    getRate: key => Asset.getRate(key),
+    getAuditDBAddress: addressOrSymbol => Asset.getAuditDBAddress(addressOrSymbol),
+    getRPCAddress: addressOrSymbol => Asset.getRPCAddress(addressOrSymbol),
+    getRate: addressOrSymbol => Asset.getRate(addressOrSymbol),
     getInvestors: address => Asset.getInvestorsCount(address),
 
     // audit DB
@@ -53,22 +51,26 @@ SDK.prototype = {
       Asset.updateRate(address, AUM, checksum, options),
 
     // NET
-    NET: key => Asset.NET(key),
+    NET: addressOrSymbol => Asset.NET(addressOrSymbol),
 
     // ERC20
     getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
     totalSupply: address => ERC20.totalSupply(address),
-    approve: (address, spender, value, options) => ERC20.approve(address, spender, value, options),
+    approve: (address, spender, value, { from, privateKey, gasPrice }) =>
+      ERC20.approve(address, spender, value, { from, privateKey, gasPrice }),
     allowance: (address, owner, spender) => ERC20.allowance(address, owner, spender),
-    transfer: (address, wallet, value, options) => ERC20.transfer(address, wallet, value, options)
+    transfer: (wallet, value, contractAddress, { from, privateKey, gasPrice }) =>
+      ERC20.transfer(wallet, value, contractAddress, { from, privateKey, gasPrice }),
+    transferETH: (to, value, { from, privateKey, gasPrice }) =>
+      ERC20.transferETH(to, value, { from, privateKey, gasPrice })
   },
 
   trade: {
     // @dev callback return tx hash
-    buy: (value, assetAddress, currencyAddress, options, callback) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback),
-    sell: (value, assetAddress, options, callback) =>
-      RPC.sellAsset(value, assetAddress, options, callback),
+    buy: (value, assetAddress, currencyAddress, { from, privateKey, gasPrice }, callback) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, { from, privateKey, gasPrice }, callback),
+    sell: (value, assetAddress, { from, privateKey, gasPrice }, callback) =>
+      RPC.sellAsset(value, assetAddress, { from, privateKey, gasPrice }, callback),
     estimate: (value, assetAddress, currencyAddress) =>
       estimateTX(value, assetAddress, currencyAddress)
   },
@@ -76,13 +78,14 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: address => Config.getConfigDirectly(address),
-    deploy: (type, params, options) => Deployer.deployProject(type, params, options)
+    deploy: (type, params, { from, privateKey, gasPrice }) =>
+      Deployer.deployProject(type, params, { from, privateKey, gasPrice })
   },
 
   platform: {
     currency: {
       getList: () => SCRegistry.getList(),
-      getRate: key => SCRegistry.getRate(key),
+      getRate: addressOrSymbol => SCRegistry.getRate(addressOrSymbol),
       getAddress: symbol => SCRegistry.getAddress(symbol),
       getSymbol: address => SCRegistry.getSymbol(address)
     },
@@ -91,8 +94,18 @@ SDK.prototype = {
   },
 
   auditor: {
-    addUser: (walletAddress, countryID, walletType, expirationDate, options) =>
-      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, options),
+    addUser: (
+      walletAddress,
+      countryID,
+      walletType,
+      expirationDate,
+      { from, privateKey, gasPrice }
+    ) =>
+      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, {
+        from,
+        privateKey,
+        gasPrice
+      }),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
     getUserDetails: address => TPLRegistry.getUserDetails(address)
   },
@@ -103,10 +116,16 @@ SDK.prototype = {
   },
 
   dev: {
-    mint: (value, walletAddress, assetAddress, options) =>
-      ERC20.mint(value, walletAddress, assetAddress, options),
-    updatePermission: (address, countryID, walletTypes, options, callback) =>
-      Config.updatePermission(address, countryID, walletTypes, options, callback)
+    mint: (value, walletAddress, assetAddress, { from, privateKey, gasPrice }) =>
+      ERC20.mint(value, walletAddress, assetAddress, { from, privateKey, gasPrice }),
+    updatePermission: (address, countryID, walletTypes, { from, privateKey, gasPrice }, callback) =>
+      Config.updatePermission(
+        address,
+        countryID,
+        walletTypes,
+        { from, privateKey, gasPrice },
+        callback
+      )
   }
 };
 

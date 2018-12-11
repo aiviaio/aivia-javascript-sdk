@@ -2,7 +2,7 @@ const EthereumTx = require("ethereumjs-tx");
 const { getProvider } = require("../helpers/createInstance");
 
 module.exports = async params => {
-  const { data, from, to, privateKey, gasPrice, gasLimit, callback } = params;
+  const { data, from, to, privateKey, gasPrice, gasLimit, callback, value } = params;
   const web3 = getProvider();
   const block = await web3.eth.getBlock("latest");
   const nonce = await web3.eth.getTransactionCount(from);
@@ -10,12 +10,12 @@ module.exports = async params => {
   TMP.privateKey = Buffer.from(privateKey, "hex");
 
   delete params.privateKey;
-
   const txParams = {
     nonce,
     data,
     from,
     to,
+    value,
     gasPrice: gasPrice || 40000000000,
     gasLimit: gasLimit || block.gasLimit
   };

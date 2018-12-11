@@ -103,17 +103,18 @@ const mint = async (value, walletAddress, assetAddress, options) => {
  * @param {String} options.privateKey,
  * @param {Integer} options.gasPrice
  */
-const transfer = async (address, wallet, value, options) => {
-  const instance = createInstance(ERC20.abi, address);
+const transfer = async (contractAddress, wallet, value, options, callback) => {
+  const instance = createInstance(ERC20.abi, contractAddress);
   const action = instance.methods.transfer(wallet, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
       from: options.from,
-      to: address,
+      to: contractAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit
+      gasLimit: options.gasLimit,
+      callback
     })
   );
 
@@ -136,11 +137,27 @@ const transfer = async (address, wallet, value, options) => {
   return Event;
 };
 
+const transferETH = async (to, value, options, callback) => {
+  await errorHandler(
+    signedTX({
+      data: undefined,
+      from: options.from,
+      to,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      callback,
+      value: utils.numberToHex(value)
+    })
+  );
+};
+
 module.exports = {
   getBalance,
   totalSupply,
   mint,
   allowance,
   approve,
-  transfer
+  transfer,
+  transferETH
 };
