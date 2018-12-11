@@ -40,4 +40,12 @@ describe("ERC20", () => {
     const _AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
     expect(utils.toFixed(_AIV_BALANCE - AIV_BALANCE, 6)).to.equal(amount);
   });
+
+  it("should transfer ETH to other", async () => {
+    const amount = 0.0001;
+    const ETH = await SDK.asset.getBalance(getAddress("otherUser"));
+    await SDK.asset.transferETH(getAddress("otherUser"), amount, getUser("user"));
+    const _ETH = await SDK.asset.getBalance(getAddress("otherUser"));
+    expect(utils.toFixed(_ETH - ETH)).to.equal(amount);
+  });
 });
