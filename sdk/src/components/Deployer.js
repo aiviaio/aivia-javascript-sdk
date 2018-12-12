@@ -6,15 +6,12 @@ const { errorHandler } = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 
+// @TODO: add validation
 const deployProject = async (type, params, options, callback) => {
   const proxyAddress = await EntryPoint.getProxyAddress();
-
   const instance = createInstance(Proxy.abi, proxyAddress);
-
   const _params = ReselectData.input(type, params);
-
   const deployAction = instance.methods.deployProject(..._params);
-
   const initAction = instance.methods.initProject();
 
   await errorHandler(
