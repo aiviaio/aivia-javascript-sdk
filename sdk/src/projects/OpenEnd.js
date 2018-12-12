@@ -1,6 +1,13 @@
-const is = require("is_js");
 const utils = require("../utils");
 const Error = require("../helpers/Error");
+const {
+  isAddress,
+  isString,
+  isInteger,
+  isNumber,
+  isBoolean,
+  isArray
+} = require("../helpers/errorHandler");
 
 const input = ({
   projectName,
@@ -9,6 +16,26 @@ const input = ({
   custodian,
   permissions: { countries = [], walletTypes = [], rule = false }
 }) => {
+  isString({ projectName, tokenName, tokenSymbol });
+  isAddress({ custodian });
+  isNumber({ initialPrice, platformFee, entryFee, exitFee });
+  isInteger({ maxTokens, maxInvestors });
+  isBoolean({ rule });
+  isArray({ countries, walletTypes });
+
+  if (countries.length !== walletTypes.length) {
+    Error({
+      name: "params",
+      message: `countries length must be equal walletTypes length`
+    });
+  }
+
+  const fees = {
+    platformFee,
+    entryFee,
+    exitFee
+  };
+
   const names = {
     projectName,
     tokenName,
@@ -21,55 +48,44 @@ const input = ({
     maxInvestors
   };
 
-  const fees = {
-    platformFee,
-    entryFee,
-    exitFee
-  };
-
   const namesArray = Object.keys(names).map(name => {
     const element = names[name];
-    if (is.not.string(element)) {
-      return Error({
+    if (name === "tokenSymbol") {
+      if (element.length > 4) {
+        Error({
+          name: "params",
+          message: `'${name}' length must not exceed 4 characters`
+        });
+      }
+    } else if (element.length > 32) {
+      Error({
         name: "params",
-        message: `'${name}' field must be a string`
+        message: `'${name}' length must not exceed 32 characters`
       });
     }
+
     return utils.toHex(element);
   });
 
   const paramsArray = Object.keys(params).map(name => {
     const element = params[name];
-    if (is.not.number(element)) {
-      return Error({
-        name: "params",
-        message: `'${name}' field must be a number`
-      });
-    }
     if (name === "initialPrice") {
       return utils.toWei(element);
     }
-
     return element;
   });
 
   const feesArray = Object.keys(fees).map(name => {
     const element = fees[name];
-    if (is.not.number(element)) {
-      return Error({
+    if (element >= 100) {
+      Error({
         name: "params",
-        message: `'${name}' field must be a number`
+        message: `'${name}' can not be more than 100`
       });
     }
     return utils.toWei(element);
   });
 
-  if (!utils.isAddress(custodian)) {
-    return Error({
-      name: "params",
-      message: "'custodianAddress' field must be a address"
-    });
-  }
   return {
     type: 1,
     namesArray,

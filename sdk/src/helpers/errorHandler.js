@@ -122,6 +122,19 @@ const isBoolean = params => {
   }
 };
 
+const isObject = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      if (utils.is.not.object(params[key])) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a object`
+        });
+      }
+    }
+  }
+};
+
 module.exports = {
   errorHandler,
   isAddress,
@@ -131,5 +144,6 @@ module.exports = {
   isNumber,
   isArray,
   isFunction,
-  isBoolean
+  isBoolean,
+  isObject
 };

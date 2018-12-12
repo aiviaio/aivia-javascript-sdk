@@ -28,7 +28,7 @@ describe("Deploy", () => {
           projectName: "Open-End Project",
           tokenDetails: {
             tokenName: "Token from SDK",
-            tokenSymbol: `SDK${Date.now()}`,
+            tokenSymbol: `ST${projectList.length}`,
             initialPrice: options.initialPrice,
             maxTokens: 25000000,
             maxInvestors: 3000
@@ -38,7 +38,7 @@ describe("Deploy", () => {
           permissions: {
             countries: [1],
             walletTypes: [1],
-            rule: false
+            rule: undefined
           }
         },
         getUser("projectOwner")

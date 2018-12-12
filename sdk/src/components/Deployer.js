@@ -2,12 +2,23 @@ const Proxy = require("../ABI/Proxy");
 
 const signedTX = require("../helpers/signedTX");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isObject,
+  isInteger,
+  isFunction,
+  isAddress,
+  isString
+} = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 
-// @TODO: add validation
 const deployProject = async (type, params, options, callback) => {
+  isInteger({ type });
+  isObject({ params, options });
+  isAddress({ from: options.from });
+  isString({ privateKey: options.privateKey });
+  isFunction({ callback });
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
   const _params = ReselectData.input(type, params);
