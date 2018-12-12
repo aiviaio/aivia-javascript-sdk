@@ -1,6 +1,12 @@
 const ERC20 = require("../ABI/ERC20Mintable");
 const { createInstance, getProvider } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isNumber, isFunction } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddress,
+  isNumber,
+  isFunction,
+  isString
+} = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
@@ -36,6 +42,7 @@ const allowance = async (assetAddress, owner, spender) => {
 
 const approve = async (assetAddress, spender, value, options, callback) => {
   isAddress({ assetAddress, spender, from: options.from });
+  isString({ privateKey: options.privateKey });
   isNumber({ value });
   isFunction({ callback });
   const instance = createInstance(ERC20.abi, assetAddress);
@@ -74,6 +81,7 @@ const approve = async (assetAddress, spender, value, options, callback) => {
 const mint = async (value, to, assetAddress, options, callback) => {
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
+  isString({ privateKey: options.privateKey });
   isFunction({ callback });
   const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.mint(to, utils.toWei(value));
@@ -111,6 +119,7 @@ const mint = async (value, to, assetAddress, options, callback) => {
 const transfer = async (to, value, assetAddress, options, callback) => {
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
+  isString({ privateKey: options.privateKey });
   isFunction({ callback });
   const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.transfer(to, utils.toWei(value));
@@ -148,6 +157,7 @@ const transfer = async (to, value, assetAddress, options, callback) => {
 const transferETH = async (to, value, options, callback) => {
   isNumber({ value });
   isAddress({ to, from: options.from });
+  isString({ privateKey: options.privateKey });
   isFunction({ callback });
   await errorHandler(
     signedTX({

@@ -6,7 +6,7 @@ const RPC = require("../ABI/RPC");
 const ERC20ABI = require("../ABI/ERC20Mintable").abi;
 const { createInstance } = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
-const { errorHandler } = require("../helpers/errorHandler");
+const { errorHandler, isNumber, isAddress, isString } = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
 
@@ -20,11 +20,14 @@ const createCurrenciesInstances = async () => {
 };
 
 const checkBeforeBuy = async (value, assetAddress, currencyAddress, options) => {
+  isNumber({ value });
+  isAddress({ assetAddress, currencyAddress, from: options.from });
+  isString({ privateKey: options.privateKey });
   await createCurrenciesInstances();
   storage.asset = createInstance(ERC20ABI, assetAddress);
   storage.currency = createInstance(ERC20ABI, currencyAddress);
   const balance = await storage.currency.methods.balanceOf(options.from).call();
-  if (balance < value) {
+  if (balance < Number(value)) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
 };
@@ -102,10 +105,12 @@ const buyAsset = async (value, assetAddress, currencyAddress, options, callback)
 };
 
 const checkBeforeSell = async (value, assetAddress, options) => {
+  isNumber({ value });
+  isAddress({ assetAddress, from: options.from });
   await createCurrenciesInstances();
   storage.asset = createInstance(ERC20ABI, assetAddress);
   const balance = await storage.asset.methods.balanceOf(options.from).call();
-  if (balance < value) {
+  if (balance < Number(value)) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
 };

@@ -1,12 +1,19 @@
 const TPLRegistry = require("../ABI/TPLRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isInteger, isFunction } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddress,
+  isInteger,
+  isFunction,
+  isString
+} = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
 
 const addUser = async (userAddress, countryID, walletType, expirationDate, options, callback) => {
   isAddress({ userAddress, from: options.from });
+  isString({ privateKey: options.privateKey });
   isInteger({ countryID, walletType, expirationDate });
   isFunction({ callback });
   const registryAddress = await Proxy.getRegistryAddress("tpl");

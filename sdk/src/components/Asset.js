@@ -48,7 +48,7 @@ const getRate = async addressOrSymbol => {
 const updateRate = async (assetAddress, AUM, checksum, options) => {
   isAddress({ assetAddress, from: options.from });
   isNumber({ AUM });
-  isString({ checksum });
+  isString({ checksum, privateKey: options.privateKey });
   const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
   const auditDB = await errorHandler(getAuditDBAddress(assetAddress));
   const instance = createInstance(Audit.abi, auditDB);

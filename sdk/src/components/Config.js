@@ -4,7 +4,8 @@ const {
   isAddress,
   isInteger,
   isArray,
-  isFunction
+  isFunction,
+  isString
 } = require("../helpers/errorHandler");
 const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");
@@ -26,6 +27,7 @@ const getConfigDirectly = async configAddress => {
 
 const updatePermission = async (configAddress, countryID, walletTypes, options, callback) => {
   isAddress({ configAddress, from: options.from });
+  isString({ privateKey: options.privateKey });
   isInteger({ countryID });
   isArray({ walletTypes });
   isFunction({ callback });
