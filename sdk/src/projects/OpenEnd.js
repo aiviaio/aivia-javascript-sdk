@@ -51,10 +51,10 @@ const input = ({
   const namesArray = Object.keys(names).map(name => {
     const element = names[name];
     if (name === "tokenSymbol") {
-      if (element.length > 4) {
+      if (element.length > 4 || element.length < 3) {
         Error({
           name: "params",
-          message: `'${name}' length must not exceed 4 characters`
+          message: `'${name}' length should be 3 or 4 long`
         });
       }
     } else if (element.length > 32) {

@@ -1,5 +1,5 @@
 const Proxy = require("../ABI/Proxy");
-
+const AssetsRegistry = require("./AssetsRegistry");
 const signedTX = require("../helpers/signedTX");
 const { createInstance } = require("../helpers/createInstance");
 const {
@@ -8,7 +8,8 @@ const {
   isInteger,
   isFunction,
   isAddress,
-  isString
+  isString,
+  isZeroAddress
 } = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
@@ -19,6 +20,15 @@ const deployProject = async (type, params, options, callback) => {
   isAddress({ from: options.from });
   isString({ privateKey: options.privateKey });
   isFunction({ callback });
+  const { tokenSymbol } = params.tokenDetails;
+
+  const tokenAddress = await AssetsRegistry.getAssetAddress(tokenSymbol);
+  isZeroAddress({
+    tokenAddress: {
+      value: tokenAddress,
+      message: `${tokenSymbol} already exist`
+    }
+  });
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
   const _params = ReselectData.input(type, params);

@@ -135,6 +135,20 @@ const isObject = params => {
   }
 };
 
+const isZeroAddress = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.isAddress(value) && value !== utils.ZERO_ADDRESS) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a ZERO_ADDRESS`
+        });
+      }
+    }
+  }
+};
+
 module.exports = {
   errorHandler,
   isAddress,
@@ -145,5 +159,6 @@ module.exports = {
   isArray,
   isFunction,
   isBoolean,
-  isObject
+  isObject,
+  isZeroAddress
 };
