@@ -25,8 +25,8 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 30000000000) {
 
 SDK.prototype = {
   utils: {
-    isDeployer: address => Proxy.isDeployer(address),
-    isAuditor: (address, type) => Proxy.isAuditor(address, type),
+    isDeployer: deployerAddress => Proxy.isDeployer(deployerAddress),
+    isAuditor: (auditorAddress, type) => Proxy.isAuditor(auditorAddress, type),
     provider: () => getProvider()
   },
 
@@ -34,35 +34,35 @@ SDK.prototype = {
   getRegistryAddress: key => Proxy.getRegistryAddress(key),
 
   asset: {
-    getConfig: address => Config.getConfig(address),
+    getConfig: assetAddress => Config.getConfig(assetAddress),
     getRatingsList: () => Ratings.getRatingsList(),
 
     // AssetsRegistry
     getList: () => AssetsRegistry.getAssetsList(),
     getAssetAddress: symbol => AssetsRegistry.getAssetAddress(symbol),
-    getAssetSymbol: address => AssetsRegistry.getAssetSymbol(address),
+    getAssetSymbol: assetAddress => AssetsRegistry.getAssetSymbol(assetAddress),
 
     // Asset
     getAuditDBAddress: addressOrSymbol => Asset.getAuditDBAddress(addressOrSymbol),
     getRPCAddress: addressOrSymbol => Asset.getRPCAddress(addressOrSymbol),
     getRate: addressOrSymbol => Asset.getRate(addressOrSymbol),
-    getInvestors: address => Asset.getInvestorsCount(address),
+    getInvestors: assetAddress => Asset.getInvestorsCount(assetAddress),
 
     // audit DB
-    updateRate: (address, AUM, checksum, options) =>
-      Asset.updateRate(address, AUM, checksum, options),
+    updateRate: (assetAddress, AUM, checksum, options) =>
+      Asset.updateRate(assetAddress, AUM, checksum, options),
 
     // NET
     NET: addressOrSymbol => Asset.NET(addressOrSymbol),
 
     // ERC20
-    getBalance: (wallet, address) => ERC20.getBalance(wallet, address),
-    totalSupply: address => ERC20.totalSupply(address),
-    approve: (address, spender, value, options, callback) =>
-      ERC20.approve(address, spender, value, options, callback),
-    allowance: (address, owner, spender) => ERC20.allowance(address, owner, spender),
-    transfer: (to, value, contractAddress, options, callback) =>
-      ERC20.transfer(to, value, contractAddress, options, callback),
+    getBalance: (wallet, assetAddress) => ERC20.getBalance(wallet, assetAddress),
+    totalSupply: assetAddress => ERC20.totalSupply(assetAddress),
+    approve: (assetAddress, spender, value, options, callback) =>
+      ERC20.approve(assetAddress, spender, value, options, callback),
+    allowance: (assetAddress, owner, spender) => ERC20.allowance(assetAddress, owner, spender),
+    transfer: (to, value, assetAddress, options, callback) =>
+      ERC20.transfer(to, value, assetAddress, options, callback),
     transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback)
   },
 
@@ -78,7 +78,7 @@ SDK.prototype = {
 
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
-    getConfig: address => Config.getConfigDirectly(address),
+    getConfig: configAddress => Config.getConfigDirectly(configAddress),
     deploy: (type, params, options, callback) =>
       Deployer.deployProject(type, params, options, callback)
   },
@@ -88,29 +88,29 @@ SDK.prototype = {
       getList: () => SCRegistry.getList(),
       getRate: addressOrSymbol => SCRegistry.getRate(addressOrSymbol),
       getAddress: symbol => SCRegistry.getAddress(symbol),
-      getSymbol: address => SCRegistry.getSymbol(address)
+      getSymbol: currencyAddress => SCRegistry.getSymbol(currencyAddress)
     },
     wallet: () => PlatformRegistry.getPlatformWallet(),
     token: () => PlatformRegistry.getPlatformToken()
   },
 
   auditor: {
-    addUser: (walletAddress, countryID, walletType, expirationDate, options, callback) =>
-      TPLRegistry.addUser(walletAddress, countryID, walletType, expirationDate, options, callback),
+    addUser: (userAddress, countryID, walletType, expirationDate, options, callback) =>
+      TPLRegistry.addUser(userAddress, countryID, walletType, expirationDate, options, callback),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
-    getUserDetails: address => TPLRegistry.getUserDetails(address)
+    getUserDetails: userAddress => TPLRegistry.getUserDetails(userAddress)
   },
 
   custodian: {
     getList: () => CustodiansRegistry.getList(),
-    getDetails: address => CustodiansRegistry.getDetails(address)
+    getDetails: custodianAddress => CustodiansRegistry.getDetails(custodianAddress)
   },
 
   dev: {
-    mint: (value, walletAddress, assetAddress, options, callback) =>
-      ERC20.mint(value, walletAddress, assetAddress, options, callback),
-    updatePermission: (address, countryID, walletTypes, options, callback) =>
-      Config.updatePermission(address, countryID, walletTypes, options, callback)
+    mint: (value, to, assetAddress, options, callback) =>
+      ERC20.mint(value, to, assetAddress, options, callback),
+    updatePermission: (configAddress, countryID, walletTypes, options, callback) =>
+      Config.updatePermission(configAddress, countryID, walletTypes, options, callback)
   }
 };
 

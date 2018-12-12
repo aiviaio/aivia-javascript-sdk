@@ -5,25 +5,25 @@ const EntryPoint = require("./EntryPoint");
 const utils = require("../utils");
 
 const getRegistryAddress = async key => {
-  isString(key, "key");
+  isString({ key });
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
   return errorHandler(instance.methods.getRegistryAddress(utils.toHex(key)).call());
 };
 
-const isDeployer = async address => {
-  isAddress(address);
+const isDeployer = async deployerAddress => {
+  isAddress({ deployerAddress });
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
-  return errorHandler(instance.methods.isDeployer(address).call());
+  return errorHandler(instance.methods.isDeployer(deployerAddress).call());
 };
 
-const isAuditor = async (address, type) => {
-  isAddress(address);
-  isInteger(type, "type");
+const isAuditor = async (auditorAddress, type) => {
+  isAddress({ auditorAddress });
+  isInteger({ type });
   const proxyAddress = await EntryPoint.getProxyAddress();
   const instance = createInstance(Proxy.abi, proxyAddress);
-  return errorHandler(instance.methods.isAuditor(address, type).call());
+  return errorHandler(instance.methods.isAuditor(auditorAddress, type).call());
 };
 
 module.exports = {

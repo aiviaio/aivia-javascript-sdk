@@ -1,14 +1,17 @@
 const TPLRegistry = require("../ABI/TPLRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler } = require("../helpers/errorHandler");
+const { errorHandler, isAddress, isInteger, isFunction } = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
 
-const addUser = async (walletAddress, countryID, walletType, expirationDate, options, callback) => {
+const addUser = async (userAddress, countryID, walletType, expirationDate, options, callback) => {
+  isAddress({ userAddress, from: options.from });
+  isInteger({ countryID, walletType, expirationDate });
+  isFunction({ callback });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
-  const action = instance.methods.addUser(walletAddress, countryID, walletType, expirationDate);
+  const action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
@@ -37,13 +40,14 @@ const addUser = async (walletAddress, countryID, walletType, expirationDate, opt
   return Event;
 };
 
-const getUserDetails = async address => {
+const getUserDetails = async userAddress => {
+  isAddress({ userAddress });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
-  const userDetails = await errorHandler(instance.methods.getUserDetails(address).call());
+  const userDetails = await errorHandler(instance.methods.getUserDetails(userAddress).call());
   const [country, walletType, expirationDate] = Object.values(userDetails);
   return {
-    address,
+    address: userAddress,
     country: Number(country),
     walletType: Number(walletType),
     expirationDate: Number(expirationDate)

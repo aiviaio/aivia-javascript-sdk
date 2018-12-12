@@ -14,7 +14,7 @@ const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
 const getAddressWithKey = async addressOrSymbol => {
-  isAddressOrSymbol(addressOrSymbol);
+  isAddressOrSymbol({ addressOrSymbol });
 
   if (utils.isAddress(addressOrSymbol)) {
     return addressOrSymbol;
@@ -24,34 +24,33 @@ const getAddressWithKey = async addressOrSymbol => {
 };
 
 const getAuditDBAddress = async addressOrSymbol => {
-  isAddressOrSymbol(addressOrSymbol);
+  isAddressOrSymbol({ addressOrSymbol });
   const address = await getAddressWithKey(addressOrSymbol);
   const { auditDB } = await errorHandler(Config.getConfig(address));
   return auditDB;
 };
 
 const getRPCAddress = async addressOrSymbol => {
-  isAddressOrSymbol(addressOrSymbol);
+  isAddressOrSymbol({ addressOrSymbol });
   const address = await getAddressWithKey(addressOrSymbol);
   const { RPC } = await Config.getConfig(address);
   return RPC;
 };
 
 const getRate = async addressOrSymbol => {
-  isAddressOrSymbol(addressOrSymbol);
+  isAddressOrSymbol({ addressOrSymbol });
   const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
 };
 
-const updateRate = async (address, AUM, checksum, options) => {
-  isAddress(address);
-  isNumber(AUM, "AUM");
-  isString(checksum, "checksum");
-  isAddress(options.from, "from");
+const updateRate = async (assetAddress, AUM, checksum, options) => {
+  isAddress({ assetAddress, from: options.from });
+  isNumber({ AUM });
+  isString({ checksum });
   const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
-  const auditDB = await errorHandler(getAuditDBAddress(address));
+  const auditDB = await errorHandler(getAuditDBAddress(assetAddress));
   const instance = createInstance(Audit.abi, auditDB);
   const timestamp = Math.floor(Date.now() / 1000);
   const action = await errorHandler(
@@ -88,16 +87,16 @@ const updateRate = async (address, AUM, checksum, options) => {
 };
 
 const NET = async addressOrSymbol => {
-  isAddressOrSymbol(addressOrSymbol);
+  isAddressOrSymbol({ addressOrSymbol });
   const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));
 };
 
-const getInvestorsCount = async address => {
-  isAddress(address);
-  const RPC = await errorHandler(getRPCAddress(address));
+const getInvestorsCount = async assetAddress => {
+  isAddress({ assetAddress });
+  const RPC = await errorHandler(getRPCAddress(assetAddress));
   const instance = createInstance(RPC_ABI.abi, RPC);
   const investors = await errorHandler(instance.methods.getInvestorsCount().call());
   return Number(investors);

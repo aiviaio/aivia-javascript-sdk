@@ -5,17 +5,17 @@ let provider = null;
 
 const list = {};
 
-const createInstance = (ABI, address) => {
+const createInstance = (ABI, contractAddress) => {
   if (!provider) {
     provider = new Web3(new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER")));
   }
-  const key = JSON.stringify(ABI) + address;
+  const key = JSON.stringify(ABI) + contractAddress;
 
   if (list[key]) {
     return list[key];
   }
 
-  const instance = new provider.eth.Contract(ABI, address);
+  const instance = new provider.eth.Contract(ABI, contractAddress);
   list[key] = instance;
   return instance;
 };

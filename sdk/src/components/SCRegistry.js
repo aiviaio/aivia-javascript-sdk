@@ -1,7 +1,6 @@
 const Assets = require("../ABI/SCRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler } = require("../helpers/errorHandler");
-const Error = require("../helpers/Error");
+const { errorHandler, isAddressOrSymbol, isString, isAddress } = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
@@ -9,7 +8,6 @@ const getList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
   const addressesList = await errorHandler(instance.methods.getAssetsList().call());
-
   const assetsList = addressesList.map(async address => {
     const assets = await instance.methods.getAssetByAddress(address).call();
     const [assetsSymbol, assetsRate] = Object.values(assets);
@@ -22,16 +20,10 @@ const getList = async () => {
 };
 
 const getRate = async addressOrSymbol => {
-  if (utils.is.not.string(addressOrSymbol) && !utils.isAddress(addressOrSymbol)) {
-    Error({
-      name: "params",
-      message: "Acceptable parameters address or symbol token"
-    });
-  }
+  isAddressOrSymbol({ addressOrSymbol });
 
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-
   if (utils.isAddress(addressOrSymbol)) {
     const rate = await errorHandler(instance.methods.getAssetRate(addressOrSymbol).call());
     return utils.fromWei(rate);
@@ -45,12 +37,7 @@ const getRate = async addressOrSymbol => {
 };
 
 const getAddress = async symbol => {
-  if (utils.is.not.string(symbol)) {
-    Error({
-      name: "params",
-      message: "'symbol' must be a string"
-    });
-  }
+  isString({ symbol });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
   const assetAddress = await errorHandler(
@@ -60,17 +47,11 @@ const getAddress = async symbol => {
   return assetAddress;
 };
 
-const getSymbol = async address => {
-  if (utils.is.not.string(address)) {
-    Error({
-      name: "params",
-      message: "'address' must be a string"
-    });
-  }
+const getSymbol = async currencyAddress => {
+  isAddress({ currencyAddress });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-  const hexSymbol = await errorHandler(instance.methods.getSymbol(address).call());
-
+  const hexSymbol = await errorHandler(instance.methods.getSymbol(currencyAddress).call());
   return utils.toUtf8(hexSymbol);
 };
 

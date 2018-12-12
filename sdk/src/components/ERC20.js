@@ -1,40 +1,50 @@
 const ERC20 = require("../ABI/ERC20Mintable");
 const { createInstance, getProvider } = require("../helpers/createInstance");
-const { errorHandler } = require("../helpers/errorHandler");
+const { errorHandler, isAddress, isNumber, isFunction } = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
-const getBalance = async (wallet, address) => {
-  if (address && utils.isAddress(address)) {
-    const instance = createInstance(ERC20.abi, address);
+const getBalance = async (wallet, assetAddress) => {
+  isAddress({ wallet });
+
+  if (assetAddress) {
+    isAddress({ assetAddress });
+  }
+
+  if (assetAddress) {
+    const instance = createInstance(ERC20.abi, assetAddress);
     const balance = await errorHandler(await instance.methods.balanceOf(wallet).call());
     return utils.fromWei(balance);
   }
   const web3 = getProvider();
-
   return utils.fromWei(await web3.eth.getBalance(wallet));
 };
 
-const totalSupply = async address => {
-  const instance = createInstance(ERC20.abi, address);
+const totalSupply = async assetAddress => {
+  isAddress({ assetAddress });
+  const instance = createInstance(ERC20.abi, assetAddress);
   const total = await errorHandler(await instance.methods.totalSupply().call());
   return utils.fromWei(total);
 };
 
-const allowance = async (address, owner, spender) => {
-  const instance = createInstance(ERC20.abi, address);
+const allowance = async (assetAddress, owner, spender) => {
+  isAddress({ assetAddress, owner, spender });
+  const instance = createInstance(ERC20.abi, assetAddress);
   const value = await errorHandler(await instance.methods.allowance(owner, spender).call());
   return utils.fromWei(value);
 };
 
-const approve = async (address, spender, value, options, callback) => {
-  const instance = createInstance(ERC20.abi, address);
+const approve = async (assetAddress, spender, value, options, callback) => {
+  isAddress({ assetAddress, spender, from: options.from });
+  isNumber({ value });
+  isFunction({ callback });
+  const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.approve(spender, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
       from: options.from,
-      to: address,
+      to: assetAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
@@ -43,7 +53,7 @@ const approve = async (address, spender, value, options, callback) => {
   );
 
   const Events = await instance.getPastEvents("Approval", {
-    filter: { to: address, from: options.from },
+    filter: { to: assetAddress, from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
@@ -61,9 +71,12 @@ const approve = async (address, spender, value, options, callback) => {
   return Event;
 };
 
-const mint = async (value, walletAddress, assetAddress, options, callback) => {
+const mint = async (value, to, assetAddress, options, callback) => {
+  isNumber({ value });
+  isAddress({ assetAddress, to, from: options.from });
+  isFunction({ callback });
   const instance = createInstance(ERC20.abi, assetAddress);
-  const action = instance.methods.mint(walletAddress, utils.toWei(value));
+  const action = instance.methods.mint(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
@@ -77,17 +90,17 @@ const mint = async (value, walletAddress, assetAddress, options, callback) => {
   );
 
   const Events = await instance.getPastEvents("Transfer", {
-    filter: { to: walletAddress, from: utils.ZERO_ADDRESS },
+    filter: { to, from: utils.ZERO_ADDRESS },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
+    const [from, _to, _value] = Object.values(returnValues);
     return {
       from,
-      to,
+      to: _to,
       value: utils.fromWei(_value)
     };
   });
@@ -95,24 +108,17 @@ const mint = async (value, walletAddress, assetAddress, options, callback) => {
   return Event;
 };
 
-/**
- *
- * @param {String} address Asset address
- * @param {String} wallet ERC20 wallet address
- * @param {Float} value value
- * @param {Object} options { from, privateKey, gasPrice}
- * @param {String} options.from,
- * @param {String} options.privateKey,
- * @param {Integer} options.gasPrice
- */
-const transfer = async (wallet, value, contractAddress, options, callback) => {
-  const instance = createInstance(ERC20.abi, contractAddress);
-  const action = instance.methods.transfer(wallet, utils.toWei(value));
+const transfer = async (to, value, assetAddress, options, callback) => {
+  isNumber({ value });
+  isAddress({ assetAddress, to, from: options.from });
+  isFunction({ callback });
+  const instance = createInstance(ERC20.abi, assetAddress);
+  const action = instance.methods.transfer(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action.encodeABI(),
       from: options.from,
-      to: contractAddress,
+      to: assetAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
@@ -121,17 +127,17 @@ const transfer = async (wallet, value, contractAddress, options, callback) => {
   );
 
   const Events = await instance.getPastEvents("Transfer", {
-    filter: { to: wallet, from: options.from },
+    filter: { to, from: options.from },
     fromBlock: blockNumber,
     toBlock: "latest"
   });
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;
-    const [from, to, _value] = Object.values(returnValues);
+    const [from, _to, _value] = Object.values(returnValues);
     return {
       from,
-      to,
+      to: _to,
       value: utils.fromWei(_value)
     };
   });
@@ -140,6 +146,9 @@ const transfer = async (wallet, value, contractAddress, options, callback) => {
 };
 
 const transferETH = async (to, value, options, callback) => {
+  isNumber({ value });
+  isAddress({ to, from: options.from });
+  isFunction({ callback });
   await errorHandler(
     signedTX({
       data: undefined,

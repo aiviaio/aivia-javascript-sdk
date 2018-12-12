@@ -9,48 +9,116 @@ const errorHandler = promise => {
   }
 };
 
-const isAddress = (params, name, message) => {
-  if (!utils.isAddress(params)) {
-    Error({
-      name: "params",
-      message: message || `${name || "address"} must be a ethereum address`
-    });
+const isAddress = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (!utils.isAddress(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a ethereum address`
+        });
+      }
+    }
   }
 };
 
-const isInteger = (params, name, message) => {
-  if (utils.is.not.integer(params)) {
-    Error({
-      name: "params",
-      message: message || `${name || "address"} must be integer`
-    });
+const isInteger = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.is.not.integer(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a integer`
+        });
+      }
+    }
   }
 };
 
-const isAddressOrSymbol = (params, name, message) => {
-  if (utils.is.not.string(params) && !utils.isAddress(params)) {
-    Error({
-      name: "params",
-      message: message || `${name || "addressOrSymbol"} must be a address or symbol token`
-    });
+const isAddressOrSymbol = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.is.not.string(value) && !utils.isAddress(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a address or symbol token`
+        });
+      }
+    }
   }
 };
 
-const isString = (params, name, message) => {
-  if (utils.is.not.string(params)) {
-    Error({
-      name: "params",
-      message: message || `${name || "string"} must be a string`
-    });
+const isString = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.is.not.string(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a string`
+        });
+      }
+    }
   }
 };
 
-const isNumber = (params, name, message) => {
-  if (utils.is.not.number(params)) {
-    Error({
-      name: "params",
-      message: message || `${name || "value"} must be a number`
-    });
+const isNumber = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.is.not.number(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a number`
+        });
+      }
+    }
+  }
+};
+
+const isArray = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value =
+        utils.is.object(params[key]) && params[key].value ? params[key].value : params[key];
+      if (!Array.isArray(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a array`
+        });
+      }
+    }
+  }
+};
+
+const isFunction = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (value && utils.is.not.function(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a function`
+        });
+      }
+    }
+  }
+};
+
+const isBoolean = params => {
+  for (const key in params) {
+    if (params.hasOwnProperty(key)) {
+      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      if (utils.is.not.boolean(value)) {
+        Error({
+          name: "params",
+          message: params[key].message || `${key} must be a boolean`
+        });
+      }
+    }
   }
 };
 
@@ -60,5 +128,8 @@ module.exports = {
   isInteger,
   isAddressOrSymbol,
   isString,
-  isNumber
+  isNumber,
+  isArray,
+  isFunction,
+  isBoolean
 };
