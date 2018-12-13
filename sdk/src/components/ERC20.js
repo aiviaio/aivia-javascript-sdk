@@ -41,10 +41,8 @@ const allowance = async (assetAddress, owner, spender) => {
 };
 
 const approve = async (assetAddress, spender, value, options, callback) => {
-  isAddress({ assetAddress, spender, from: options.from });
-  isString({ privateKey: options.privateKey });
+  isAddress({ assetAddress, spender });
   isNumber({ value });
-  isFunction({ callback });
   const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.approve(spender, utils.toWei(value));
   const { blockNumber } = await errorHandler(
@@ -80,9 +78,7 @@ const approve = async (assetAddress, spender, value, options, callback) => {
 
 const mint = async (value, to, assetAddress, options, callback) => {
   isNumber({ value });
-  isAddress({ assetAddress, to, from: options.from });
-  isString({ privateKey: options.privateKey });
-  isFunction({ callback });
+  isAddress({ assetAddress, to });
   const instance = createInstance(ERC20.abi, assetAddress);
   const action = instance.methods.mint(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
@@ -161,7 +157,6 @@ const transferETH = async (to, value, options, callback) => {
   isFunction({ callback });
   await errorHandler(
     signedTX({
-      data: undefined,
       from: options.from,
       to,
       privateKey: options.privateKey,

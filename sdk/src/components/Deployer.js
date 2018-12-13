@@ -2,24 +2,13 @@ const Proxy = require("../ABI/Proxy");
 const AssetsRegistry = require("./AssetsRegistry");
 const signedTX = require("../helpers/signedTX");
 const { createInstance } = require("../helpers/createInstance");
-const {
-  errorHandler,
-  isObject,
-  isInteger,
-  isFunction,
-  isAddress,
-  isString,
-  isZeroAddress
-} = require("../helpers/errorHandler");
+const { errorHandler, isObject, isInteger, isZeroAddress } = require("../helpers/errorHandler");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 
 const deployProject = async (type, params, options, callback) => {
   isInteger({ type });
   isObject({ params, options });
-  isAddress({ from: options.from });
-  isString({ privateKey: options.privateKey });
-  isFunction({ callback });
   const { tokenSymbol } = params.tokenDetails;
 
   const tokenAddress = await AssetsRegistry.getAssetAddress(tokenSymbol);

@@ -1,12 +1,5 @@
 const { createInstance } = require("../helpers/createInstance");
-const {
-  errorHandler,
-  isAddress,
-  isInteger,
-  isArray,
-  isFunction,
-  isString
-} = require("../helpers/errorHandler");
+const { errorHandler, isAddress, isInteger, isArray } = require("../helpers/errorHandler");
 const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");
 const signedTX = require("../helpers/signedTX");
@@ -26,11 +19,9 @@ const getConfigDirectly = async configAddress => {
 };
 
 const updatePermission = async (configAddress, countryID, walletTypes, options, callback) => {
-  isAddress({ configAddress, from: options.from });
-  isString({ privateKey: options.privateKey });
+  isAddress({ configAddress });
   isInteger({ countryID });
   isArray({ walletTypes });
-  isFunction({ callback });
   const instance = createInstance(ABI.updatePermission, configAddress);
   const action = await errorHandler(
     instance.methods.updatePermissionByCountry(countryID, walletTypes)

@@ -11,6 +11,7 @@ const TPLRegistry = require("./components/TPLRegistry");
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
 const { estimateTX } = require("./helpers/estimateTX");
+const getNonce = require("./helpers/getNonce");
 const { getProvider } = require("./helpers/createInstance");
 const Ratings = require("./components/Ratings");
 
@@ -21,12 +22,13 @@ function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 30000000000) {
   config.init(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE);
 }
 
-// @dev options = {from: "address", privateKey: "private key", gasPrice: "gas price"}
+// @dev options = {from: "address", privateKey: "private key", gasPrice: "gas price", nonce: "default undefined"}
 
 SDK.prototype = {
   utils: {
     isDeployer: deployerAddress => Proxy.isDeployer(deployerAddress),
     isAuditor: (auditorAddress, type) => Proxy.isAuditor(auditorAddress, type),
+    getNonce: address => getNonce(address),
     provider: () => getProvider()
   },
 
