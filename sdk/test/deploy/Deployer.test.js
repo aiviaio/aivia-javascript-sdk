@@ -38,7 +38,7 @@ describe("Deploy", () => {
           permissions: {
             countries: [1],
             walletTypes: [1],
-            rule: undefined
+            rule: false
           }
         },
         getUser("projectOwner")
