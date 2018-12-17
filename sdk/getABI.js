@@ -15,7 +15,6 @@ const list = [
   "ERC20Mintable",
   "ProjectConfig",
   "PlatformToken",
-  "OpenEndDeployer",
   "TrueUSD",
   "PlatformRegistry",
   "TPLRegistry",
