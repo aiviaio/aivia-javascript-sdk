@@ -25,7 +25,7 @@ describe("Deploy", () => {
       const project = await SDK.project.deploy(
         1,
         {
-          projectName: "Open-End Project",
+          projectName: "Crypto Hedge Project",
           tokenDetails: {
             tokenName: "Token from SDK",
             tokenSymbol: `ST${projectList.length}`,

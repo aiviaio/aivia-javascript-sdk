@@ -20,11 +20,6 @@ describe("Proxy", () => {
   });
 
   describe("isDeployer", () => {
-    it("return true status", async () => {
-      const { address } = require("../../src/ABI/OpenEndDeployer");
-      const status = await SDK.utils.isDeployer(address);
-      expect(status).to.equal(true);
-    });
     it("return false status", async () => {
       const { address } = require("../../src/ABI/Proxy");
       const status = await SDK.utils.isDeployer(address);
