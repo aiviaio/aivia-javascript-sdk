@@ -24,6 +24,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "generate-export-aliases": "^1.1.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
     "prettier": "^1.14.3"
   },
@@ -31,7 +32,8 @@
     "test": " mocha ./test/index.js --timeout=13000",
     "abi": "MODE=dev node ./getABI.js",
     "build": "babel src -d dist",
-    "prepublish": "generate-export-aliases"
+    "prepublish": "generate-export-aliases",
+    "docs": "node ./docs.js"
   },
   "config": {
     "exportAliases": {

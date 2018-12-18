@@ -48,7 +48,7 @@ SDK.prototype = {
     getAuditDBAddress: addressOrSymbol => Asset.getAuditDBAddress(addressOrSymbol),
     getRPCAddress: addressOrSymbol => Asset.getRPCAddress(addressOrSymbol),
     getRate: addressOrSymbol => Asset.getRate(addressOrSymbol),
-    getInvestors: assetAddress => Asset.getInvestorsCount(assetAddress),
+    getInvestors: assetAddress => Asset.getInvestors(assetAddress),
 
     // audit DB
     updateRate: (assetAddress, AUM, checksum, options) =>
