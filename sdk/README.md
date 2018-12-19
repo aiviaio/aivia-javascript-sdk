@@ -7,11 +7,7 @@
 <dd></dd>
 <dt><a href="#module_ERC20">ERC20</a></dt>
 <dd></dd>
-<dt><a href="#module_DEV">DEV</a></dt>
-<dd></dd>
-<dt><a href="#module_Buy">Buy</a></dt>
-<dd></dd>
-<dt><a href="#module_Sell">Sell</a></dt>
+<dt><a href="#module_Buy/Sell">Buy/Sell</a></dt>
 <dd></dd>
 </dl>
 
@@ -194,6 +190,7 @@ returns asset symbol by address
     * [.approve(assetAddress, spender, value, options, callback)](#module_ERC20.approve) ⇒ <code>event</code>
     * [.transfer(to, value, assetAddress, options, callback)](#module_ERC20.transfer) ⇒ <code>event</code>
     * [.transferETH(to, value, options, callback)](#module_ERC20.transferETH) ⇒ <code>event</code>
+    * [.mint(value, to, assetAddress, options, callback)](#module_ERC20.mint) ⇒ <code>event</code>
 
 
 * * *
@@ -308,18 +305,12 @@ transfer ETH value to other address
 
 * * *
 
-<a name="module_DEV"></a>
+<a name="module_ERC20.mint"></a>
 
-## DEV
-
-* * *
-
-<a name="module_DEV.mint"></a>
-
-### SDK.dev.mint(value, to, assetAddress, options, callback) ⇒ <code>event</code>
+### SDK.asset.mint(value, to, assetAddress, options, callback) ⇒ <code>event</code>
 mint asset value to other wallet from contract owner
 
-**Kind**: static method of [<code>DEV</code>](#module_DEV)  
+**Kind**: static method of [<code>ERC20</code>](#module_ERC20)  
 **Returns**: <code>event</code> - transaction event {from, to, value}  
 
 | Param | Type | Description |
@@ -336,23 +327,25 @@ mint asset value to other wallet from contract owner
 
 * * *
 
-<a name="module_Buy"></a>
+<a name="module_Buy/Sell"></a>
 
-## Buy
+## Buy/Sell
 
-* [Buy](#module_Buy)
-    * [.checkBeforeBuy(value, assetAddress, currencyAddress, from)](#module_Buy.checkBeforeBuy) ⇒ <code>true</code> \| <code>error</code>
-    * [.buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy.buyAsset) ⇒ <code>event</code>
+* [Buy/Sell](#module_Buy/Sell)
+    * [.checkBeforeBuy(value, assetAddress, currencyAddress, from)](#module_Buy/Sell.checkBeforeBuy) ⇒ <code>true</code> \| <code>error</code>
+    * [.buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy/Sell.buyAsset) ⇒ <code>event</code>
+    * [.checkBeforeSell(value, assetAddress, options)](#module_Buy/Sell.checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
+    * [.sellAsset(value, assetAddress, options, callback)](#module_Buy/Sell.sellAsset) ⇒ <code>event</code>
 
 
 * * *
 
-<a name="module_Buy.checkBeforeBuy"></a>
+<a name="module_Buy/Sell.checkBeforeBuy"></a>
 
 ### SDK.trade.checkBeforeBuy(value, assetAddress, currencyAddress, from) ⇒ <code>true</code> \| <code>error</code>
 the method by which you can first check the parameters before buy
 
-**Kind**: static method of [<code>Buy</code>](#module_Buy)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>true</code> \| <code>error</code> - ;  
 
 | Param | Type | Description |
@@ -365,12 +358,12 @@ the method by which you can first check the parameters before buy
 
 * * *
 
-<a name="module_Buy.buyAsset"></a>
+<a name="module_Buy/Sell.buyAsset"></a>
 
 ### SDK.trade.buyAsset(value, assetAddress, currencyAddress, options, callback) ⇒ <code>event</code>
 purchase of tokens
 
-**Kind**: static method of [<code>Buy</code>](#module_Buy)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>event</code> - transaction event {spend, received, fees: { manager, platform } }  
 
 | Param | Type | Description |
@@ -387,23 +380,12 @@ purchase of tokens
 
 * * *
 
-<a name="module_Sell"></a>
-
-## Sell
-
-* [Sell](#module_Sell)
-    * [.checkBeforeSell(value, assetAddress, options)](#module_Sell.checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
-    * [.sellAsset(value, assetAddress, options, callback)](#module_Sell.sellAsset) ⇒ <code>event</code>
-
-
-* * *
-
-<a name="module_Sell.checkBeforeSell"></a>
+<a name="module_Buy/Sell.checkBeforeSell"></a>
 
 ### SDK.trade.checkBeforeSell(value, assetAddress, options) ⇒ <code>true</code> \| <code>error</code>
 the method by which you can first check the parameters before sell
 
-**Kind**: static method of [<code>Sell</code>](#module_Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>true</code> \| <code>error</code> - ;  
 
 | Param | Type | Description |
@@ -416,12 +398,12 @@ the method by which you can first check the parameters before sell
 
 * * *
 
-<a name="module_Sell.sellAsset"></a>
+<a name="module_Buy/Sell.sellAsset"></a>
 
 ### SDK.trade.sellAsset(value, assetAddress, options, callback) ⇒ <code>event</code>
 sale of tokens
 
-**Kind**: static method of [<code>Sell</code>](#module_Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>event</code> - transaction event {spend, received, fees: { manager, platform } }  
 
 | Param | Type | Description |

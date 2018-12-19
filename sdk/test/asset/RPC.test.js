@@ -51,7 +51,7 @@ describe("RPC", () => {
     const platformWallet = await SDK.platform.wallet();
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
-    await SDK.dev.mint(200, user, TUSD, getUser("trueUSDOwner"));
+    await SDK.asset.mint(200, user, TUSD, getUser("trueUSDOwner"));
     const { owner, token } = projectList[0];
     const AIV_USER = await SDK.asset.getBalance(user, AIV);
     const AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
@@ -91,7 +91,7 @@ describe("RPC", () => {
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
-    await SDK.dev.mint(200, custodian, TUSD, getUser("trueUSDOwner"));
+    await SDK.asset.mint(200, custodian, TUSD, getUser("trueUSDOwner"));
 
     const { spend, received } = await SDK.trade.sell(amount.TOKEN, token, getUser("user"));
     const TUSD_USER_DIFF = (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;

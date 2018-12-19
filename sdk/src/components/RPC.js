@@ -20,7 +20,7 @@ const createCurrenciesInstances = async () => {
 };
 
 /**
- * @module Buy
+ * @module Buy/Sell
  * @typicalname SDK.trade
  */
 
@@ -132,11 +132,6 @@ exports.buyAsset = async (value, assetAddress, currencyAddress, options, callbac
     }
   };
 };
-
-/**
- * @module Sell
- * @typicalname SDK.trade
- */
 
 /**
  * the method by which you can first check the parameters before sell

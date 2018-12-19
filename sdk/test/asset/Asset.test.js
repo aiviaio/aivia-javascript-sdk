@@ -39,7 +39,7 @@ describe("Asset", () => {
 
     it("update permission", async () => {
       const { config } = projectList[0];
-      await SDK.dev.updatePermission(config, 1, [0], getUser("projectOwner"));
+      await SDK.project.updatePermission(config, 1, [0], getUser("projectOwner"));
     });
   });
 });

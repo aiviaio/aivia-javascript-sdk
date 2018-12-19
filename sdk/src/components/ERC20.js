@@ -193,11 +193,6 @@ exports.transferETH = async (to, value, options, callback) => {
 };
 
 /**
- * @module DEV
- * @typicalname SDK.dev
- */
-
-/**
  * mint asset value to other wallet from contract owner
  * @param {number} value amount of asset
  * @param {address} to wallet address

@@ -65,7 +65,9 @@ SDK.prototype = {
     allowance: (assetAddress, owner, spender) => ERC20.allowance(assetAddress, owner, spender),
     transfer: (to, value, assetAddress, options, callback) =>
       ERC20.transfer(to, value, assetAddress, options, callback),
-    transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback)
+    transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback),
+    mint: (value, to, assetAddress, options, callback) =>
+      ERC20.mint(value, to, assetAddress, options, callback)
   },
 
   trade: {
@@ -85,7 +87,9 @@ SDK.prototype = {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: configAddress => Config.getConfigDirectly(configAddress),
     deploy: (type, params, options, callback) =>
-      Deployer.deployProject(type, params, options, callback)
+      Deployer.deployProject(type, params, options, callback),
+    updatePermission: (configAddress, countryID, walletTypes, options, callback) =>
+      Config.updatePermission(configAddress, countryID, walletTypes, options, callback)
   },
 
   platform: {
@@ -109,13 +113,6 @@ SDK.prototype = {
   custodian: {
     getList: () => CustodiansRegistry.getList(),
     getDetails: custodianAddress => CustodiansRegistry.getDetails(custodianAddress)
-  },
-
-  dev: {
-    mint: (value, to, assetAddress, options, callback) =>
-      ERC20.mint(value, to, assetAddress, options, callback),
-    updatePermission: (configAddress, countryID, walletTypes, options, callback) =>
-      Config.updatePermission(configAddress, countryID, walletTypes, options, callback)
   }
 };
 
