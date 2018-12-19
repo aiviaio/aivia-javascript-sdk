@@ -10,7 +10,18 @@ const {
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
-const getBalance = async (wallet, assetAddress) => {
+/**
+ * @module ERC20
+ * @typicalname SDK.asset
+ */
+
+/**
+ * returns asset balance by assetAddress or ETH balance
+ * @param {address} wallet
+ * @param {Address=} assetAddress
+ * @returns {balance}
+ */
+exports.getBalance = async (wallet, assetAddress) => {
   isAddress({ wallet });
 
   if (assetAddress) {
@@ -26,21 +37,45 @@ const getBalance = async (wallet, assetAddress) => {
   return utils.fromWei(await web3.eth.getBalance(wallet));
 };
 
-const totalSupply = async assetAddress => {
+/**
+ * returns asset totalSupply
+ * @param {address} assetAddress
+ * @return {totalSupply}
+ */
+exports.totalSupply = async assetAddress => {
   isAddress({ assetAddress });
   const instance = createInstance(ERC20.abi, assetAddress);
   const total = await errorHandler(await instance.methods.totalSupply().call());
   return utils.fromWei(total);
 };
 
-const allowance = async (assetAddress, owner, spender) => {
+/**
+ * returns amount approved by owner to spender
+ * @param {address} assetAddress
+ * @param {address} owner
+ * @param {address} spender
+ * @return {allowance}
+ */
+exports.allowance = async (assetAddress, owner, spender) => {
   isAddress({ assetAddress, owner, spender });
   const instance = createInstance(ERC20.abi, assetAddress);
   const value = await errorHandler(await instance.methods.allowance(owner, spender).call());
   return utils.fromWei(value);
 };
 
-const approve = async (assetAddress, spender, value, options, callback) => {
+/**
+ * allows spender to manage a certain amount of assets
+ * @param {address} assetAddress asset address
+ * @param {address} spender spender wallet address
+ * @param {number} value amount of asset
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {from, to, value}
+ */
+exports.approve = async (assetAddress, spender, value, options, callback) => {
   isAddress({ assetAddress, spender });
   isNumber({ value });
   const instance = createInstance(ERC20.abi, assetAddress);
@@ -76,43 +111,20 @@ const approve = async (assetAddress, spender, value, options, callback) => {
   return Event;
 };
 
-const mint = async (value, to, assetAddress, options, callback) => {
-  isNumber({ value });
-  isAddress({ assetAddress, to });
-  const instance = createInstance(ERC20.abi, assetAddress);
-  const action = instance.methods.mint(to, utils.toWei(value));
-  const { blockNumber } = await errorHandler(
-    signedTX({
-      data: action.encodeABI(),
-      from: options.from,
-      to: assetAddress,
-      privateKey: options.privateKey,
-      gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit,
-      callback
-    })
-  );
+/**
+ * transfer ERC20 asset value to other address
+ * @param {address} to wallet address
+ * @param {number} value amount of asset
+ * @param {address} assetAddress asset address
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {from, to, value}
+ */
 
-  const Events = await instance.getPastEvents("Transfer", {
-    filter: { to, from: utils.ZERO_ADDRESS },
-    fromBlock: blockNumber,
-    toBlock: "latest"
-  });
-
-  const [Event] = Events.map(event => {
-    const { returnValues } = event;
-    const [from, _to, _value] = Object.values(returnValues);
-    return {
-      from,
-      to: _to,
-      value: utils.fromWei(_value)
-    };
-  });
-
-  return Event;
-};
-
-const transfer = async (to, value, assetAddress, options, callback) => {
+exports.transfer = async (to, value, assetAddress, options, callback) => {
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
   isString({ privateKey: options.privateKey });
@@ -150,7 +162,19 @@ const transfer = async (to, value, assetAddress, options, callback) => {
   return Event;
 };
 
-const transferETH = async (to, value, options, callback) => {
+/**
+ * transfer ETH value to other address
+ * @param {address} to wallet address
+ * @param {number} value amount of asset
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {from, to, value}
+ */
+
+exports.transferETH = async (to, value, options, callback) => {
   isNumber({ value });
   isAddress({ to, from: options.from });
   isString({ privateKey: options.privateKey });
@@ -168,12 +192,55 @@ const transferETH = async (to, value, options, callback) => {
   );
 };
 
-module.exports = {
-  getBalance,
-  totalSupply,
-  mint,
-  allowance,
-  approve,
-  transfer,
-  transferETH
+/**
+ * @module DEV
+ * @typicalname SDK.dev
+ */
+
+/**
+ * mint asset value to other wallet from contract owner
+ * @param {number} value amount of asset
+ * @param {address} to wallet address
+ * @param {address} assetAddress asset address
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {from, to, value}
+ */
+exports.mint = async (value, to, assetAddress, options, callback) => {
+  isNumber({ value });
+  isAddress({ assetAddress, to });
+  const instance = createInstance(ERC20.abi, assetAddress);
+  const action = instance.methods.mint(to, utils.toWei(value));
+  const { blockNumber } = await errorHandler(
+    signedTX({
+      data: action.encodeABI(),
+      from: options.from,
+      to: assetAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      callback
+    })
+  );
+
+  const Events = await instance.getPastEvents("Transfer", {
+    filter: { to, from: utils.ZERO_ADDRESS },
+    fromBlock: blockNumber,
+    toBlock: "latest"
+  });
+
+  const [Event] = Events.map(event => {
+    const { returnValues } = event;
+    const [from, _to, _value] = Object.values(returnValues);
+    return {
+      from,
+      to: _to,
+      value: utils.fromWei(_value)
+    };
+  });
+
+  return Event;
 };

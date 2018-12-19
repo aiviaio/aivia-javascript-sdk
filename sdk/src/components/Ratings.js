@@ -3,7 +3,7 @@ const Asset = require("./Asset");
 const { errorHandler } = require("../helpers/errorHandler");
 
 const getRatingsList = async () => {
-  const addressesList = await errorHandler(AssetsRegistry.getAssetsList());
+  const addressesList = await errorHandler(AssetsRegistry.getList());
   const tokensList = addressesList.map(async ({ address }) => {
     const symbol = await AssetsRegistry.getAssetSymbol(address);
     const price = await Asset.getRate(address);

@@ -40,7 +40,7 @@ SDK.prototype = {
     getRatingsList: () => Ratings.getRatingsList(),
 
     // AssetsRegistry
-    getList: () => AssetsRegistry.getAssetsList(),
+    getList: () => AssetsRegistry.getList(),
     getAssetAddress: symbol => AssetsRegistry.getAssetAddress(symbol),
     getAssetSymbol: assetAddress => AssetsRegistry.getAssetSymbol(assetAddress),
 
@@ -69,11 +69,14 @@ SDK.prototype = {
   },
 
   trade: {
-    // @dev callback return tx hash
+    checkBeforeBuy: (value, assetAddress, currencyAddress, from) =>
+      RPC.checkBeforeBuy(value, assetAddress, currencyAddress, from),
     buy: (value, assetAddress, currencyAddress, options, callback) =>
       RPC.buyAsset(value, assetAddress, currencyAddress, options, callback),
+    checkBeforeSell: (value, assetAddress, from) => RPC.checkBeforeSell(value, assetAddress, from),
     sell: (value, assetAddress, options, callback) =>
       RPC.sellAsset(value, assetAddress, options, callback),
+
     estimate: (value, assetAddress, currencyAddress) =>
       estimateTX(value, assetAddress, currencyAddress)
   },

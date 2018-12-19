@@ -19,20 +19,50 @@ const createCurrenciesInstances = async () => {
   storage.AIV = storage.AIV || createInstance(ERC20ABI, storage.AIVAddress);
 };
 
-const checkBeforeBuy = async (value, assetAddress, currencyAddress, options) => {
+/**
+ * @module Buy
+ * @typicalname SDK.trade
+ */
+
+/**
+ * the method by which you can first check the parameters before buy
+ * @param {number} value the amount of the asset that
+ * will be exchanged for the assets you want to buy
+ * @param {address} assetAddress asset address that will be bought
+ * @param {address} currencyAddress address of the asset to be sold
+ * @param {address} from wallet address
+ * @returns {true|error};
+ */
+
+exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
   isNumber({ value });
-  isAddress({ assetAddress, currencyAddress });
+  isAddress({ assetAddress, currencyAddress, from });
   await createCurrenciesInstances();
   storage.asset = createInstance(ERC20ABI, assetAddress);
   storage.currency = createInstance(ERC20ABI, currencyAddress);
-  const balance = await storage.currency.methods.balanceOf(options.from).call();
+  const balance = await storage.currency.methods.balanceOf(from).call();
   if (balance < Number(value)) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
+  return true;
 };
 
-const buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
-  await checkBeforeBuy(value, assetAddress, currencyAddress, options);
+/**
+ * purchase of tokens
+ * @param {number} value the amount of the asset that
+ * will be exchanged for the assets you want to buy
+ * @param {address} assetAddress asset address that will be bought
+ * @param {address} currencyAddress address of the asset to be sold
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {spend, received, fees: { manager, platform } }
+ */
+
+exports.buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
+  await this.checkBeforeBuy(value, assetAddress, currencyAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
@@ -95,27 +125,53 @@ const buyAsset = async (value, assetAddress, currencyAddress, options, callback)
 
   return {
     spend,
+    received,
     fees: {
       manager,
       platform
-    },
-    received
+    }
   };
 };
 
-const checkBeforeSell = async (value, assetAddress, options) => {
+/**
+ * @module Sell
+ * @typicalname SDK.trade
+ */
+
+/**
+ * the method by which you can first check the parameters before sell
+ * @param {number} value the amount of the asset that  will be sold
+ * @param {address} assetAddress asset address that will be sold
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @returns {true|error};
+ */
+
+exports.checkBeforeSell = async (value, assetAddress, from) => {
   isNumber({ value });
-  isAddress({ assetAddress });
+  isAddress({ assetAddress, from });
   await createCurrenciesInstances();
   storage.asset = createInstance(ERC20ABI, assetAddress);
-  const balance = await storage.asset.methods.balanceOf(options.from).call();
+  const balance = await storage.asset.methods.balanceOf(from).call();
   if (balance < Number(value)) {
     Error({ name: "transaction", message: "Not enough funds on balance" });
   }
+  return true;
 };
 
-const sellAsset = async (value, assetAddress, options, callback) => {
-  await checkBeforeSell(value, assetAddress, options);
+/**
+ * sale of tokens
+ * @param {number} value the amount of the asset that will be sold
+ * @param {address} assetAddress asset address that will be sold
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {event} transaction event {spend, received, fees: { manager, platform } }
+ */
+exports.sellAsset = async (value, assetAddress, options, callback) => {
+  await this.checkBeforeSell(value, assetAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.sellAsset(utils.toWei(value));
@@ -173,9 +229,4 @@ const sellAsset = async (value, assetAddress, options, callback) => {
       platform
     }
   };
-};
-
-module.exports = {
-  buyAsset,
-  sellAsset
 };

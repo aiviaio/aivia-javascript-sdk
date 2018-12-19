@@ -13,7 +13,7 @@ const Config = require("./Config");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 /**
- * @module asset
+ * @module Asset
  * @typicalname SDK.asset
  */
 
@@ -29,7 +29,6 @@ const getAddressWithKey = async addressOrSymbol => {
 
 /**
  * returns AuditDB address
- * @async
  * @param {String|Address} addressOrSymbol
  * @returns {AuditDBAddress} AuditDB address
  */
@@ -42,7 +41,6 @@ exports.getAuditDBAddress = async addressOrSymbol => {
 
 /**
  * returns asset RPC address
- * @async
  * @param {String|Address} addressOrSymbol
  * @returns {RPCAddress} RPC address
  */
@@ -55,7 +53,6 @@ exports.getRPCAddress = async addressOrSymbol => {
 
 /**
  * returns asset rate by address or symbol
- * @async
  * @param {String|Address} addressOrSymbol
  * @returns {rate} current(last) rate
  */
@@ -69,16 +66,15 @@ exports.getRate = async addressOrSymbol => {
 
 /**
  * function to update the price of the asset rate
- * @async
  * @access only auditors
- * @param {Address} assetAddress asset address
- * @param {Number} AUM project total aum
- * @param {String} checksum md5 checksum
- * @param {Object} options
- * @param {Address} options.address wallet address
- * @param {String} options.privateKey private key
- * @param {Number} options.gasPrice gas price
- * @returns {event}  event transactions {rate, auditor}
+ * @param {address} assetAddress asset address
+ * @param {number} AUM project total aum
+ * @param {string} checksum md5 checksum
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @returns {event} transaction event {rate, auditor}
  */
 exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   isAddress({ assetAddress });
@@ -122,6 +118,11 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   return Event;
 };
 
+/**
+ * returns asset NET by address or symbol
+ * @param {String|Address} addressOrSymbol
+ * @returns {NET}
+ */
 exports.NET = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
   const auditDB = await errorHandler(this.getAuditDBAddress(addressOrSymbol));
@@ -129,7 +130,11 @@ exports.NET = async addressOrSymbol => {
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));
 };
-
+/**
+ * returns asset investors count by address
+ * @param {address} addressOrSymbol
+ * @returns {investors}
+ */
 exports.getInvestors = async assetAddress => {
   isAddress({ assetAddress });
   const RPC = await errorHandler(this.getRPCAddress(assetAddress));
