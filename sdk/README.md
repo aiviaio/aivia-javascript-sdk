@@ -9,6 +9,8 @@
 <dd></dd>
 <dt><a href="#module_Buy/Sell">Buy/Sell</a></dt>
 <dd></dd>
+<dt><a href="#module_utils">utils</a></dt>
+<dd></dd>
 </dl>
 
 <a name="module_Asset"></a>
@@ -336,6 +338,7 @@ mint asset value to other wallet from contract owner
     * [.buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy/Sell.buyAsset) ⇒ <code>event</code>
     * [.checkBeforeSell(value, assetAddress, options)](#module_Buy/Sell.checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
     * [.sellAsset(value, assetAddress, options, callback)](#module_Buy/Sell.sellAsset) ⇒ <code>event</code>
+    * [.estimate(value, assetAddress, [currencyAddress])](#module_Buy/Sell.estimate) ⇒ <code>estimate</code>
 
 
 * * *
@@ -415,6 +418,142 @@ sale of tokens
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | callback | <code>function</code> | function(hash) |
+
+
+* * *
+
+<a name="module_Buy/Sell.estimate"></a>
+
+### SDK.trade.estimate(value, assetAddress, [currencyAddress]) ⇒ <code>estimate</code>
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+**Returns**: <code>estimate</code> - ;  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>number</code> | the amount of the asset |
+| assetAddress | <code>address</code> | asset address |
+| [currencyAddress] | <code>address</code> | currency address |
+
+
+* * *
+
+<a name="module_utils"></a>
+
+## utils
+
+* [utils](#module_utils)
+    * [.toHex(string)](#module_utils.toHex) ⇒ <code>hex</code>
+    * [.toWei(value)](#module_utils.toWei) ⇒ <code>value</code>
+    * [.fromWei(value)](#module_utils.fromWei) ⇒ <code>value</code>
+    * [.isAddress(address)](#module_utils.isAddress) ⇒ <code>boolean</code>
+    * [.toUtf8(hex)](#module_utils.toUtf8) ⇒ <code>string</code>
+    * [.toFixed(value, [digits])](#module_utils.toFixed) ⇒ <code>value</code>
+    * [.numberToHex(value)](#module_utils.numberToHex) ⇒ <code>string</code>
+
+
+* * *
+
+<a name="module_utils.toHex"></a>
+
+### SDK.utils.toHex(string) ⇒ <code>hex</code>
+convert string to hex
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>hex</code> - the resulting HEX string;  
+
+| Param | Type |
+| --- | --- |
+| string | <code>string</code> | 
+
+
+* * *
+
+<a name="module_utils.toWei"></a>
+
+### SDK.utils.toWei(value) ⇒ <code>value</code>
+converts any value value into wei
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>value</code> - ;  
+
+| Param | Type |
+| --- | --- |
+| value | <code>number</code> | 
+
+
+* * *
+
+<a name="module_utils.fromWei"></a>
+
+### SDK.utils.fromWei(value) ⇒ <code>value</code>
+converts any value from wei
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>value</code> - ;  
+
+| Param | Type |
+| --- | --- |
+| value | <code>number</code> | 
+
+
+* * *
+
+<a name="module_utils.isAddress"></a>
+
+### SDK.utils.isAddress(address) ⇒ <code>boolean</code>
+check if a given string is a valid Ethereum address
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>boolean</code> - status;  
+
+| Param | Type |
+| --- | --- |
+| address | <code>address</code> | 
+
+
+* * *
+
+<a name="module_utils.toUtf8"></a>
+
+### SDK.utils.toUtf8(hex) ⇒ <code>string</code>
+converts any value from hex to string
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>string</code> - ;  
+
+| Param | Type |
+| --- | --- |
+| hex | <code>string</code> | 
+
+
+* * *
+
+<a name="module_utils.toFixed"></a>
+
+### SDK.utils.toFixed(value, [digits]) ⇒ <code>value</code>
+formats a number using fixed-point notation
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | <code>number</code> |  |  |
+| [digits] | <code>number</code> | <code>5</code> | digits it's number of digits to appear after the decimal point; |
+
+
+* * *
+
+<a name="module_utils.numberToHex"></a>
+
+### SDK.utils.numberToHex(value) ⇒ <code>string</code>
+covert number to hex
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>string</code> - number;  
+
+| Param | Type |
+| --- | --- |
+| value | <code>value</code> | 
 
 
 * * *

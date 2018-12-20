@@ -10,7 +10,6 @@ const PlatformRegistry = require("./components/PlatformRegistry");
 const TPLRegistry = require("./components/TPLRegistry");
 const Asset = require("./components/Asset");
 const Config = require("./components/Config");
-const { estimateTX } = require("./helpers/estimateTX");
 const getNonce = require("./helpers/getNonce");
 const { getProvider } = require("./helpers/createInstance");
 const Ratings = require("./components/Ratings");
@@ -21,8 +20,6 @@ const ERC20 = require("./components/ERC20");
 function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 30000000000) {
   config.init(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE);
 }
-
-// @dev options = {from: "address", privateKey: "private key", gasPrice: "gas price", nonce: "default undefined"}
 
 SDK.prototype = {
   utils: {
@@ -80,7 +77,7 @@ SDK.prototype = {
       RPC.sellAsset(value, assetAddress, options, callback),
 
     estimate: (value, assetAddress, currencyAddress) =>
-      estimateTX(value, assetAddress, currencyAddress)
+      RPC.estimate(value, assetAddress, currencyAddress)
   },
 
   project: {

@@ -9,6 +9,7 @@ const signedTX = require("../helpers/signedTX");
 const { errorHandler, isNumber, isAddress } = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
+const { estimateTX } = require("../helpers/estimateTX");
 
 const storage = {};
 
@@ -18,7 +19,6 @@ const createCurrenciesInstances = async () => {
   storage.TUSD = storage.TUSD || createInstance(ERC20ABI, storage.TUSDAddress);
   storage.AIV = storage.AIV || createInstance(ERC20ABI, storage.AIVAddress);
 };
-
 /**
  * @module Buy/Sell
  * @typicalname SDK.trade
@@ -33,7 +33,6 @@ const createCurrenciesInstances = async () => {
  * @param {address} from wallet address
  * @returns {true|error};
  */
-
 exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
   isNumber({ value });
   isAddress({ assetAddress, currencyAddress, from });
@@ -225,3 +224,14 @@ exports.sellAsset = async (value, assetAddress, options, callback) => {
     }
   };
 };
+
+/**
+ *
+ * @param {number} value the amount of the asset
+ * @param {address} assetAddress asset address
+ * @param {address=} currencyAddress currency address
+ * @returns {estimate};
+ */
+
+exports.estimate = (value, assetAddress, currencyAddress) =>
+  estimateTX(value, assetAddress, currencyAddress);
