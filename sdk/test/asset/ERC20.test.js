@@ -48,4 +48,9 @@ describe("ERC20", () => {
     const _ETH = await SDK.asset.getBalance(getAddress("otherUser"));
     expect(utils.toFixed(_ETH - ETH)).to.equal(amount);
   });
+
+  it("should transfer ETH to other", async () => {
+    const amount = "0.00000000000000007";
+    await SDK.asset.transferETH(getAddress("otherUser"), amount, getUser("user"));
+  });
 });

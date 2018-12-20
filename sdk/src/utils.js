@@ -17,7 +17,7 @@ exports.toHex = string => web3.utils.utf8ToHex(string);
 /**
  * converts any value value into wei
  * @param {number} value
- * @returns {value} ;
+ * @returns {value}
  */
 exports.toWei = value => web3.utils.toWei(value.toString(), "ether");
 

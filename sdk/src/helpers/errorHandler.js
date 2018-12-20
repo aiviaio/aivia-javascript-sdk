@@ -69,7 +69,7 @@ const isNumber = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
       const value = utils.is.object(params[key]) ? params[key].value : params[key];
-      if (utils.is.not.number(value)) {
+      if (utils.is.not.number(value) && utils.is.not.number(Number(value))) {
         Error({
           name: "params",
           message: params[key].message || `${key} must be a number`
