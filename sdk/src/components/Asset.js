@@ -32,7 +32,7 @@ const getAddressWithKey = async addressOrSymbol => {
  * @param {String|Address} addressOrSymbol
  * @returns {AuditDBAddress} AuditDB address
  */
-const getAuditDBAddress = async addressOrSymbol => {
+exports.getAuditDBAddress = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
   const address = await getAddressWithKey(addressOrSymbol);
   const { auditDB } = await errorHandler(Config.getConfig(address));
@@ -44,7 +44,7 @@ const getAuditDBAddress = async addressOrSymbol => {
  * @param {String|Address} addressOrSymbol
  * @returns {RPCAddress} RPC address
  */
-const getRPCAddress = async addressOrSymbol => {
+exports.getRPCAddress = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
   const address = await errorHandler(getAddressWithKey(addressOrSymbol));
   const { RPC } = await Config.getConfig(address);
@@ -56,9 +56,9 @@ const getRPCAddress = async addressOrSymbol => {
  * @param {String|Address} addressOrSymbol
  * @returns {rate} current(last) rate
  */
-const getRate = async addressOrSymbol => {
+exports.getRate = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
-  const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
+  const auditDB = await errorHandler(module.exports.getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
@@ -76,12 +76,12 @@ const getRate = async addressOrSymbol => {
  * @param {number} options.gasPrice gas price
  * @returns {event} transaction event {rate, auditor}
  */
-const updateRate = async (assetAddress, AUM, checksum, options) => {
+exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   isAddress({ assetAddress });
   isNumber({ AUM });
   isString({ checksum });
   const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
-  const auditDB = await errorHandler(getAuditDBAddress(assetAddress));
+  const auditDB = await errorHandler(module.exports.getAuditDBAddress(assetAddress));
   const instance = createInstance(Audit.abi, auditDB);
   const timestamp = Math.floor(Date.now() / 1000);
   const action = await errorHandler(
@@ -123,9 +123,9 @@ const updateRate = async (assetAddress, AUM, checksum, options) => {
  * @param {String|Address} addressOrSymbol
  * @returns {NET}
  */
-const NET = async addressOrSymbol => {
+exports.NET = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
-  const auditDB = await errorHandler(getAuditDBAddress(addressOrSymbol));
+  const auditDB = await errorHandler(module.exports.getAuditDBAddress(addressOrSymbol));
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));
@@ -135,19 +135,19 @@ const NET = async addressOrSymbol => {
  * @param {address} addressOrSymbol
  * @returns {investors}
  */
-const getInvestors = async assetAddress => {
+exports.getInvestors = async assetAddress => {
   isAddress({ assetAddress });
-  const RPC = await errorHandler(getRPCAddress(assetAddress));
+  const RPC = await errorHandler(module.exports.getRPCAddress(assetAddress));
   const instance = createInstance(RPC_ABI.abi, RPC);
   const investors = await errorHandler(instance.methods.getInvestorsCount().call());
   return Number(investors);
 };
 
-module.exports = {
-  getAuditDBAddress,
-  getRPCAddress,
-  getRate,
-  updateRate,
-  NET,
-  getInvestors
-};
+// module.exports = {
+//   getAuditDBAddress,
+//   getRPCAddress,
+//   getRate,
+//   updateRate,
+//   NET,
+//   getInvestors
+// };

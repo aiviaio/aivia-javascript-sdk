@@ -33,7 +33,7 @@ const createCurrenciesInstances = async () => {
  * @param {address} from wallet address
  * @returns {true|error};
  */
-const checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
+exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
   isNumber({ value });
   isAddress({ assetAddress, currencyAddress, from });
   await createCurrenciesInstances();
@@ -60,8 +60,8 @@ const checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
 
-const buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
-  await checkBeforeBuy(value, assetAddress, currencyAddress, options.from);
+exports.buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
+  await module.exports.checkBeforeBuy(value, assetAddress, currencyAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
@@ -141,7 +141,7 @@ const buyAsset = async (value, assetAddress, currencyAddress, options, callback)
  * @returns {true|error};
  */
 
-const checkBeforeSell = async (value, assetAddress, from) => {
+exports.checkBeforeSell = async (value, assetAddress, from) => {
   isNumber({ value });
   isAddress({ assetAddress, from });
   await createCurrenciesInstances();
@@ -164,8 +164,8 @@ const checkBeforeSell = async (value, assetAddress, from) => {
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
-const sellAsset = async (value, assetAddress, options, callback) => {
-  await checkBeforeSell(value, assetAddress, options.from);
+exports.sellAsset = async (value, assetAddress, options, callback) => {
+  await module.exports.checkBeforeSell(value, assetAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.sellAsset(utils.toWei(value));
@@ -233,13 +233,5 @@ const sellAsset = async (value, assetAddress, options, callback) => {
  * @returns {estimate};
  */
 
-const estimate = (value, assetAddress, currencyAddress) =>
+exports.estimate = (value, assetAddress, currencyAddress) =>
   estimateTX(value, assetAddress, currencyAddress);
-
-module.exports = {
-  checkBeforeBuy,
-  checkBeforeSell,
-  buyAsset,
-  sellAsset,
-  estimate
-};

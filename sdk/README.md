@@ -18,22 +18,22 @@
 ## Asset
 
 * [Asset](#module_Asset)
-    * [~getAuditDBAddress(addressOrSymbol)](#module_Asset..getAuditDBAddress) ⇒ <code>AuditDBAddress</code>
-    * [~getRPCAddress(addressOrSymbol)](#module_Asset..getRPCAddress) ⇒ <code>RPCAddress</code>
-    * [~getRate(addressOrSymbol)](#module_Asset..getRate) ⇒ <code>rate</code>
-    * [~updateRate(assetAddress, AUM, checksum, options)](#module_Asset..updateRate) ⇒ <code>event</code>
-    * [~NET(addressOrSymbol)](#module_Asset..NET) ⇒ <code>NET</code>
-    * [~getInvestors(addressOrSymbol)](#module_Asset..getInvestors) ⇒ <code>investors</code>
+    * [.getAuditDBAddress(addressOrSymbol)](#module_Asset.getAuditDBAddress) ⇒ <code>AuditDBAddress</code>
+    * [.getRPCAddress(addressOrSymbol)](#module_Asset.getRPCAddress) ⇒ <code>RPCAddress</code>
+    * [.getRate(addressOrSymbol)](#module_Asset.getRate) ⇒ <code>rate</code>
+    * [.updateRate(assetAddress, AUM, checksum, options)](#module_Asset.updateRate) ⇒ <code>event</code>
+    * [.NET(addressOrSymbol)](#module_Asset.NET) ⇒ <code>NET</code>
+    * [.getInvestors(addressOrSymbol)](#module_Asset.getInvestors) ⇒ <code>investors</code>
 
 
 * * *
 
-<a name="module_Asset..getAuditDBAddress"></a>
+<a name="module_Asset.getAuditDBAddress"></a>
 
-### Asset~getAuditDBAddress(addressOrSymbol) ⇒ <code>AuditDBAddress</code>
+### SDK.asset.getAuditDBAddress(addressOrSymbol) ⇒ <code>AuditDBAddress</code>
 returns AuditDB address
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 **Returns**: <code>AuditDBAddress</code> - AuditDB address  
 
 | Param | Type |
@@ -43,12 +43,12 @@ returns AuditDB address
 
 * * *
 
-<a name="module_Asset..getRPCAddress"></a>
+<a name="module_Asset.getRPCAddress"></a>
 
-### Asset~getRPCAddress(addressOrSymbol) ⇒ <code>RPCAddress</code>
+### SDK.asset.getRPCAddress(addressOrSymbol) ⇒ <code>RPCAddress</code>
 returns asset RPC address
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 **Returns**: <code>RPCAddress</code> - RPC address  
 
 | Param | Type |
@@ -58,12 +58,12 @@ returns asset RPC address
 
 * * *
 
-<a name="module_Asset..getRate"></a>
+<a name="module_Asset.getRate"></a>
 
-### Asset~getRate(addressOrSymbol) ⇒ <code>rate</code>
+### SDK.asset.getRate(addressOrSymbol) ⇒ <code>rate</code>
 returns asset rate by address or symbol
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 **Returns**: <code>rate</code> - current(last) rate  
 
 | Param | Type |
@@ -73,12 +73,12 @@ returns asset rate by address or symbol
 
 * * *
 
-<a name="module_Asset..updateRate"></a>
+<a name="module_Asset.updateRate"></a>
 
-### Asset~updateRate(assetAddress, AUM, checksum, options) ⇒ <code>event</code>
+### SDK.asset.updateRate(assetAddress, AUM, checksum, options) ⇒ <code>event</code>
 function to update the price of the asset rate
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 **Returns**: <code>event</code> - transaction event {rate, auditor}  
 
 | Param | Type | Description |
@@ -94,12 +94,12 @@ function to update the price of the asset rate
 
 * * *
 
-<a name="module_Asset..NET"></a>
+<a name="module_Asset.NET"></a>
 
-### Asset~NET(addressOrSymbol) ⇒ <code>NET</code>
+### SDK.asset.NET(addressOrSymbol) ⇒ <code>NET</code>
 returns asset NET by address or symbol
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 
 | Param | Type |
 | --- | --- |
@@ -108,12 +108,12 @@ returns asset NET by address or symbol
 
 * * *
 
-<a name="module_Asset..getInvestors"></a>
+<a name="module_Asset.getInvestors"></a>
 
-### Asset~getInvestors(addressOrSymbol) ⇒ <code>investors</code>
+### SDK.asset.getInvestors(addressOrSymbol) ⇒ <code>investors</code>
 returns asset investors count by address
 
-**Kind**: inner method of [<code>Asset</code>](#module_Asset)  
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
 
 | Param | Type |
 | --- | --- |
@@ -334,21 +334,21 @@ mint asset value to other wallet from contract owner
 ## Buy/Sell
 
 * [Buy/Sell](#module_Buy/Sell)
-    * [~checkBeforeBuy(value, assetAddress, currencyAddress, from)](#module_Buy/Sell..checkBeforeBuy) ⇒ <code>true</code> \| <code>error</code>
-    * [~buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy/Sell..buyAsset) ⇒ <code>event</code>
-    * [~checkBeforeSell(value, assetAddress, options)](#module_Buy/Sell..checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
-    * [~sellAsset(value, assetAddress, options, callback)](#module_Buy/Sell..sellAsset) ⇒ <code>event</code>
-    * [~estimate(value, assetAddress, [currencyAddress])](#module_Buy/Sell..estimate) ⇒ <code>estimate</code>
+    * [.checkBeforeBuy(value, assetAddress, currencyAddress, from)](#module_Buy/Sell.checkBeforeBuy) ⇒ <code>true</code> \| <code>error</code>
+    * [.buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy/Sell.buyAsset) ⇒ <code>event</code>
+    * [.checkBeforeSell(value, assetAddress, options)](#module_Buy/Sell.checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
+    * [.sellAsset(value, assetAddress, options, callback)](#module_Buy/Sell.sellAsset) ⇒ <code>event</code>
+    * [.estimate(value, assetAddress, [currencyAddress])](#module_Buy/Sell.estimate) ⇒ <code>estimate</code>
 
 
 * * *
 
-<a name="module_Buy/Sell..checkBeforeBuy"></a>
+<a name="module_Buy/Sell.checkBeforeBuy"></a>
 
-### Buy/Sell~checkBeforeBuy(value, assetAddress, currencyAddress, from) ⇒ <code>true</code> \| <code>error</code>
+### SDK.trade.checkBeforeBuy(value, assetAddress, currencyAddress, from) ⇒ <code>true</code> \| <code>error</code>
 the method by which you can first check the parameters before buy
 
-**Kind**: inner method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>true</code> \| <code>error</code> - ;  
 
 | Param | Type | Description |
@@ -361,12 +361,12 @@ the method by which you can first check the parameters before buy
 
 * * *
 
-<a name="module_Buy/Sell..buyAsset"></a>
+<a name="module_Buy/Sell.buyAsset"></a>
 
-### Buy/Sell~buyAsset(value, assetAddress, currencyAddress, options, callback) ⇒ <code>event</code>
+### SDK.trade.buyAsset(value, assetAddress, currencyAddress, options, callback) ⇒ <code>event</code>
 purchase of tokens
 
-**Kind**: inner method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>event</code> - transaction event {spend, received, fees: { manager, platform } }  
 
 | Param | Type | Description |
@@ -383,12 +383,12 @@ purchase of tokens
 
 * * *
 
-<a name="module_Buy/Sell..checkBeforeSell"></a>
+<a name="module_Buy/Sell.checkBeforeSell"></a>
 
-### Buy/Sell~checkBeforeSell(value, assetAddress, options) ⇒ <code>true</code> \| <code>error</code>
+### SDK.trade.checkBeforeSell(value, assetAddress, options) ⇒ <code>true</code> \| <code>error</code>
 the method by which you can first check the parameters before sell
 
-**Kind**: inner method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>true</code> \| <code>error</code> - ;  
 
 | Param | Type | Description |
@@ -401,12 +401,12 @@ the method by which you can first check the parameters before sell
 
 * * *
 
-<a name="module_Buy/Sell..sellAsset"></a>
+<a name="module_Buy/Sell.sellAsset"></a>
 
-### Buy/Sell~sellAsset(value, assetAddress, options, callback) ⇒ <code>event</code>
+### SDK.trade.sellAsset(value, assetAddress, options, callback) ⇒ <code>event</code>
 sale of tokens
 
-**Kind**: inner method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>event</code> - transaction event {spend, received, fees: { manager, platform } }  
 
 | Param | Type | Description |
@@ -422,10 +422,10 @@ sale of tokens
 
 * * *
 
-<a name="module_Buy/Sell..estimate"></a>
+<a name="module_Buy/Sell.estimate"></a>
 
-### Buy/Sell~estimate(value, assetAddress, [currencyAddress]) ⇒ <code>estimate</code>
-**Kind**: inner method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
+### SDK.trade.estimate(value, assetAddress, [currencyAddress]) ⇒ <code>estimate</code>
+**Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
 **Returns**: <code>estimate</code> - ;  
 
 | Param | Type | Description |
