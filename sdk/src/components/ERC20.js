@@ -179,7 +179,7 @@ exports.transferETH = async (to, value, options, callback) => {
   isAddress({ to, from: options.from });
   isString({ privateKey: options.privateKey });
   isFunction({ callback });
-  await errorHandler(
+  const tx = await errorHandler(
     signedTX({
       from: options.from,
       to,
@@ -190,6 +190,7 @@ exports.transferETH = async (to, value, options, callback) => {
       value: utils.numberToHex(value)
     })
   );
+  return tx;
 };
 
 /**
