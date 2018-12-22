@@ -142,12 +142,3 @@ exports.getInvestors = async assetAddress => {
   const investors = await errorHandler(instance.methods.getInvestorsCount().call());
   return Number(investors);
 };
-
-// module.exports = {
-//   getAuditDBAddress,
-//   getRPCAddress,
-//   getRate,
-//   updateRate,
-//   NET,
-//   getInvestors
-// };

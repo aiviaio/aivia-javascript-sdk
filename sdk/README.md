@@ -3,11 +3,17 @@
 <dl>
 <dt><a href="#module_Asset">Asset</a></dt>
 <dd></dd>
-<dt><a href="#module_AssetsRegistry">AssetsRegistry</a></dt>
+<dt><a href="#module_Assets Registry">Assets Registry</a></dt>
 <dd></dd>
 <dt><a href="#module_ERC20">ERC20</a></dt>
 <dd></dd>
+<dt><a href="#module_Platform">Platform</a></dt>
+<dd></dd>
 <dt><a href="#module_Buy/Sell">Buy/Sell</a></dt>
+<dd></dd>
+<dt><a href="#module_Currency">Currency</a></dt>
+<dd></dd>
+<dt><a href="#module_TPL Registry">TPL Registry</a></dt>
 <dd></dd>
 <dt><a href="#module_utils">utils</a></dt>
 <dd></dd>
@@ -122,24 +128,24 @@ returns asset investors count by address
 
 * * *
 
-<a name="module_AssetsRegistry"></a>
+<a name="module_Assets Registry"></a>
 
-## AssetsRegistry
+## Assets Registry
 
-* [AssetsRegistry](#module_AssetsRegistry)
-    * [.getList()](#module_AssetsRegistry.getList) ⇒ <code>Array.&lt;assetsList&gt;</code>
-    * [.getAssetAddress(symbol)](#module_AssetsRegistry.getAssetAddress) ⇒ <code>address</code>
-    * [.getAssetSymbol(assetAddress)](#module_AssetsRegistry.getAssetSymbol) ⇒ <code>symbol</code>
+* [Assets Registry](#module_Assets Registry)
+    * [.getList()](#module_Assets Registry.getList) ⇒ <code>Array.&lt;assetsList&gt;</code>
+    * [.getAssetAddress(symbol)](#module_Assets Registry.getAssetAddress) ⇒ <code>address</code>
+    * [.getAssetSymbol(assetAddress)](#module_Assets Registry.getAssetSymbol) ⇒ <code>symbol</code>
 
 
 * * *
 
-<a name="module_AssetsRegistry.getList"></a>
+<a name="module_Assets Registry.getList"></a>
 
 ### SDK.asset.getList() ⇒ <code>Array.&lt;assetsList&gt;</code>
 returns assets list array
 
-**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
+**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
 **Properties**
 
 | Name | Type |
@@ -151,12 +157,12 @@ returns assets list array
 
 * * *
 
-<a name="module_AssetsRegistry.getAssetAddress"></a>
+<a name="module_Assets Registry.getAssetAddress"></a>
 
 ### SDK.asset.getAssetAddress(symbol) ⇒ <code>address</code>
 returns asset address by symbol
 
-**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
+**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
 **Returns**: <code>address</code> - asset address  
 
 | Param | Type |
@@ -166,12 +172,12 @@ returns asset address by symbol
 
 * * *
 
-<a name="module_AssetsRegistry.getAssetSymbol"></a>
+<a name="module_Assets Registry.getAssetSymbol"></a>
 
 ### SDK.asset.getAssetSymbol(assetAddress) ⇒ <code>symbol</code>
 returns asset symbol by address
 
-**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
+**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
 **Returns**: <code>symbol</code> - asset symbol  
 
 | Param | Type |
@@ -329,6 +335,35 @@ mint asset value to other wallet from contract owner
 
 * * *
 
+<a name="module_Platform"></a>
+
+## Platform
+
+* [Platform](#module_Platform)
+    * [.getPlatformWallet()](#module_Platform.getPlatformWallet) ⇒ <code>address</code>
+    * [.getPlatformToken()](#module_Platform.getPlatformToken) ⇒ <code>address</code>
+
+
+* * *
+
+<a name="module_Platform.getPlatformWallet"></a>
+
+### SDK.platform.getPlatformWallet() ⇒ <code>address</code>
+returns platform wallet address
+
+**Kind**: static method of [<code>Platform</code>](#module_Platform)  
+
+* * *
+
+<a name="module_Platform.getPlatformToken"></a>
+
+### SDK.platform.getPlatformToken() ⇒ <code>address</code>
+returns platform token address
+
+**Kind**: static method of [<code>Platform</code>](#module_Platform)  
+
+* * *
+
 <a name="module_Buy/Sell"></a>
 
 ## Buy/Sell
@@ -433,6 +468,160 @@ sale of tokens
 | value | <code>number</code> | the amount of the asset |
 | assetAddress | <code>address</code> | asset address |
 | [currencyAddress] | <code>address</code> | currency address |
+
+
+* * *
+
+<a name="module_Currency"></a>
+
+## Currency
+
+* [Currency](#module_Currency)
+    * [.getList()](#module_Currency.getList) ⇒ <code>Array.&lt;currenciesList&gt;</code>
+    * [.getRate(addressOrSymbol)](#module_Currency.getRate) ⇒ <code>rate</code>
+    * [.getAddress(symbol)](#module_Currency.getAddress) ⇒ <code>address</code>
+    * [.getSymbol(currencyAddress)](#module_Currency.getSymbol) ⇒ <code>symbol</code>
+
+
+* * *
+
+<a name="module_Currency.getList"></a>
+
+### SDK.platform.currency.getList() ⇒ <code>Array.&lt;currenciesList&gt;</code>
+returns platform currencies list
+
+**Kind**: static method of [<code>Currency</code>](#module_Currency)  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| currenciesList.item | <code>object</code> | 
+| item.symbol | <code>string</code> | 
+| item.address | <code>string</code> | 
+| item.rate | <code>number</code> | 
+
+
+* * *
+
+<a name="module_Currency.getRate"></a>
+
+### SDK.platform.currency.getRate(addressOrSymbol) ⇒ <code>rate</code>
+returns  currency rate by address or symbol
+
+**Kind**: static method of [<code>Currency</code>](#module_Currency)  
+**Returns**: <code>rate</code> - - rate of currency  
+
+| Param | Type |
+| --- | --- |
+| addressOrSymbol | <code>string</code> \| <code>address</code> | 
+
+
+* * *
+
+<a name="module_Currency.getAddress"></a>
+
+### SDK.platform.currency.getAddress(symbol) ⇒ <code>address</code>
+returns currency address by symbol
+
+**Kind**: static method of [<code>Currency</code>](#module_Currency)  
+**Returns**: <code>address</code> - currency address  
+
+| Param | Type |
+| --- | --- |
+| symbol | <code>string</code> | 
+
+
+* * *
+
+<a name="module_Currency.getSymbol"></a>
+
+### SDK.platform.currency.getSymbol(currencyAddress) ⇒ <code>symbol</code>
+returns currency symbol by address
+
+**Kind**: static method of [<code>Currency</code>](#module_Currency)  
+**Returns**: <code>symbol</code> - currency symbol  
+
+| Param | Type |
+| --- | --- |
+| currencyAddress | <code>address</code> | 
+
+
+* * *
+
+<a name="module_TPL Registry"></a>
+
+## TPL Registry
+
+* [TPL Registry](#module_TPL Registry)
+    * [.addUser(userAddress, countryID, walletType, [expirationDate], options, callback)](#module_TPL Registry.addUser) ⇒ <code>event</code>
+    * [.getUserDetails(userAddress)](#module_TPL Registry.getUserDetails) ⇒ <code>object</code>
+    * [.getUsersList()](#module_TPL Registry.getUsersList) ⇒ <code>Array.&lt;userList&gt;</code>
+
+
+* * *
+
+<a name="module_TPL Registry.addUser"></a>
+
+### SDK.auditors.addUser(userAddress, countryID, walletType, [expirationDate], options, callback) ⇒ <code>event</code>
+add or update user
+
+**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Returns**: <code>event</code> - transaction event {eventName, address}  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| userAddress | <code>address</code> |  | user wallet address |
+| countryID | <code>number</code> |  | county ID |
+| walletType | <code>number</code> |  | wallet type ID |
+| [expirationDate] | <code>number</code> | <code>0</code> | expiration date |
+| options | <code>object</code> |  |  |
+| options.address | <code>address</code> |  | wallet address |
+| options.privateKey | <code>string</code> |  | private key |
+| options.gasPrice | <code>number</code> |  | gas price |
+| callback | <code>function</code> |  | function(hash) |
+
+
+* * *
+
+<a name="module_TPL Registry.getUserDetails"></a>
+
+### SDK.auditors.getUserDetails(userAddress) ⇒ <code>object</code>
+returns user details by address
+
+**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Returns**: <code>object</code> - userDetails  
+
+| Param | Type |
+| --- | --- |
+| userAddress | <code>address</code> | 
+
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| userDetails.address | <code>address</code> | 
+| userDetails.country | <code>number</code> | 
+| userDetails.walletType | <code>number</code> | 
+| userDetails.expirationDate | <code>number</code> | 
+
+
+* * *
+
+<a name="module_TPL Registry.getUsersList"></a>
+
+### SDK.auditors.getUsersList() ⇒ <code>Array.&lt;userList&gt;</code>
+returns user list list
+
+**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| userList.user | <code>object</code> | 
+| user.address | <code>address</code> | 
+| user.country | <code>number</code> | 
+| user.walletType | <code>number</code> | 
+| user.expirationDate | <code>number</code> | 
 
 
 * * *

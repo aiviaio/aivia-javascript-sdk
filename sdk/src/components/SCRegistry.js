@@ -4,7 +4,20 @@ const { errorHandler, isAddressOrSymbol, isString, isAddress } = require("../hel
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
-const getList = async () => {
+/**
+ * @module Currency
+ * @typicalname SDK.platform.currency
+ */
+
+/**
+ * returns platform currencies list
+ * @returns {currenciesList[]}
+ * @property {object} currenciesList.item
+ * @property {string} item.symbol
+ * @property {string} item.address
+ * @property {number} item.rate
+ */
+exports.getList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
   const addressesList = await errorHandler(instance.methods.getAssetsList().call());
@@ -19,7 +32,12 @@ const getList = async () => {
   return Promise.all(assetsList);
 };
 
-const getRate = async addressOrSymbol => {
+/**
+ * returns  currency rate by address or symbol
+ * @param {string|address} addressOrSymbol
+ * @returns {rate} - rate of currency
+ */
+exports.getRate = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
 
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
@@ -36,7 +54,12 @@ const getRate = async addressOrSymbol => {
   return utils.fromWei(rate);
 };
 
-const getAddress = async symbol => {
+/**
+ * returns currency address by symbol
+ * @param {string} symbol
+ * @returns {address} currency address
+ */
+exports.getAddress = async symbol => {
   isString({ symbol });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
@@ -47,17 +70,15 @@ const getAddress = async symbol => {
   return assetAddress;
 };
 
-const getSymbol = async currencyAddress => {
+/**
+ * returns currency symbol by address
+ * @param {address} currencyAddress
+ * @returns {symbol} currency symbol
+ */
+exports.getSymbol = async currencyAddress => {
   isAddress({ currencyAddress });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
   const hexSymbol = await errorHandler(instance.methods.getSymbol(currencyAddress).call());
   return utils.toUtf8(hexSymbol);
-};
-
-module.exports = {
-  getList,
-  getRate,
-  getAddress,
-  getSymbol
 };

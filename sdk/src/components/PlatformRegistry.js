@@ -4,7 +4,16 @@ const { errorHandler } = require("../helpers/errorHandler");
 const utils = require("../utils");
 const Proxy = require("./Proxy");
 
-const getPlatformWallet = async () => {
+/**
+ * @module Platform
+ * @typicalname SDK.platform
+ */
+
+/**
+ * returns platform wallet address
+ * @returns {address}
+ */
+exports.getPlatformWallet = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
   const instance = createInstance(PlatformRegistry.abi, registryAddress);
   const address = await errorHandler(
@@ -13,16 +22,15 @@ const getPlatformWallet = async () => {
   return address;
 };
 
-const getPlatformToken = async () => {
+/**
+ * returns platform token address
+ * @returns {address}
+ */
+exports.getPlatformToken = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
   const instance = createInstance(PlatformRegistry.abi, registryAddress);
   const address = await errorHandler(
     instance.methods.getAddress(utils.toHex("platformToken")).call()
   );
   return address;
-};
-
-module.exports = {
-  getPlatformWallet,
-  getPlatformToken
 };

@@ -5,7 +5,7 @@ const Proxy = require("./Proxy");
 const utils = require("../utils");
 
 /**
- * @module AssetsRegistry
+ * @module Assets Registry
  * @typicalname SDK.asset
  */
 
