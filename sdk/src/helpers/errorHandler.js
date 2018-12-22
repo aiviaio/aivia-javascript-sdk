@@ -5,7 +5,10 @@ const errorHandler = promise => {
   try {
     return promise;
   } catch (error) {
-    throw new Error(error);
+    return Error({
+      name: "async",
+      message: error.message
+    });
   }
 };
 

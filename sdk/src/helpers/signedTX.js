@@ -1,6 +1,12 @@
 const EthereumTx = require("ethereumjs-tx");
 const { getProvider } = require("../helpers/createInstance");
-const { isFunction, isAddress, isString, isInteger } = require("../helpers/errorHandler");
+const {
+  isFunction,
+  isAddress,
+  isString,
+  isInteger,
+  errorHandler
+} = require("../helpers/errorHandler");
 const config = require("../config");
 const getNonce = require("./getNonce");
 
@@ -12,12 +18,12 @@ module.exports = async params => {
     isInteger({ nonce: params.nonce });
   }
   const web3 = getProvider();
-  const block = await web3.eth.getBlock("latest");
+  const block = await errorHandler(web3.eth.getBlock("latest"));
   const TMP = {};
   TMP.privateKey = Buffer.from(params.privateKey, "hex");
   delete params.privateKey;
   const txParams = {
-    nonce: params.nonce || (await getNonce(params.from)),
+    nonce: params.nonce || (await errorHandler(getNonce(params.from))),
     data: params.data,
     from: params.from,
     to: params.to,

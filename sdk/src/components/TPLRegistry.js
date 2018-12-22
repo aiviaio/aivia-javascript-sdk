@@ -33,7 +33,7 @@ exports.addUser = async (
 ) => {
   isAddress({ userAddress });
   isInteger({ countryID, walletType, expirationDate });
-  const registryAddress = await errorHandler(Proxy.getRegistryAddress("tpl"));
+  const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
   const action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
   const { blockNumber } = await errorHandler(
@@ -77,7 +77,7 @@ exports.addUser = async (
  */
 exports.getUserDetails = async userAddress => {
   isAddress({ userAddress });
-  const registryAddress = await errorHandler(Proxy.getRegistryAddress("tpl"));
+  const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
   const userDetails = await errorHandler(instance.methods.getUserDetails(userAddress).call());
   const [country, walletType, expirationDate] = Object.values(userDetails);
@@ -99,7 +99,7 @@ exports.getUserDetails = async userAddress => {
  * @property {number} user.expirationDate
  */
 exports.getUsersList = async short => {
-  const registryAddress = await errorHandler(Proxy.getRegistryAddress("tpl"));
+  const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
   const addressList = await errorHandler(instance.methods.getUsersList().call());
   if (short) {

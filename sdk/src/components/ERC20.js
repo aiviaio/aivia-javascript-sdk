@@ -34,7 +34,7 @@ exports.getBalance = async (wallet, assetAddress) => {
     return utils.fromWei(balance);
   }
   const web3 = getProvider();
-  return utils.fromWei(await web3.eth.getBalance(wallet));
+  return utils.fromWei(await errorHandler(web3.eth.getBalance(wallet)));
 };
 
 /**
@@ -45,7 +45,7 @@ exports.getBalance = async (wallet, assetAddress) => {
 exports.totalSupply = async assetAddress => {
   isAddress({ assetAddress });
   const instance = createInstance(ERC20.abi, assetAddress);
-  const total = await errorHandler(await instance.methods.totalSupply().call());
+  const total = await errorHandler(instance.methods.totalSupply().call());
   return utils.fromWei(total);
 };
 
@@ -92,11 +92,13 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
     })
   );
 
-  const Events = await instance.getPastEvents("Approval", {
-    filter: { to: assetAddress, from: options.from },
-    fromBlock: blockNumber,
-    toBlock: "latest"
-  });
+  const Events = await errorHandler(
+    instance.getPastEvents("Approval", {
+      filter: { to: assetAddress, from: options.from },
+      fromBlock: blockNumber,
+      toBlock: "latest"
+    })
+  );
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;
@@ -143,11 +145,13 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
     })
   );
 
-  const Events = await instance.getPastEvents("Transfer", {
-    filter: { to, from: options.from },
-    fromBlock: blockNumber,
-    toBlock: "latest"
-  });
+  const Events = await errorHandler(
+    instance.getPastEvents("Transfer", {
+      filter: { to, from: options.from },
+      fromBlock: blockNumber,
+      toBlock: "latest"
+    })
+  );
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;
@@ -222,11 +226,13 @@ exports.mint = async (value, to, assetAddress, options, callback) => {
     })
   );
 
-  const Events = await instance.getPastEvents("Transfer", {
-    filter: { to, from: utils.ZERO_ADDRESS },
-    fromBlock: blockNumber,
-    toBlock: "latest"
-  });
+  const Events = await errorHandler(
+    instance.getPastEvents("Transfer", {
+      filter: { to, from: utils.ZERO_ADDRESS },
+      fromBlock: blockNumber,
+      toBlock: "latest"
+    })
+  );
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;

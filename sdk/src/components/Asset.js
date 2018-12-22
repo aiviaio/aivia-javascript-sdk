@@ -100,11 +100,13 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
 
   const { blockNumber } = await errorHandler(transaction);
 
-  const Events = await instance.getPastEvents("updateAudit", {
-    filter: { to: auditDB, from: options.from },
-    fromBlock: blockNumber,
-    toBlock: "latest"
-  });
+  const Events = await errorHandler(
+    instance.getPastEvents("updateAudit", {
+      filter: { to: auditDB, from: options.from },
+      fromBlock: blockNumber,
+      toBlock: "latest"
+    })
+  );
 
   const [Event] = Events.map(event => {
     const { returnValues } = event;

@@ -5,9 +5,9 @@ const { errorHandler } = require("../helpers/errorHandler");
 const getRatingsList = async () => {
   const addressesList = await errorHandler(AssetsRegistry.getList());
   const tokensList = addressesList.map(async ({ address }) => {
-    const symbol = await AssetsRegistry.getAssetSymbol(address);
-    const price = await Asset.getRate(address);
-    const investors = await Asset.getInvestors(address);
+    const symbol = await errorHandler(AssetsRegistry.getAssetSymbol(address));
+    const price = await errorHandler(Asset.getRate(address));
+    const investors = await errorHandler(Asset.getInvestors(address));
     return { symbol, address, investors, price };
   });
 

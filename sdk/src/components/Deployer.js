@@ -16,8 +16,8 @@ const deployProject = async (type, params, options, callback) => {
   const { tokenSymbol } = params.tokenDetails;
   const gasPrice = options.gasPrice || config.get("DEFAULT_GAS_PRICE");
   const approximateCost = utils.fromWei(gasPrice * 8000000);
-  const balance = await ERC20.getBalance(options.from);
-  const tokenAddress = await AssetsRegistry.getAssetAddress(tokenSymbol);
+  const balance = await errorHandler(ERC20.getBalance(options.from));
+  const tokenAddress = await errorHandler(AssetsRegistry.getAssetAddress(tokenSymbol));
   if (balance < approximateCost) {
     Error({
       name: "transaction",
@@ -30,7 +30,7 @@ const deployProject = async (type, params, options, callback) => {
       message: `${tokenSymbol} already exist`
     }
   });
-  const proxyAddress = await EntryPoint.getProxyAddress();
+  const proxyAddress = await errorHandler(EntryPoint.getProxyAddress());
   const instance = createInstance(Proxy.abi, proxyAddress);
   const _params = ReselectData.input(type, params);
   const deployAction = instance.methods.deployProject(..._params);

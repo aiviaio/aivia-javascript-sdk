@@ -9,7 +9,7 @@ const getList = async () => {
   const instance = createInstance(CustodiansRegistry.abi, registryAddress);
   const addressesList = await errorHandler(instance.methods.getCustodiansList().call());
   const custodiansList = addressesList.map(async address => {
-    const details = await instance.methods.getCustodianDetails(address).call();
+    const details = await errorHandler(instance.methods.getCustodianDetails(address).call());
     const [name, contracts] = Object.values(details);
     return { address, name: utils.toUtf8(name), contracts };
   });
@@ -20,7 +20,7 @@ const getDetails = async custodianAddress => {
   isAddress({ custodianAddress });
   const registryAddress = await Proxy.getRegistryAddress("custodians");
   const instance = createInstance(CustodiansRegistry.abi, registryAddress);
-  const details = await instance.methods.getCustodianDetails(custodianAddress).call();
+  const details = await errorHandler(instance.methods.getCustodianDetails(custodianAddress).call());
   const [name, contracts] = Object.values(details);
   return { name: utils.toUtf8(name), contracts };
 };

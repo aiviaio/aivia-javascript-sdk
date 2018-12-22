@@ -21,7 +21,7 @@ exports.getList = async () => {
   const instance = createInstance(AssetsRegistry.abi, registryAddress);
   const addressesList = await errorHandler(instance.methods.getAssetsList().call());
   const tokensList = addressesList.map(async address => {
-    const hex = await instance.methods.getSymbol(address).call();
+    const hex = await errorHandler(instance.methods.getSymbol(address).call());
     const symbol = utils.toUtf8(hex);
     return { symbol, address };
   });

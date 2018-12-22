@@ -8,13 +8,13 @@ const getConfig = async assetAddress => {
   isAddress({ assetAddress });
   const instance = createInstance(ABI.config, assetAddress);
   const configAddress = await errorHandler(instance.methods.config().call());
-  const config = await getConfigDetails(configAddress);
+  const config = await errorHandler(getConfigDetails(configAddress));
   return config;
 };
 
 const getConfigDirectly = async configAddress => {
   isAddress({ configAddress });
-  const config = await getConfigDetails(configAddress);
+  const config = await errorHandler(getConfigDetails(configAddress));
   return config;
 };
 
@@ -27,15 +27,17 @@ const updatePermission = async (configAddress, countryID, walletTypes, options, 
     instance.methods.updatePermissionByCountry(countryID, walletTypes)
   );
 
-  await signedTX({
-    data: action.encodeABI(),
-    from: options.from,
-    to: configAddress,
-    privateKey: options.privateKey,
-    gasPrice: options.gasPrice,
-    gasLimit: options.gasLimit,
-    callback
-  });
+  await errorHandler(
+    signedTX({
+      data: action.encodeABI(),
+      from: options.from,
+      to: configAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      callback
+    })
+  );
 };
 
 module.exports = {
