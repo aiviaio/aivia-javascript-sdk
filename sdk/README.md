@@ -3,7 +3,9 @@
 <dl>
 <dt><a href="#module_Asset">Asset</a></dt>
 <dd></dd>
-<dt><a href="#module_Assets Registry">Assets Registry</a></dt>
+<dt><a href="#module_AssetsRegistry">AssetsRegistry</a></dt>
+<dd></dd>
+<dt><a href="#module_Deploy">Deploy</a></dt>
 <dd></dd>
 <dt><a href="#module_ERC20">ERC20</a></dt>
 <dd></dd>
@@ -13,7 +15,7 @@
 <dd></dd>
 <dt><a href="#module_Currency">Currency</a></dt>
 <dd></dd>
-<dt><a href="#module_TPL Registry">TPL Registry</a></dt>
+<dt><a href="#module_TPLRegistry">TPLRegistry</a></dt>
 <dd></dd>
 <dt><a href="#module_utils">utils</a></dt>
 <dd></dd>
@@ -96,6 +98,7 @@ function to update the price of the asset rate
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 
 
 * * *
@@ -128,24 +131,24 @@ returns asset investors count by address
 
 * * *
 
-<a name="module_Assets Registry"></a>
+<a name="module_AssetsRegistry"></a>
 
-## Assets Registry
+## AssetsRegistry
 
-* [Assets Registry](#module_Assets Registry)
-    * [.getList()](#module_Assets Registry.getList) ⇒ <code>Array.&lt;assetsList&gt;</code>
-    * [.getAssetAddress(symbol)](#module_Assets Registry.getAssetAddress) ⇒ <code>address</code>
-    * [.getAssetSymbol(assetAddress)](#module_Assets Registry.getAssetSymbol) ⇒ <code>symbol</code>
+* [AssetsRegistry](#module_AssetsRegistry)
+    * [.getList()](#module_AssetsRegistry.getList) ⇒ <code>Array.&lt;assetsList&gt;</code>
+    * [.getAssetAddress(symbol)](#module_AssetsRegistry.getAssetAddress) ⇒ <code>address</code>
+    * [.getAssetSymbol(assetAddress)](#module_AssetsRegistry.getAssetSymbol) ⇒ <code>symbol</code>
 
 
 * * *
 
-<a name="module_Assets Registry.getList"></a>
+<a name="module_AssetsRegistry.getList"></a>
 
 ### SDK.asset.getList() ⇒ <code>Array.&lt;assetsList&gt;</code>
 returns assets list array
 
-**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
+**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
 **Properties**
 
 | Name | Type |
@@ -157,12 +160,12 @@ returns assets list array
 
 * * *
 
-<a name="module_Assets Registry.getAssetAddress"></a>
+<a name="module_AssetsRegistry.getAssetAddress"></a>
 
 ### SDK.asset.getAssetAddress(symbol) ⇒ <code>address</code>
 returns asset address by symbol
 
-**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
+**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
 **Returns**: <code>address</code> - asset address  
 
 | Param | Type |
@@ -172,17 +175,60 @@ returns asset address by symbol
 
 * * *
 
-<a name="module_Assets Registry.getAssetSymbol"></a>
+<a name="module_AssetsRegistry.getAssetSymbol"></a>
 
 ### SDK.asset.getAssetSymbol(assetAddress) ⇒ <code>symbol</code>
 returns asset symbol by address
 
-**Kind**: static method of [<code>Assets Registry</code>](#module_Assets Registry)  
+**Kind**: static method of [<code>AssetsRegistry</code>](#module_AssetsRegistry)  
 **Returns**: <code>symbol</code> - asset symbol  
 
 | Param | Type |
 | --- | --- |
 | assetAddress | <code>address</code> | 
+
+
+* * *
+
+<a name="module_Deploy"></a>
+
+## Deploy
+
+* * *
+
+<a name="module_Deploy.deploy"></a>
+
+### SDK.project.deploy(type, params, options, callback) ⇒ <code>components</code>
+deploy project
+
+**Kind**: static method of [<code>Deploy</code>](#module_Deploy)  
+**Returns**: <code>components</code> - deployed project components  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>number</code> | project type ID |
+| params | <code>object</code> |  |
+| params.projectName | <code>string</code> | maximum length 32 characters |
+| params.tokenDetails | <code>object</code> | {tokenName, tokenSymbol, initialPrice, maxTokens, maxInvestors} |
+| params.tokenDetails.tokenName | <code>string</code> | maximum length 32 characters |
+| params.tokenDetails.tokenSymbol | <code>string</code> | maximum length 32 characters |
+| params.tokenDetails.initialPrice | <code>number</code> |  |
+| params.tokenDetails.maxTokens | <code>number</code> |  |
+| params.tokenDetails.maxInvestors | <code>number</code> | maximum number of investors, if equal to "0" then there are no restrictions |
+| params.fees | <code>object</code> | {platformFee, entryFee, exitFee} |
+| params.fees.platformFee | <code>number</code> | indicate in percent |
+| params.fees.entryFee | <code>number</code> | indicate in percent |
+| params.fees.exitFee | <code>number</code> | indicate in percent |
+| params.custodian | <code>address</code> | custodian wallet address |
+| params.permissions | <code>object</code> | {countries, walletTypes, rule} |
+| params.permissions.countries | <code>array.&lt;number&gt;</code> |  |
+| params.permissions.walletTypes | <code>array.&lt;number&gt;</code> |  |
+| params.permissions.rule | <code>boolean</code> |  |
+| options | <code>object</code> |  |
+| options.address | <code>address</code> | wallet address |
+| options.privateKey | <code>string</code> | private key |
+| options.gasPrice | <code>number</code> | gas price |
+| callback | <code>function</code> | function(hash) |
 
 
 * * *
@@ -265,6 +311,7 @@ allows spender to manage a certain amount of assets
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -287,6 +334,7 @@ transfer ERC20 asset value to other address
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -308,6 +356,7 @@ transfer ETH value to other address
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -330,6 +379,7 @@ mint asset value to other wallet from contract owner
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -413,6 +463,7 @@ purchase of tokens
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -452,6 +503,7 @@ sale of tokens
 | options.address | <code>address</code> | wallet address |
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
 
 
@@ -548,24 +600,24 @@ returns currency symbol by address
 
 * * *
 
-<a name="module_TPL Registry"></a>
+<a name="module_TPLRegistry"></a>
 
-## TPL Registry
+## TPLRegistry
 
-* [TPL Registry](#module_TPL Registry)
-    * [.addUser(userAddress, countryID, walletType, [expirationDate], options, callback)](#module_TPL Registry.addUser) ⇒ <code>event</code>
-    * [.getUserDetails(userAddress)](#module_TPL Registry.getUserDetails) ⇒ <code>object</code>
-    * [.getUsersList()](#module_TPL Registry.getUsersList) ⇒ <code>Array.&lt;userList&gt;</code>
+* [TPLRegistry](#module_TPLRegistry)
+    * [.addUser(userAddress, countryID, walletType, [expirationDate], options, callback)](#module_TPLRegistry.addUser) ⇒ <code>event</code>
+    * [.getUserDetails(userAddress)](#module_TPLRegistry.getUserDetails) ⇒ <code>object</code>
+    * [.getUsersList()](#module_TPLRegistry.getUsersList) ⇒ <code>Array.&lt;userList&gt;</code>
 
 
 * * *
 
-<a name="module_TPL Registry.addUser"></a>
+<a name="module_TPLRegistry.addUser"></a>
 
-### SDK.auditors.addUser(userAddress, countryID, walletType, [expirationDate], options, callback) ⇒ <code>event</code>
+### SDK.auditor.addUser(userAddress, countryID, walletType, [expirationDate], options, callback) ⇒ <code>event</code>
 add or update user
 
-**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Kind**: static method of [<code>TPLRegistry</code>](#module_TPLRegistry)  
 **Returns**: <code>event</code> - transaction event {eventName, address}  
 
 | Param | Type | Default | Description |
@@ -578,17 +630,18 @@ add or update user
 | options.address | <code>address</code> |  | wallet address |
 | options.privateKey | <code>string</code> |  | private key |
 | options.gasPrice | <code>number</code> |  | gas price |
+| options.gasLimit | <code>number</code> |  | gas limit |
 | callback | <code>function</code> |  | function(hash) |
 
 
 * * *
 
-<a name="module_TPL Registry.getUserDetails"></a>
+<a name="module_TPLRegistry.getUserDetails"></a>
 
-### SDK.auditors.getUserDetails(userAddress) ⇒ <code>object</code>
+### SDK.auditor.getUserDetails(userAddress) ⇒ <code>object</code>
 returns user details by address
 
-**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Kind**: static method of [<code>TPLRegistry</code>](#module_TPLRegistry)  
 **Returns**: <code>object</code> - userDetails  
 
 | Param | Type |
@@ -607,12 +660,12 @@ returns user details by address
 
 * * *
 
-<a name="module_TPL Registry.getUsersList"></a>
+<a name="module_TPLRegistry.getUsersList"></a>
 
-### SDK.auditors.getUsersList() ⇒ <code>Array.&lt;userList&gt;</code>
+### SDK.auditor.getUsersList() ⇒ <code>Array.&lt;userList&gt;</code>
 returns user list list
 
-**Kind**: static method of [<code>TPL Registry</code>](#module_TPL Registry)  
+**Kind**: static method of [<code>TPLRegistry</code>](#module_TPLRegistry)  
 **Properties**
 
 | Name | Type |

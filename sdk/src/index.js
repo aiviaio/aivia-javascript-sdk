@@ -83,8 +83,7 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: configAddress => Config.getConfigDirectly(configAddress),
-    deploy: (type, params, options, callback) =>
-      Deployer.deployProject(type, params, options, callback),
+    deploy: (type, params, options, callback) => Deployer.deploy(type, params, options, callback),
     updatePermission: (configAddress, countryID, walletTypes, options, callback) =>
       Config.updatePermission(configAddress, countryID, walletTypes, options, callback)
   },

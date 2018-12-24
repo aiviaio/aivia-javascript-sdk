@@ -72,6 +72,7 @@ exports.allowance = async (assetAddress, owner, spender) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -122,6 +123,7 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -174,6 +176,7 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -206,6 +209,7 @@ exports.transferETH = async (to, value, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */

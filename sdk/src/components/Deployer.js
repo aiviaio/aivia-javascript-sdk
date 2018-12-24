@@ -10,7 +10,41 @@ const Error = require("../helpers/Error");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
 
-const deployProject = async (type, params, options, callback) => {
+/**
+ * @module Deploy
+ * @typicalname SDK.project
+ */
+
+/**
+ * deploy project
+ * @param {number} type project type ID
+ * @param {object} params
+ * @param {string} params.projectName maximum length 32 characters
+ * @param {object} params.tokenDetails  {tokenName, tokenSymbol, initialPrice, maxTokens, maxInvestors}
+ *
+ * @param {string} params.tokenDetails.tokenName maximum length 32 characters
+ * @param {string} params.tokenDetails.tokenSymbol maximum length 32 characters
+ * @param {number} params.tokenDetails.initialPrice
+ * @param {number} params.tokenDetails.maxTokens
+ * @param {number} params.tokenDetails.maxInvestors maximum number of investors, if equal to "0" then there are no restrictions
+ *
+ * @param {object} params.fees {platformFee, entryFee, exitFee}
+ * @param {number} params.fees.platformFee indicate in percent
+ * @param {number} params.fees.entryFee indicate in percent
+ * @param {number} params.fees.exitFee indicate in percent
+ * @param {address} params.custodian custodian wallet address
+ * @param {object} params.permissions {countries, walletTypes, rule}
+ * @param {array.<number>} params.permissions.countries
+ * @param {array.<number>} params.permissions.walletTypes
+ * @param {boolean} params.permissions.rule
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {function} callback function(hash)
+ * @return {components} deployed project components
+ */
+exports.deploy = async (type, params, options, callback) => {
   isInteger({ type });
   isObject({ params, options });
   const { tokenSymbol } = params.tokenDetails;
@@ -66,8 +100,4 @@ const deployProject = async (type, params, options, callback) => {
   });
 
   return ReselectData.output(type, returnValues);
-};
-
-module.exports = {
-  deployProject
 };

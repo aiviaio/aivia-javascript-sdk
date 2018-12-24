@@ -56,6 +56,7 @@ exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
@@ -161,6 +162,7 @@ exports.checkBeforeSell = async (value, assetAddress, from) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+* @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */

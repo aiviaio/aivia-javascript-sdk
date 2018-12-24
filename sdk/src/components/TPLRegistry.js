@@ -6,8 +6,8 @@ const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
 
 /**
- * @module TPL Registry
- * @typicalname SDK.auditors
+ * @module TPLRegistry
+ * @typicalname SDK.auditor
  */
 
 /**
@@ -20,6 +20,7 @@ const signedTX = require("../helpers/signedTX");
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {eventName, address}
  */
