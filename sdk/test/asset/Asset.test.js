@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const AIVIA_SDK = require("../../src");
 const projectList = require("../projects");
-const { getUser } = require("../helpers/users");
+// const { getUser } = require("../helpers/users");
 
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 
@@ -37,9 +37,9 @@ describe("Asset", () => {
       expect(RPCByAddress).to.equal(RPC);
     });
 
-    it("update permission", async () => {
-      const { config } = projectList[0];
-      await SDK.project.updatePermission(config, 1, [0], getUser("projectOwner"));
-    });
+    // it("update permission", async () => {
+    //   const { config } = projectList[0];
+    //   await SDK.project.updatePermission(config, 1, [0], getUser("projectOwner"));
+    // });
   });
 });

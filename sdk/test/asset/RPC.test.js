@@ -5,6 +5,7 @@ const AIVIA_SDK = require("../../src");
 const projectList = require("../projects");
 const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
+const assertRevert = require("../helpers/assertRevert");
 const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 const history = require("../history");
 
@@ -52,7 +53,7 @@ describe("RPC", () => {
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     await SDK.asset.mint(200, user, TUSD, getUser("trueUSDOwner"));
-    const { owner, token } = projectList[0];
+    const { owner, token } = projectList[projectList.length - 1];
     const AIV_USER = await SDK.asset.getBalance(user, AIV);
     const AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
     const AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
@@ -85,9 +86,18 @@ describe("RPC", () => {
     );
   });
 
+  it("shouldn't buy token", async () => {
+    if (!events.buy) return;
+    const AIV = await SDK.platform.token();
+    const otherUser = await getAddress("otherUser");
+    await SDK.asset.mint(200, otherUser, AIV, getUser("platformWallet"));
+    const { token } = projectList[projectList.length - 1];
+    await assertRevert(SDK.trade.buy(100, token, AIV, getUser("otherUser")));
+  });
+
   it("should sell tokens", async () => {
     if (!events.sell) return;
-    const { token, custodian } = projectList[0];
+    const { token, custodian } = projectList[projectList.length - 1];
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
@@ -101,7 +111,7 @@ describe("RPC", () => {
 
   it("should buy token TUSD", async () => {
     if (!events.buy) return;
-    const { token } = projectList[0];
+    const { token } = projectList[projectList.length - 1];
     const user = await getAddress("user");
     const platformWallet = await SDK.platform.wallet();
     const AIV = await SDK.platform.token();
@@ -121,7 +131,7 @@ describe("RPC", () => {
   });
 
   it("should update rate", async () => {
-    const { token } = projectList[0];
+    const { token } = projectList[projectList.length - 1];
     const auditor = getAddress("DGAddress");
     const totalSupply = await SDK.asset.totalSupply(token);
     const NET = await SDK.asset.NET(token);
