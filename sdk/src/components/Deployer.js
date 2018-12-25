@@ -50,7 +50,6 @@ exports.deploy = async (type, params, options, callback) => {
   const { tokenSymbol } = params.tokenDetails;
   const gasPrice = options.gasPrice || config.get("DEFAULT_GAS_PRICE");
   const approximateCost = utils.fromWei(gasPrice * 8000000);
-  console.log(approximateCost);
   const balance = await errorHandler(ERC20.getBalance(options.from));
   const tokenAddress = await errorHandler(AssetsRegistry.getAssetAddress(tokenSymbol));
   if (balance < approximateCost) {

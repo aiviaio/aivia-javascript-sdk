@@ -17,7 +17,7 @@ const Ratings = require("./components/Ratings");
 const RPC = require("./components/RPC");
 const ERC20 = require("./components/ERC20");
 
-function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 30000000000) {
+function SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE = 50000000000) {
   config.init(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE);
 }
 
