@@ -50,6 +50,7 @@ exports.deploy = async (type, params, options, callback) => {
   const { tokenSymbol } = params.tokenDetails;
   const gasPrice = options.gasPrice || config.get("DEFAULT_GAS_PRICE");
   const approximateCost = utils.fromWei(gasPrice * 8000000);
+  console.log(approximateCost);
   const balance = await errorHandler(ERC20.getBalance(options.from));
   const tokenAddress = await errorHandler(AssetsRegistry.getAssetAddress(tokenSymbol));
   if (balance < approximateCost) {
@@ -71,25 +72,27 @@ exports.deploy = async (type, params, options, callback) => {
   const initAction = instance.methods.initProject();
   await errorHandler(
     signedTX({
-      data: deployAction.encodeABI(),
+      data: deployAction,
       from: options.from,
       to: proxyAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      callback,
+      action: "deploy"
     })
   );
 
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: initAction.encodeABI(),
+      data: initAction,
       from: options.from,
       to: proxyAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      callback,
+      action: "deploy"
     })
   );
 

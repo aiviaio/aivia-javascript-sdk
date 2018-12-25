@@ -56,7 +56,7 @@ exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
@@ -79,13 +79,14 @@ exports.buyAsset = async (value, assetAddress, currencyAddress, options, callbac
   }
 
   const transaction = signedTX({
-    data: action.encodeABI(),
+    data: action,
     from: options.from,
     to: RPCAddress,
     privateKey: options.privateKey,
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
-    callback
+    callback,
+    action: "trade"
   });
 
   const { blockNumber } = await errorHandler(transaction);
@@ -162,7 +163,7 @@ exports.checkBeforeSell = async (value, assetAddress, from) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
@@ -173,13 +174,14 @@ exports.sellAsset = async (value, assetAddress, options, callback) => {
   const action = instance.methods.sellAsset(utils.toWei(value));
 
   const transaction = signedTX({
-    data: action.encodeABI(),
+    data: action,
     from: options.from,
     to: RPCAddress,
     privateKey: options.privateKey,
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
-    callback
+    callback,
+    action: "trade"
   });
 
   const { blockNumber } = await errorHandler(transaction);

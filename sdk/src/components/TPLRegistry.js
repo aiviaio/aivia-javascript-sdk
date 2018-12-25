@@ -39,7 +39,7 @@ exports.addUser = async (
   const action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: action.encodeABI(),
+      data: action,
       from: options.from,
       to: registryAddress,
       privateKey: options.privateKey,

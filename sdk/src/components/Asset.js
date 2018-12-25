@@ -74,7 +74,7 @@ exports.getRate = async addressOrSymbol => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @returns {event} transaction event {rate, auditor}
  */
 exports.updateRate = async (assetAddress, AUM, checksum, options) => {
@@ -90,7 +90,7 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   );
 
   const transaction = signedTX({
-    data: action.encodeABI(),
+    data: action,
     from: options.from,
     to: auditDB,
     privateKey: options.privateKey,

@@ -29,7 +29,7 @@ const updatePermission = async (configAddress, countryID, walletTypes, options, 
 
   await errorHandler(
     signedTX({
-      data: action.encodeABI(),
+      data: action,
       from: options.from,
       to: configAddress,
       privateKey: options.privateKey,

@@ -10,6 +10,11 @@ const {
 const config = require("../config");
 const getNonce = require("./getNonce");
 
+const additionalGasLimit = {
+  trade: 10000,
+  deploy: 120000
+};
+
 module.exports = async params => {
   isFunction({ callback: params.callback });
   isAddress({ from: params.from, to: params.to });
@@ -21,16 +26,30 @@ module.exports = async params => {
   const block = await errorHandler(web3.eth.getBlock("latest"));
   const TMP = {};
   TMP.privateKey = Buffer.from(params.privateKey, "hex");
+
   delete params.privateKey;
+
   const txParams = {
     nonce: params.nonce || (await errorHandler(getNonce(params.from))),
-    data: params.data,
     from: params.from,
     to: params.to,
     value: params.value,
-    gasPrice: params.gasPrice || config.get("DEFAULT_GAS_PRICE"),
-    gasLimit: params.gasLimit || block.gasLimit
+    gasPrice: params.gasPrice || config.get("DEFAULT_GAS_PRICE")
   };
+
+  let gasLimit = null;
+
+  if (params.value) {
+    gasLimit = await web3.eth.estimateGas(txParams);
+  }
+
+  if (params.data) {
+    const additional = additionalGasLimit[params.action] || 0;
+    gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
+    txParams.data = params.data.encodeABI();
+  }
+
+  txParams.gasLimit = params.gasLimit || gasLimit || block.gasLimit;
 
   Object.freeze(txParams);
 

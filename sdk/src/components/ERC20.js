@@ -72,7 +72,7 @@ exports.allowance = async (assetAddress, owner, spender) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -83,7 +83,7 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
   const action = instance.methods.approve(spender, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: action.encodeABI(),
+      data: action,
       from: options.from,
       to: assetAddress,
       privateKey: options.privateKey,
@@ -123,7 +123,7 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -137,7 +137,7 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
   const action = instance.methods.transfer(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: action.encodeABI(),
+      data: action,
       from: options.from,
       to: assetAddress,
       privateKey: options.privateKey,
@@ -176,7 +176,7 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -209,7 +209,7 @@ exports.transferETH = async (to, value, options, callback) => {
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
-* @param {number} options.gasLimit gas limit
+ * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
  * @return {event} transaction event {from, to, value}
  */
@@ -220,7 +220,7 @@ exports.mint = async (value, to, assetAddress, options, callback) => {
   const action = instance.methods.mint(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
-      data: action.encodeABI(),
+      data: action,
       from: options.from,
       to: assetAddress,
       privateKey: options.privateKey,
