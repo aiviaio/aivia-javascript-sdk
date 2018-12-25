@@ -45,7 +45,7 @@ const entryFee = (value, currencyPrice) => {
   return tokens;
 };
 
-describe("RPC", () => {
+describe("RPC", async () => {
   it("should buy token", async () => {
     if (!events.buy) return;
     const AIV = await SDK.platform.token();
