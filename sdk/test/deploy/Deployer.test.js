@@ -37,7 +37,7 @@ describe("Deploy", () => {
           custodian: custodianAddress,
           permissions: {
             countries: [1],
-            walletTypes: [1],
+            walletTypes: [2],
             rule: true
           }
         },
