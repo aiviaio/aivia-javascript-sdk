@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+const { expect, assert } = require("chai");
 const fs = require("fs");
 const options = require("../deploy/Deployer.test");
 const AIVIA_SDK = require("../../src");
@@ -60,7 +60,10 @@ describe("RPC", async () => {
     const TOKEN_USER = await SDK.asset.getBalance(user, token);
     const rate = await SDK.asset.getRate(token);
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
-
+    function estimateGasLimit(value) {
+      assert(value < 0);
+    }
+    await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"), estimateGasLimit);
     await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
     const investors = await SDK.asset.getInvestors(token);
 
