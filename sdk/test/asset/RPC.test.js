@@ -109,8 +109,8 @@ describe("RPC", async () => {
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     await SDK.asset.mint(200, custodian, TUSD, getUser("trueUSDOwner"));
-    const { spend, received, fees } = await SDK.trade.sell(amount.TOKEN, token, getUser("user"));
 
+    const { spend, received, fees } = await SDK.trade.sell(amount.TOKEN, token, getUser("user"));
     const TUSD_USER_DIFF = (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
     const estimate = await SDK.trade.estimate(amount.TOKEN, token);
     const [_spend, _received, _fees] = Object.values(estimate);
