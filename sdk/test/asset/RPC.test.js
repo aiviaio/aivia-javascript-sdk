@@ -1,4 +1,4 @@
-const { expect, assert } = require("chai");
+const { expect } = require("chai");
 const fs = require("fs");
 const options = require("../deploy/Deployer.test");
 const AIVIA_SDK = require("../../src");
@@ -25,9 +25,7 @@ const events = {
 
 const willMint = (value, rate, currencyPrice) => {
   const inUSD = value * currencyPrice;
-  const feesInUSD = (inUSD * (options.fees.platformFee + options.fees.entryFee)) / 100;
-  const remaining = inUSD - feesInUSD;
-  const tokens = remaining / rate;
+  const tokens = inUSD / rate;
   return tokens;
 };
 
@@ -60,33 +58,39 @@ describe("RPC", async () => {
     const TOKEN_USER = await SDK.asset.getBalance(user, token);
     const rate = await SDK.asset.getRate(token);
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
-    function estimateGasLimit(value) {
-      assert(value < 0);
-    }
-    await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"), estimateGasLimit);
-    await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
-    const investors = await SDK.asset.getInvestors(token);
 
+    const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
+
+    const investors = await SDK.asset.getInvestors(token);
     const _AIV_USER = await SDK.asset.getBalance(user, AIV);
     const _AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
     const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
     const _TOKEN_USER = await SDK.asset.getBalance(user, token);
 
+    const estimate = await SDK.trade.estimate(amount.AIV, token, AIV);
+    const [_spend, _received, _fees] = Object.values(estimate);
+
+    expect(_spend).to.equal(utils.toFixed(spend));
+    expect(_fees.platform).to.equal(utils.toFixed(fees.platform));
+    expect(_fees.manager).to.equal(utils.toFixed(fees.manager));
+    expect(_received).to.equal(utils.toFixed(received));
+
     expect(investors).to.equal(1);
 
-    expect(utils.toFixed(_AIV_USER, 2)).to.equal(utils.toFixed(AIV_USER - amount.AIV, 2));
+    const entryFeeValue = entryFee(amount.AIV, AIV_RATE);
+    const platformFeeValue = platformFee(amount.AIV, AIV_RATE);
+    const allFeesAmount = entryFeeValue + platformFeeValue;
+    expect(utils.toFixed(_AIV_USER)).to.equal(utils.toFixed(AIV_USER - amount.AIV - allFeesAmount));
 
-    expect(utils.toFixed(_TOKEN_USER, 2)).to.equal(
-      utils.toFixed(TOKEN_USER + willMint(amount.AIV, rate, AIV_RATE), 2)
+    expect(utils.toFixed(_TOKEN_USER)).to.equal(
+      utils.toFixed(TOKEN_USER + willMint(amount.AIV, rate, AIV_RATE))
     );
 
-    expect(utils.toFixed(_AIV_PROJECT_OWNER, 2)).to.equal(
-      utils.toFixed(AIV_PROJECT_OWNER + entryFee(amount.AIV, AIV_RATE), 2)
+    expect(utils.toFixed(_AIV_PROJECT_OWNER)).to.equal(
+      utils.toFixed(AIV_PROJECT_OWNER + entryFeeValue)
     );
 
-    expect(utils.toFixed(_AIV_PLATFORM, 2)).to.equal(
-      utils.toFixed(AIV_PLATFORM + platformFee(amount.AIV, AIV_RATE), 2)
-    );
+    expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + platformFeeValue));
   });
 
   it("shouldn't buy token", async () => {
@@ -105,11 +109,19 @@ describe("RPC", async () => {
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     await SDK.asset.mint(200, custodian, TUSD, getUser("trueUSDOwner"));
+    const { spend, received, fees } = await SDK.trade.sell(amount.TOKEN, token, getUser("user"));
 
-    const { spend, received } = await SDK.trade.sell(amount.TOKEN, token, getUser("user"));
     const TUSD_USER_DIFF = (await SDK.asset.getBalance(user, TUSD)) - TUSD_USER;
+    const estimate = await SDK.trade.estimate(amount.TOKEN, token);
+    const [_spend, _received, _fees] = Object.values(estimate);
+
+    expect(_spend).to.equal(utils.toFixed(spend));
+    expect(_fees.platform).to.equal(utils.toFixed(fees.platform));
+    expect(_fees.manager).to.equal(utils.toFixed(fees.manager));
+    expect(_received).to.equal(utils.toFixed(received));
+
     expect(spend).to.equal(amount.TOKEN);
-    expect(utils.toFixed(received, 4)).to.equal(utils.toFixed(TUSD_USER_DIFF, 4));
+    expect(utils.toFixed(received)).to.equal(utils.toFixed(TUSD_USER_DIFF));
   });
 
   it("should buy token TUSD", async () => {
@@ -122,16 +134,27 @@ describe("RPC", async () => {
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const TOKEN_USER = await SDK.asset.getBalance(user, token);
-    const estimate = await SDK.trade.estimate(amount.TUSD, token, TUSD);
-
-    const [_TUSD, _FEES, _TOKEN] = Object.values(estimate);
-    await SDK.trade.buy(amount.TUSD, token, TUSD, getUser("user"));
+    const { spend, received, fees } = await SDK.trade.buy(
+      amount.TUSD,
+      token,
+      TUSD,
+      getUser("user")
+    );
     const _TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const _TOKEN_USER = await SDK.asset.getBalance(user, token);
     const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
-    expect(utils.toFixed(TUSD_USER - _TUSD_USER)).to.equal(_TUSD);
-    expect(utils.toFixed(_TOKEN_USER - TOKEN_USER)).to.equal(utils.toFixed(_TOKEN));
-    expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + _FEES.platform));
+
+    const estimate = await SDK.trade.estimate(amount.TUSD, token, TUSD);
+    const [_spend, _received, _fees] = Object.values(estimate);
+
+    expect(_spend).to.equal(utils.toFixed(spend));
+    expect(_fees.platform).to.equal(utils.toFixed(fees.platform));
+    expect(_fees.manager).to.equal(utils.toFixed(fees.manager));
+    expect(_received).to.equal(utils.toFixed(received));
+
+    expect(utils.toFixed(TUSD_USER - _TUSD_USER)).to.equal(_spend);
+    expect(utils.toFixed(_TOKEN_USER - TOKEN_USER)).to.equal(utils.toFixed(_received));
+    expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + _fees.platform));
   });
 
   it("should update rate", async () => {
