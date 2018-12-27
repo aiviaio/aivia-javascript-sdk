@@ -123,6 +123,7 @@ describe("RPC", async () => {
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const TOKEN_USER = await SDK.asset.getBalance(user, token);
     const estimate = await SDK.trade.estimate(amount.TUSD, token, TUSD);
+
     const [_TUSD, _FEES, _TOKEN] = Object.values(estimate);
     await SDK.trade.buy(amount.TUSD, token, TUSD, getUser("user"));
     const _TUSD_USER = await SDK.asset.getBalance(user, TUSD);
