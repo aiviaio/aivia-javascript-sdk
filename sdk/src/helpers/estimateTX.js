@@ -1,11 +1,9 @@
-const detectSymbol = require("../helpers/detectSymbol");
 const utils = require("../utils");
 const Asset = require("../components/Asset");
 const SCRegistry = require("../components/SCRegistry");
 const Config = require("../components/Config");
 
 let storage = {
-  symbols: {},
   rates: {}
 };
 
@@ -23,15 +21,6 @@ const _getRate = async (address, isCurrency = false) => {
   return assetRate;
 };
 
-const _getSymbol = async address => {
-  if (storage.symbols[address]) {
-    return storage.symbols[address];
-  }
-  const symbol = await detectSymbol(address);
-  storage.symbols[address] = symbol;
-  return symbol;
-};
-
 const _getAddress = async symbol => {
   if (storage.symbol) {
     return storage.symbol;
@@ -46,9 +35,6 @@ const estimateBuy = async (value, assetAddress, currencyAddress) => {
   const { entryFee, platformFee } = await Config.getConfig(assetAddress);
   storage.AIV = await _getAddress("AIV");
 
-  const assetSymbol = await _getSymbol(assetAddress);
-  const currencySymbol = await _getSymbol(currencyAddress);
-
   const assetRate = await _getRate(assetAddress);
   const AIVRate = await _getRate(storage.AIV, true);
   const currencyRate = await _getRate(currencyAddress, true);
@@ -56,20 +42,19 @@ const estimateBuy = async (value, assetAddress, currencyAddress) => {
   const inUSD = currencyRate * value;
   const platformFeeAmount = (inUSD * platformFee) / 100;
   const entryFeeAmount = (inUSD * entryFee) / 100;
-  const remaining = inUSD - (platformFeeAmount + entryFeeAmount);
 
   if (currencyAddress !== storage.AIV) {
-    estimate[currencySymbol] = value;
+    estimate.spend = value;
   } else {
-    estimate[currencySymbol] = utils.toFixed(remaining / AIVRate);
+    estimate.spend = utils.toFixed(inUSD / AIVRate);
   }
+
+  estimate.received = utils.toFixed(inUSD / assetRate);
 
   estimate.fees = {
     platform: utils.toFixed(platformFeeAmount / AIVRate),
-    entry: utils.toFixed(entryFeeAmount / AIVRate)
+    manager: utils.toFixed(entryFeeAmount / AIVRate)
   };
-
-  estimate[assetSymbol] = utils.toFixed(remaining / assetRate);
 
   return estimate;
 };
@@ -81,20 +66,19 @@ const estimateSell = async (value, assetAddress) => {
   const { exitFee, platformFee } = await Config.getConfig(assetAddress);
   const AIVRate = await _getRate(storage.AIV, true);
   const TUSDRate = await _getRate(storage.TUSD, true);
-  const assetSymbol = await _getSymbol(assetAddress);
   const assetRate = await _getRate(assetAddress);
   const inUSD = assetRate * value;
 
   const platformFeeAmount = (inUSD * platformFee) / 100;
   const exitFeeAmount = (inUSD * exitFee) / 100;
-  const remaining = inUSD - (platformFeeAmount + exitFeeAmount);
-  estimate[assetSymbol] = utils.toFixed(remaining / assetRate);
 
-  estimate.TUSD = utils.toFixed(remaining / TUSDRate);
+  estimate.spend = utils.toFixed(inUSD / assetRate);
+
+  estimate.received = utils.toFixed(inUSD / TUSDRate);
 
   estimate.fees = {
     platform: utils.toFixed(platformFeeAmount / AIVRate),
-    exit: utils.toFixed(exitFeeAmount / AIVRate)
+    manager: utils.toFixed(exitFeeAmount / AIVRate)
   };
   return estimate;
 };
