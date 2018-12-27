@@ -51,6 +51,13 @@ module.exports = async params => {
 
   txParams.gasLimit = params.gasLimit || gasLimit || block.gasLimit;
 
+  // return estimated gas limit
+
+  if (typeof params.callback === "function" && params.callback.name === "estimateGasLimit") {
+    params.callback(txParams.gasLimit);
+    return txParams.gasLimit;
+  }
+
   Object.freeze(txParams);
 
   TMP.rawTx = new EthereumTx(txParams);
@@ -64,7 +71,7 @@ module.exports = async params => {
   const transaction = web3.eth.sendSignedTransaction(`0x${TMP.serializedTx.toString("hex")}`);
 
   transaction.once("transactionHash", hash => {
-    if (params.callback) {
+    if (typeof params.callback === "function") {
       params.callback(hash);
     }
   });
