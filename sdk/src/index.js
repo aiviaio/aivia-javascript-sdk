@@ -60,9 +60,10 @@ SDK.prototype = {
     approve: (assetAddress, spender, value, options, callback) =>
       ERC20.approve(assetAddress, spender, value, options, callback),
     allowance: (assetAddress, owner, spender) => ERC20.allowance(assetAddress, owner, spender),
-    transfer: (to, value, assetAddress, options, callback) =>
-      ERC20.transfer(to, value, assetAddress, options, callback),
-    transferETH: (to, value, options, callback) => ERC20.transferETH(to, value, options, callback),
+    transfer: (to, value, assetAddress, options, callback, estimate) =>
+      ERC20.transfer(to, value, assetAddress, options, callback, estimate),
+    transferETH: (to, value, options, callback, estimate) =>
+      ERC20.transferETH(to, value, options, callback, estimate),
     mint: (value, to, assetAddress, options, callback) =>
       ERC20.mint(value, to, assetAddress, options, callback)
   },
@@ -70,11 +71,11 @@ SDK.prototype = {
   trade: {
     checkBeforeBuy: (value, assetAddress, currencyAddress, from) =>
       RPC.checkBeforeBuy(value, assetAddress, currencyAddress, from),
-    buy: (value, assetAddress, currencyAddress, options, callback) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback),
+    buy: (value, assetAddress, currencyAddress, options, callback, estimate) =>
+      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback, estimate),
     checkBeforeSell: (value, assetAddress, from) => RPC.checkBeforeSell(value, assetAddress, from),
-    sell: (value, assetAddress, options, callback) =>
-      RPC.sellAsset(value, assetAddress, options, callback),
+    sell: (value, assetAddress, options, callback, estimate) =>
+      RPC.sellAsset(value, assetAddress, options, callback, estimate),
 
     estimate: (value, assetAddress, currencyAddress) =>
       RPC.estimate(value, assetAddress, currencyAddress)

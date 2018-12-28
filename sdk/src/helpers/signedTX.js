@@ -19,8 +19,7 @@ module.exports = async params => {
   isFunction({ callback: params.callback });
   isAddress({ from: params.from, to: params.to });
 
-  const isEstimateGas =
-    typeof params.callback === "function" && params.callback.name === "estimateGasLimit";
+  const isEstimateGas = typeof params.callback === "function" && params.estimate;
 
   if (!isEstimateGas) {
     isString({ privateKey: params.privateKey });

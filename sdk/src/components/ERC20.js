@@ -122,7 +122,7 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
  * @return {event} transaction event {from, to, value}
  */
 
-exports.transfer = async (to, value, assetAddress, options, callback) => {
+exports.transfer = async (to, value, assetAddress, options, callback, estimate) => {
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
   isFunction({ callback });
@@ -136,7 +136,8 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      callback,
+      estimate
     })
   );
 
@@ -174,7 +175,7 @@ exports.transfer = async (to, value, assetAddress, options, callback) => {
  * @return {event} transaction event {from, to, value}
  */
 
-exports.transferETH = async (to, value, options, callback) => {
+exports.transferETH = async (to, value, options, callback, estimate) => {
   isNumber({ value });
   isAddress({ to, from: options.from });
   isFunction({ callback });
@@ -186,7 +187,8 @@ exports.transferETH = async (to, value, options, callback) => {
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
       callback,
-      value: utils.numberToHex(value)
+      value: utils.numberToHex(value),
+      estimate
     })
   );
   return tx;

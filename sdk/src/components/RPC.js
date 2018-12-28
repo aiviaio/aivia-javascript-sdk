@@ -61,7 +61,7 @@ exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
 
-exports.buyAsset = async (value, assetAddress, currencyAddress, options, callback) => {
+exports.buyAsset = async (value, assetAddress, currencyAddress, options, callback, estimate) => {
   await module.exports.checkBeforeBuy(value, assetAddress, currencyAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
@@ -86,7 +86,8 @@ exports.buyAsset = async (value, assetAddress, currencyAddress, options, callbac
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
     callback,
-    action: "trade"
+    action: "trade",
+    estimate
   });
 
   const { blockNumber } = await errorHandler(transaction);
@@ -167,7 +168,7 @@ exports.checkBeforeSell = async (value, assetAddress, from) => {
  * @param {function} callback function(hash)
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
-exports.sellAsset = async (value, assetAddress, options, callback) => {
+exports.sellAsset = async (value, assetAddress, options, callback, estimate) => {
   await module.exports.checkBeforeSell(value, assetAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
@@ -181,7 +182,8 @@ exports.sellAsset = async (value, assetAddress, options, callback) => {
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
     callback,
-    action: "trade"
+    action: "trade",
+    estimate
   });
 
   const { blockNumber } = await errorHandler(transaction);
