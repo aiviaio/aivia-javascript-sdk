@@ -165,6 +165,17 @@ describe("RPC", async () => {
     expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + _fees.platform));
   });
 
+  it("should transfer Token to other", async () => {
+    const { token } = projectList[projectList.length - 1];
+    const amount = 1;
+    const BALANCE = await SDK.asset.getBalance(getAddress("user"), token);
+    await SDK.asset.transfer(getAddress("otherUser"), amount, token, getUser("user"));
+    const USER_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), token);
+    const _BALANCE = await SDK.asset.getBalance(getAddress("user"), token);
+    expect(utils.toFixed(BALANCE - _BALANCE)).to.equal(amount);
+    expect(utils.toFixed(USER_BALANCE)).to.equal(amount);
+  });
+
   it("should update rate", async () => {
     const { token } = projectList[projectList.length - 1];
     const auditor = getAddress("DGAddress");
