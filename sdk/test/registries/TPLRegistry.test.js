@@ -8,8 +8,11 @@ describe("TPLRegistry", () => {
     it("should add user", async () => {
       const user = await getAddress("user");
       const otherUser = await getAddress("otherUser");
+      const externalUser = await getAddress("external");
+
       await SDK.auditor.addUser(user, 1, 1, 0, getUser("DGAddress"));
       await SDK.auditor.addUser(otherUser, 154, 1, 0, getUser("DGAddress"));
+      await SDK.auditor.addUser(externalUser, 1, 1, 0, getUser("DGAddress"));
     });
 
     it("should return users list", async () => {

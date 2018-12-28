@@ -20,6 +20,8 @@ describe("ERC20", () => {
     const amount = 250;
     const { from, to, value } = await SDK.asset.mint(amount, user, AIV, getUser("platformWallet"));
 
+    await SDK.asset.mint(100, getAddress("external"), AIV, getUser("platformWallet"));
+
     expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
       utils.toFixed(userAIVBalance + amount, 4)
     );
