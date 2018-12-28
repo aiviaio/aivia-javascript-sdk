@@ -42,7 +42,9 @@ const entryFee = (value, currencyPrice) => {
   const tokens = feesInUSD / currencyPrice;
   return tokens;
 };
-
+function estimateGasLimit(value) {
+  console.info(value);
+}
 describe("RPC", async () => {
   it("should buy token", async () => {
     if (!events.buy) return;
@@ -59,6 +61,13 @@ describe("RPC", async () => {
     const rate = await SDK.asset.getRate(token);
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
 
+    SDK.trade.buy(
+      amount.AIV,
+      token,
+      AIV,
+      { from: "0x1b0A41DE654D52B8aA5c7b4258002CAe483a8a68" },
+      estimateGasLimit
+    );
     const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
 
     const investors = await SDK.asset.getInvestors(token);
