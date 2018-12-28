@@ -48,15 +48,15 @@ describe("ERC20", () => {
 
   it("should transfer ETH to other", async () => {
     let estimated = 0;
-    function estimateGasLimit(value) {
-      estimated = value;
-    }
     const amount = "0.00000000000000007";
     await SDK.asset.transferETH(
       getAddress("otherUser"),
       amount,
       { from: getAddress("user") },
-      estimateGasLimit
+      value => {
+        estimated = value;
+      },
+      true
     );
     expect(estimated).to.greaterThan(0);
     const options = getUser("user");

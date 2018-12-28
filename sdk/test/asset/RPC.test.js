@@ -41,10 +41,6 @@ const entryFee = (value, currencyPrice) => {
   return tokens;
 };
 
-function estimateGasLimit(value) {
-  amount.gas = value;
-}
-
 describe("RPC", async () => {
   it("should buy token", async () => {
     if (!events.buy) return;
@@ -61,7 +57,16 @@ describe("RPC", async () => {
     const rate = await SDK.asset.getRate(token);
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
 
-    await SDK.trade.buy(amount.AIV, token, AIV, { from: getAddress("user") }, estimateGasLimit);
+    await SDK.trade.buy(
+      amount.AIV,
+      token,
+      AIV,
+      { from: getAddress("user") },
+      value => {
+        amount.gas = value;
+      },
+      true
+    );
     const options = getUser("user");
     const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, {
       ...options,
@@ -175,7 +180,10 @@ describe("RPC", async () => {
       value,
       token,
       { from: getAddress("user") },
-      estimateGasLimit
+      value => {
+        amount.gas = value;
+      },
+      true
     );
     const options = getUser("user");
     await SDK.asset.transfer(getAddress("otherUser"), value, token, {
