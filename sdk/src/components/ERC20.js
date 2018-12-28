@@ -15,7 +15,7 @@ const utils = require("../utils");
  * @param {Address=} assetAddress
  * @returns {balance}
  */
-exports.getBalance = async (wallet, assetAddress) => {
+exports.getBalance = async (wallet, assetAddress, isString) => {
   isAddress({ wallet });
 
   if (assetAddress) {
@@ -25,10 +25,10 @@ exports.getBalance = async (wallet, assetAddress) => {
   if (assetAddress) {
     const instance = createInstance(ERC20.abi, assetAddress);
     const balance = await errorHandler(await instance.methods.balanceOf(wallet).call());
-    return utils.fromWei(balance);
+    return utils.fromWei(balance, isString);
   }
   const web3 = getProvider();
-  return utils.fromWei(await errorHandler(web3.eth.getBalance(wallet)));
+  return utils.fromWei(await errorHandler(web3.eth.getBalance(wallet)), isString);
 };
 
 /**

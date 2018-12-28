@@ -26,7 +26,13 @@ exports.toWei = value => web3.utils.toWei(value.toString(), "ether");
  * @param {number} value
  * @returns {value} ;
  */
-exports.fromWei = value => Number(web3.utils.fromWei(`${value || 0}`, "ether"));
+exports.fromWei = (value, isString) => {
+  const balance = web3.utils.fromWei(`${value || 0}`, "ether");
+  if (isString) {
+    return balance;
+  }
+  return Number(balance);
+};
 
 /**
  * check if a given string is a valid Ethereum address

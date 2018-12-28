@@ -55,7 +55,8 @@ SDK.prototype = {
     NET: addressOrSymbol => Asset.NET(addressOrSymbol),
 
     // ERC20
-    getBalance: (wallet, assetAddress) => ERC20.getBalance(wallet, assetAddress),
+    getBalance: (wallet, assetAddress, isString) =>
+      ERC20.getBalance(wallet, assetAddress, isString),
     totalSupply: assetAddress => ERC20.totalSupply(assetAddress),
     approve: (assetAddress, spender, value, options, callback) =>
       ERC20.approve(assetAddress, spender, value, options, callback),

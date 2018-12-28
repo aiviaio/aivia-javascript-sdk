@@ -67,14 +67,16 @@ exports.buyAsset = async (value, assetAddress, currencyAddress, options, callbac
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
   const { custodian } = await Config.getConfig(assetAddress);
-  if (currencyAddress === storage.TUSDAddress) {
-    try {
-      await ERC20.approve(storage.TUSDAddress, RPCAddress, value, options);
-    } catch (error) {
-      Error({
-        name: "transaction",
-        message: "Not enough funds or not allowed to withdraw them"
-      });
+  if (!estimate) {
+    if (currencyAddress === storage.TUSDAddress) {
+      try {
+        await ERC20.approve(storage.TUSDAddress, RPCAddress, value, options);
+      } catch (error) {
+        Error({
+          name: "transaction",
+          message: "Not enough funds or not allowed to withdraw them"
+        });
+      }
     }
   }
 
