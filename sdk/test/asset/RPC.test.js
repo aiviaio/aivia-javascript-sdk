@@ -10,7 +10,6 @@ const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 const history = require("../history");
 
 const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
-
 const amount = {
   AIV: 200,
   TOKEN: 200,
@@ -42,9 +41,11 @@ const entryFee = (value, currencyPrice) => {
   const tokens = feesInUSD / currencyPrice;
   return tokens;
 };
+
 function estimateGasLimit(value) {
-  console.info(value);
+  amount.gas = value;
 }
+
 describe("RPC", async () => {
   it("should buy token", async () => {
     if (!events.buy) return;
@@ -61,7 +62,7 @@ describe("RPC", async () => {
     const rate = await SDK.asset.getRate(token);
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
 
-    SDK.trade.buy(amount.AIV, token, AIV, { from: getAddress("user") }, estimateGasLimit);
+    await SDK.trade.buy(amount.AIV, token, AIV, { from: getAddress("user") }, estimateGasLimit);
     const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
 
     const investors = await SDK.asset.getInvestors(token);
@@ -94,6 +95,7 @@ describe("RPC", async () => {
     );
 
     expect(utils.toFixed(_AIV_PLATFORM)).to.equal(utils.toFixed(AIV_PLATFORM + platformFeeValue));
+    expect(amount.gas).to.greaterThan(0);
   });
 
   it("shouldn't buy token", async () => {
