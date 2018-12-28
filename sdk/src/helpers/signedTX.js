@@ -19,10 +19,10 @@ module.exports = async params => {
   isFunction({ callback: params.callback });
   isAddress({ from: params.from, to: params.to });
 
-  const isEstimate =
+  const isEstimateGas =
     typeof params.callback === "function" && params.callback.name === "estimateGasLimit";
 
-  if (!isEstimate) {
+  if (!isEstimateGas) {
     isString({ privateKey: params.privateKey });
   }
   if (params.nonce) {
@@ -59,7 +59,7 @@ module.exports = async params => {
   txParams.gasLimit = params.gasLimit || gasLimit || block.gasLimit;
 
   // return estimated gas limit
-  if (isEstimate) {
+  if (isEstimateGas) {
     params.callback(txParams.gasLimit);
     return txParams.gasLimit;
   }
