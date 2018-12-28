@@ -51,7 +51,11 @@ module.exports = async params => {
 
   if (params.data) {
     const additional = additionalGasLimit[params.action] || 0;
-    gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
+    try {
+      gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
+    } catch (error) {
+      gasLimit = null;
+    }
     txParams.data = params.data.encodeABI();
   }
 
