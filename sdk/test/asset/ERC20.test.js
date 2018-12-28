@@ -1,11 +1,8 @@
 const { expect } = require("chai");
-const AIVIA_SDK = require("../../src");
 const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
 
-const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
-
-const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
+const SDK = require("../core");
 
 describe("ERC20", () => {
   it("should return totalSupply", async () => {
@@ -50,7 +47,22 @@ describe("ERC20", () => {
   });
 
   it("should transfer ETH to other", async () => {
+    let estimated = 0;
+    function estimateGasLimit(value) {
+      estimated = value;
+    }
     const amount = "0.00000000000000007";
-    await SDK.asset.transferETH(getAddress("otherUser"), amount, getUser("user"));
+    await SDK.asset.transferETH(
+      getAddress("otherUser"),
+      amount,
+      { from: getAddress("user") },
+      estimateGasLimit
+    );
+    expect(estimated).to.greaterThan(0);
+    const options = getUser("user");
+    await SDK.asset.transferETH(getAddress("otherUser"), amount, {
+      ...options,
+      gasLimit: estimated
+    });
   });
 });

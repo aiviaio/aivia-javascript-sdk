@@ -1,15 +1,14 @@
 const { expect } = require("chai");
 const fs = require("fs");
 const options = require("../deploy/Deployer.test");
-const AIVIA_SDK = require("../../src");
 const projectList = require("../projects");
 const { getAddress, getUser } = require("../helpers/users");
 const utils = require("../../src/utils");
 const assertRevert = require("../helpers/assertRevert");
-const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
 const history = require("../history");
 
-const SDK = new AIVIA_SDK(ENTRY_POINT, "http://127.0.0.1:8545");
+const SDK = require("../core");
+
 const amount = {
   AIV: 200,
   TOKEN: 200,
@@ -63,7 +62,11 @@ describe("RPC", async () => {
     const AIV_RATE = await SDK.platform.currency.getRate(AIV);
 
     await SDK.trade.buy(amount.AIV, token, AIV, { from: getAddress("user") }, estimateGasLimit);
-    const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, getUser("user"));
+    const options = getUser("user");
+    const { spend, received, fees } = await SDK.trade.buy(amount.AIV, token, AIV, {
+      ...options,
+      gasLimit: amount.gas
+    });
 
     const investors = await SDK.asset.getInvestors(token);
     const _AIV_USER = await SDK.asset.getBalance(user, AIV);

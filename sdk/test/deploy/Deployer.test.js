@@ -1,12 +1,9 @@
 const fs = require("fs");
 const { expect } = require("chai");
-const AIVIA_SDK = require("../../src");
 const { getAddress, getUser } = require("../helpers/users");
 const projectList = require("../projects");
 
-const ENTRY_POINT = require("../../src/ABI/EntryPoint").address;
-
-const SDK = new AIVIA_SDK(ENTRY_POINT, "https://127.0.0.1:8545");
+const SDK = require("../core");
 
 const options = {
   fees: {
