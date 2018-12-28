@@ -18,16 +18,19 @@ const additionalGasLimit = {
 module.exports = async params => {
   isFunction({ callback: params.callback });
   isAddress({ from: params.from, to: params.to });
-  isString({ privateKey: params.privateKey });
+  if (params.privateKey) {
+    isString({ privateKey: params.privateKey });
+  }
   if (params.nonce) {
     isInteger({ nonce: params.nonce });
   }
   const web3 = getProvider();
   const block = await errorHandler(web3.eth.getBlock("latest"));
   const TMP = {};
-  TMP.privateKey = Buffer.from(params.privateKey, "hex");
-
-  delete params.privateKey;
+  if (params.privateKey) {
+    TMP.privateKey = Buffer.from(params.privateKey, "hex");
+    delete params.privateKey;
+  }
 
   const txParams = {
     nonce: params.nonce || (await errorHandler(getNonce(params.from))),
