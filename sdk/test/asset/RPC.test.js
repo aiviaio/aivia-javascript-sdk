@@ -154,6 +154,18 @@ describe("RPC", async () => {
       TUSD,
       getUser("user")
     );
+
+    await SDK.trade.buy(
+      amount.TUSD,
+      token,
+      TUSD,
+      { from: getAddress("user") },
+      value => {
+        console.info(value);
+      },
+      true
+    );
+
     const _TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const _TOKEN_USER = await SDK.asset.getBalance(user, token);
     const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
@@ -174,8 +186,11 @@ describe("RPC", async () => {
   it("should buy token TUSD", async () => {
     const { token } = projectList[projectList.length - 1];
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
-    const { spend, received, fees } = await SDK.trade.buy(10, token, TUSD, getUser("external"));
-    console.info({ spend, received, fees });
+    const AIV = await SDK.platform.currency.getAddress("AIV");
+    const tx1 = await SDK.trade.buy(10, token, TUSD, getUser("external"));
+    const tx2 = await SDK.trade.buy(2, token, AIV, getUser("external"));
+    expect(utils.toFixed(tx1.received)).to.greaterThan(0);
+    expect(utils.toFixed(tx2.received)).to.greaterThan(0);
   });
 
   it("should transfer Token to other", async () => {
