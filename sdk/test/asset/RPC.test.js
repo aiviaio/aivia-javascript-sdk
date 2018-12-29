@@ -49,7 +49,7 @@ describe("RPC", async () => {
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     await SDK.asset.mint(200, user, TUSD, getUser("trueUSDOwner"));
-    const { owner, token } = projectList[projectList.length - 1];
+    const { owner, token } = projectList[0];
     const AIV_USER = await SDK.asset.getBalance(user, AIV);
     const AIV_PROJECT_OWNER = await SDK.asset.getBalance(owner, AIV);
     const AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);
@@ -87,7 +87,7 @@ describe("RPC", async () => {
     expect(_fees.manager).to.equal(utils.toFixed(fees.manager));
     expect(_received).to.equal(utils.toFixed(received));
 
-    expect(investors).to.equal(1);
+    expect(investors).to.greaterThan(0);
 
     const entryFeeValue = entryFee(amount.AIV, AIV_RATE);
     const platformFeeValue = platformFee(amount.AIV, AIV_RATE);
@@ -111,13 +111,13 @@ describe("RPC", async () => {
     const AIV = await SDK.platform.token();
     const otherUser = await getAddress("otherUser");
     await SDK.asset.mint(200, otherUser, AIV, getUser("platformWallet"));
-    const { token } = projectList[projectList.length - 1];
+    const { token } = projectList[0];
     await assertRevert(SDK.trade.buy(100, token, AIV, getUser("otherUser")));
   });
 
   it("should sell tokens", async () => {
     if (!events.sell) return;
-    const { token, custodian } = projectList[projectList.length - 1];
+    const { token, custodian } = projectList[0];
     const user = await getAddress("user");
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
@@ -140,7 +140,7 @@ describe("RPC", async () => {
 
   it("should buy token TUSD", async () => {
     if (!events.buy) return;
-    const { token } = projectList[projectList.length - 1];
+    const { token } = projectList[0];
     const user = await getAddress("user");
     const platformWallet = await SDK.platform.wallet();
     const AIV = await SDK.platform.token();
@@ -161,7 +161,7 @@ describe("RPC", async () => {
       TUSD,
       { from: getAddress("user") },
       value => {
-        console.info(value);
+        console.info("GAS:", value);
       },
       true
     );
@@ -184,7 +184,7 @@ describe("RPC", async () => {
   });
 
   it("should buy token TUSD", async () => {
-    const { token } = projectList[projectList.length - 1];
+    const { token } = projectList[0];
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const AIV = await SDK.platform.currency.getAddress("AIV");
     const tx1 = await SDK.trade.buy(10, token, TUSD, getUser("external"));
@@ -194,10 +194,10 @@ describe("RPC", async () => {
   });
 
   it("should transfer Token to other", async () => {
-    const { token } = projectList[projectList.length - 1];
+    const { token } = projectList[0];
     const value = 1;
     const BALANCE = await SDK.asset.getBalance(getAddress("user"), token);
-
+    const USER_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), token);
     await SDK.asset.transfer(
       getAddress("otherUser"),
       value,
@@ -213,17 +213,18 @@ describe("RPC", async () => {
       ...options,
       gasLimit: amount.gas
     });
-    const USER_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), token);
+    const _USER_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), token);
     const _BALANCE = await SDK.asset.getBalance(getAddress("user"), token);
     expect(utils.toFixed(BALANCE - _BALANCE)).to.equal(value);
-    expect(utils.toFixed(USER_BALANCE)).to.equal(value);
+    expect(utils.toFixed(_USER_BALANCE)).to.equal(USER_BALANCE + value);
   });
 
   it("should update rate", async () => {
-    const { token } = projectList[projectList.length - 1];
+    const { token } = projectList[0];
     const auditor = getAddress("DGAddress");
     const totalSupply = await SDK.asset.totalSupply(token);
     const NET = await SDK.asset.NET(token);
+    console.info("NET: ", NET);
     const AUM = utils.toFixed(NET + amount.PL);
     const tx = await SDK.asset.updateRate(
       token,
@@ -231,6 +232,7 @@ describe("RPC", async () => {
       "c72b9698fa1927e1dd12d3cf26ed84b2",
       getUser("DGAddress")
     );
+    console.info("RATE:", tx);
 
     history.push({
       AUM,
