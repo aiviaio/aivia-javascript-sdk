@@ -28,7 +28,6 @@ module.exports = async params => {
     isInteger({ nonce: params.nonce });
   }
   const web3 = getProvider();
-  const block = await errorHandler(web3.eth.getBlock("latest"));
   const TMP = {};
   if (params.privateKey) {
     TMP.privateKey = Buffer.from(params.privateKey, "hex");
@@ -54,12 +53,12 @@ module.exports = async params => {
     try {
       gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
     } catch (error) {
-      gasLimit = null;
+      gasLimit = 400000;
     }
     txParams.data = params.data.encodeABI();
   }
 
-  txParams.gasLimit = params.gasLimit || gasLimit || block.gasLimit;
+  txParams.gasLimit = params.gasLimit || gasLimit || 8000000;
 
   // return estimated gas limit
   if (isEstimateGas) {
