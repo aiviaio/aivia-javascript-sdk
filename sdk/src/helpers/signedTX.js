@@ -53,7 +53,7 @@ module.exports = async params => {
     try {
       gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
     } catch (error) {
-      gasLimit = 400000;
+      gasLimit = 375000;
     }
     txParams.data = params.data.encodeABI();
   }
