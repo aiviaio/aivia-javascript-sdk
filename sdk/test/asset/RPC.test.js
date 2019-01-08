@@ -148,12 +148,9 @@ describe("RPC", async () => {
     const TUSD = await SDK.platform.currency.getAddress("TUSD");
     const TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const TOKEN_USER = await SDK.asset.getBalance(user, token);
-    const { spend, received, fees } = await SDK.trade.buy(
-      amount.TUSD,
-      token,
-      TUSD,
-      getUser("user")
-    );
+    const tx = await SDK.trade.buy(amount.TUSD, token, TUSD, getUser("user"));
+
+    const { spend, received, fees } = tx;
 
     await SDK.trade.buy(
       amount.TUSD,
@@ -224,7 +221,6 @@ describe("RPC", async () => {
     const auditor = getAddress("DGAddress");
     const totalSupply = await SDK.asset.totalSupply(token);
     const NET = await SDK.asset.NET(token);
-    console.info("NET: ", NET);
     const AUM = utils.toFixed(NET + amount.PL);
     const tx = await SDK.asset.updateRate(
       token,
@@ -232,7 +228,6 @@ describe("RPC", async () => {
       "c72b9698fa1927e1dd12d3cf26ed84b2",
       getUser("DGAddress")
     );
-    console.info("RATE:", tx);
 
     history.push({
       AUM,
