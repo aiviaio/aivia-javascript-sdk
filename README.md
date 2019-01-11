@@ -25,7 +25,7 @@ const AIVIA_SDK = require("aivia/sdk"); // es5
 
 const ENTRY_POINT = "0x0000000000000000000000000000000000000000" // protocol entry point contract address
 const HTTP_PROVIDER = "http://127.0.0.1:8545";
-const DEFAULT_GAS_PRICE = 10000000000 // in wei (default value 50000000000)
+const DEFAULT_GAS_PRICE = 10000000000 // in wei, default value 50000000000 (50 gWei)
 const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
 ```
 
