@@ -8,14 +8,38 @@ const badges = `
 `;
 
 const install = `
-### npm
-npm install aivia -S
+## Installation
+This is a [Node.js](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/).
+
+Before installing, [download and install Node.js](https://nodejs.org/en/download/).
+Node.js 10.0 or higher is required.
+
+\`\`\`bash
+  npm install aivia -S
+\`\`\`
+`;
+
+const example = `
+## Example
+
+\`\`\`JavaScript
+const AIVIA_SDK = require("aivia"); // es6
+const AIVIA_SDK = require("aivia/sdk"); // es5
+
+const ENTRY_POINT = "0x0000000000000000000000000000000000000000" // protocol entry point contract address
+const HTTP_PROVIDER = "http://127.0.0.1:8545";
+const DEFAULT_GAS_PRICE = 10000000000 // in wei, default value 50000000000 (50 gWei)
+const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
+\`\`\`
+
 `;
 
 const head = `
 ${title}
 ${badges}
 ${install}
+${example}
 `;
 
 generator.render({ files: "src/**/*.js", separators: true }).then(docs => {
