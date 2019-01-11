@@ -19,7 +19,8 @@ module.exports = async params => {
   isFunction({ callback: params.callback });
   isAddress({ from: params.from, to: params.to });
 
-  const isEstimateGas = typeof params.callback === "function" && params.estimate;
+  const isEstimateGas =
+    typeof params.callback === "function" && params.estimate;
 
   if (!isEstimateGas) {
     isString({ privateKey: params.privateKey });
@@ -51,7 +52,9 @@ module.exports = async params => {
   if (params.data) {
     const additional = additionalGasLimit[params.action] || 0;
     try {
-      gasLimit = (await params.data.estimateGas(params.data, { from: params.from })) + additional;
+      gasLimit =
+        (await params.data.estimateGas(params.data, { from: params.from })) +
+        additional;
     } catch (error) {
       gasLimit = 375000;
     }
@@ -76,7 +79,9 @@ module.exports = async params => {
   TMP.serializedTx = TMP.rawTx.serialize();
   delete TMP.rawTx;
 
-  const transaction = web3.eth.sendSignedTransaction(`0x${TMP.serializedTx.toString("hex")}`);
+  const transaction = web3.eth.sendSignedTransaction(
+    `0x${TMP.serializedTx.toString("hex")}`
+  );
 
   transaction.once("transactionHash", hash => {
     if (typeof params.callback === "function") {

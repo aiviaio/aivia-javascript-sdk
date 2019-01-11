@@ -22,7 +22,9 @@ const getField = async (key, fields, instance) => {
       };
     },
     constBytes: async name => {
-      const field = await instance.methods.getConstBytes(utils.toHex(name)).call();
+      const field = await instance.methods
+        .getConstBytes(utils.toHex(name))
+        .call();
       return {
         [name]: utils.toUtf8(field)
       };
@@ -32,7 +34,9 @@ const getField = async (key, fields, instance) => {
       return convertUint(convertedFields, name, field);
     },
     constUint: async name => {
-      const field = await instance.methods.getConstUint(utils.toHex(name)).call();
+      const field = await instance.methods
+        .getConstUint(utils.toHex(name))
+        .call();
       return convertUint(convertedFields, name, field);
     },
     address: async name => {
@@ -42,7 +46,9 @@ const getField = async (key, fields, instance) => {
       };
     },
     constAddress: async name => {
-      const field = await instance.methods.getConstAddress(utils.toHex(name)).call();
+      const field = await instance.methods
+        .getConstAddress(utils.toHex(name))
+        .call();
       return {
         [name]: field
       };

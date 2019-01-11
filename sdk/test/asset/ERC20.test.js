@@ -16,11 +16,24 @@ describe("ERC20", () => {
 
     const AIV = await SDK.platform.token();
 
-    const userAIVBalance = utils.toFixed(await SDK.asset.getBalance(user, AIV), 4);
+    const userAIVBalance = utils.toFixed(
+      await SDK.asset.getBalance(user, AIV),
+      4
+    );
     const amount = 250;
-    const { from, to, value } = await SDK.asset.mint(amount, user, AIV, getUser("platformWallet"));
+    const { from, to, value } = await SDK.asset.mint(
+      amount,
+      user,
+      AIV,
+      getUser("platformWallet")
+    );
 
-    await SDK.asset.mint(100, getAddress("external"), AIV, getUser("platformWallet"));
+    await SDK.asset.mint(
+      100,
+      getAddress("external"),
+      AIV,
+      getUser("platformWallet")
+    );
 
     expect(utils.toFixed(await SDK.asset.getBalance(user, AIV), 4)).to.equal(
       utils.toFixed(userAIVBalance + amount, 4)
@@ -34,16 +47,31 @@ describe("ERC20", () => {
   it("should transfer AIV to other", async () => {
     const AIV = await SDK.platform.token();
     const amount = 9.44413;
-    const AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
-    await SDK.asset.transfer(getAddress("otherUser"), amount, AIV, getUser("user"));
-    const _AIV_BALANCE = await SDK.asset.getBalance(getAddress("otherUser"), AIV);
+    const AIV_BALANCE = await SDK.asset.getBalance(
+      getAddress("otherUser"),
+      AIV
+    );
+    await SDK.asset.transfer(
+      getAddress("otherUser"),
+      amount,
+      AIV,
+      getUser("user")
+    );
+    const _AIV_BALANCE = await SDK.asset.getBalance(
+      getAddress("otherUser"),
+      AIV
+    );
     expect(utils.toFixed(_AIV_BALANCE - AIV_BALANCE, 6)).to.equal(amount);
   });
 
   it("should transfer ETH to other", async () => {
     const amount = 0.0001;
     const ETH = await SDK.asset.getBalance(getAddress("otherUser"));
-    await SDK.asset.transferETH(getAddress("otherUser"), amount, getUser("user"));
+    await SDK.asset.transferETH(
+      getAddress("otherUser"),
+      amount,
+      getUser("user")
+    );
     const _ETH = await SDK.asset.getBalance(getAddress("otherUser"));
     expect(utils.toFixed(_ETH - ETH)).to.equal(amount);
   });

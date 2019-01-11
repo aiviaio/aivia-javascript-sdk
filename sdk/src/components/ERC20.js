@@ -1,6 +1,11 @@
 const ERC20 = require("../ABI/ERC20Mintable");
 const { createInstance, getProvider } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isNumber, isFunction } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddress,
+  isNumber,
+  isFunction
+} = require("../helpers/errorHandler");
 const signedTX = require("../helpers/signedTX");
 const utils = require("../utils");
 
@@ -24,11 +29,16 @@ exports.getBalance = async (wallet, assetAddress, isString) => {
 
   if (assetAddress) {
     const instance = createInstance(ERC20.abi, assetAddress);
-    const balance = await errorHandler(await instance.methods.balanceOf(wallet).call());
+    const balance = await errorHandler(
+      await instance.methods.balanceOf(wallet).call()
+    );
     return utils.fromWei(balance, isString);
   }
   const web3 = getProvider();
-  return utils.fromWei(await errorHandler(web3.eth.getBalance(wallet)), isString);
+  return utils.fromWei(
+    await errorHandler(web3.eth.getBalance(wallet)),
+    isString
+  );
 };
 
 /**
@@ -53,7 +63,9 @@ exports.totalSupply = async assetAddress => {
 exports.allowance = async (assetAddress, owner, spender) => {
   isAddress({ assetAddress, owner, spender });
   const instance = createInstance(ERC20.abi, assetAddress);
-  const value = await errorHandler(await instance.methods.allowance(owner, spender).call());
+  const value = await errorHandler(
+    await instance.methods.allowance(owner, spender).call()
+  );
   return utils.fromWei(value);
 };
 
@@ -68,6 +80,7 @@ exports.allowance = async (assetAddress, owner, spender) => {
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
 exports.approve = async (assetAddress, spender, value, options, callback) => {
@@ -119,10 +132,18 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
 
-exports.transfer = async (to, value, assetAddress, options, callback, estimate) => {
+exports.transfer = async (
+  to,
+  value,
+  assetAddress,
+  options,
+  callback,
+  estimate
+) => {
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
   isFunction({ callback });
@@ -172,6 +193,7 @@ exports.transfer = async (to, value, assetAddress, options, callback, estimate) 
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
 
@@ -205,6 +227,7 @@ exports.transferETH = async (to, value, options, callback, estimate) => {
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
 exports.mint = async (value, to, assetAddress, options, callback) => {

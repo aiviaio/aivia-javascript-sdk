@@ -42,7 +42,8 @@ SDK.prototype = {
     getAssetSymbol: assetAddress => AssetsRegistry.getAssetSymbol(assetAddress),
 
     // Asset
-    getAuditDBAddress: addressOrSymbol => Asset.getAuditDBAddress(addressOrSymbol),
+    getAuditDBAddress: addressOrSymbol =>
+      Asset.getAuditDBAddress(addressOrSymbol),
     getRPCAddress: addressOrSymbol => Asset.getRPCAddress(addressOrSymbol),
     getRate: addressOrSymbol => Asset.getRate(addressOrSymbol),
     getInvestors: assetAddress => Asset.getInvestors(assetAddress),
@@ -60,7 +61,8 @@ SDK.prototype = {
     totalSupply: assetAddress => ERC20.totalSupply(assetAddress),
     approve: (assetAddress, spender, value, options, callback) =>
       ERC20.approve(assetAddress, spender, value, options, callback),
-    allowance: (assetAddress, owner, spender) => ERC20.allowance(assetAddress, owner, spender),
+    allowance: (assetAddress, owner, spender) =>
+      ERC20.allowance(assetAddress, owner, spender),
     transfer: (to, value, assetAddress, options, callback, estimate) =>
       ERC20.transfer(to, value, assetAddress, options, callback, estimate),
     transferETH: (to, value, options, callback, estimate) =>
@@ -73,8 +75,16 @@ SDK.prototype = {
     checkBeforeBuy: (value, assetAddress, currencyAddress, from) =>
       RPC.checkBeforeBuy(value, assetAddress, currencyAddress, from),
     buy: (value, assetAddress, currencyAddress, options, callback, estimate) =>
-      RPC.buyAsset(value, assetAddress, currencyAddress, options, callback, estimate),
-    checkBeforeSell: (value, assetAddress, from) => RPC.checkBeforeSell(value, assetAddress, from),
+      RPC.buyAsset(
+        value,
+        assetAddress,
+        currencyAddress,
+        options,
+        callback,
+        estimate
+      ),
+    checkBeforeSell: (value, assetAddress, from) =>
+      RPC.checkBeforeSell(value, assetAddress, from),
     sell: (value, assetAddress, options, callback, estimate) =>
       RPC.sellAsset(value, assetAddress, options, callback, estimate),
 
@@ -85,9 +95,22 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: configAddress => Config.getConfigDirectly(configAddress),
-    deploy: (type, params, options, callback) => Deployer.deploy(type, params, options, callback),
-    updatePermission: (configAddress, countryID, walletTypes, options, callback) =>
-      Config.updatePermission(configAddress, countryID, walletTypes, options, callback)
+    deploy: (type, params, options, callback) =>
+      Deployer.deploy(type, params, options, callback),
+    updatePermission: (
+      configAddress,
+      countryID,
+      walletTypes,
+      options,
+      callback
+    ) =>
+      Config.updatePermission(
+        configAddress,
+        countryID,
+        walletTypes,
+        options,
+        callback
+      )
   },
 
   platform: {
@@ -102,15 +125,30 @@ SDK.prototype = {
   },
 
   auditor: {
-    addUser: (userAddress, countryID, walletType, expirationDate, options, callback) =>
-      TPLRegistry.addUser(userAddress, countryID, walletType, expirationDate, options, callback),
+    addUser: (
+      userAddress,
+      countryID,
+      walletType,
+      expirationDate,
+      options,
+      callback
+    ) =>
+      TPLRegistry.addUser(
+        userAddress,
+        countryID,
+        walletType,
+        expirationDate,
+        options,
+        callback
+      ),
     getUsersList: (short = false) => TPLRegistry.getUsersList(short),
     getUserDetails: userAddress => TPLRegistry.getUserDetails(userAddress)
   },
 
   custodian: {
     getList: () => CustodiansRegistry.getList(),
-    getDetails: custodianAddress => CustodiansRegistry.getDetails(custodianAddress)
+    getDetails: custodianAddress =>
+      CustodiansRegistry.getDetails(custodianAddress)
   }
 };
 

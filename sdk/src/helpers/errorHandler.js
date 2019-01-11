@@ -15,11 +15,15 @@ const errorHandler = promise => {
 const isAddress = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (!utils.isAddress(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a ethereum address`
+          message:
+            (params[key] && params[key].message) ||
+            `${key} must be a ethereum address`
         });
       }
     }
@@ -29,11 +33,14 @@ const isAddress = params => {
 const isInteger = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.is.not.integer(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a integer`
+          message:
+            (params[key] && params[key].message) || `${key} must be a integer`
         });
       }
     }
@@ -43,12 +50,15 @@ const isInteger = params => {
 const isAddressOrSymbol = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.is.not.string(value) && !utils.isAddress(value)) {
         Error({
           name: "params",
           message:
-            (params[key] && params[key].message) || `${key} must be a address or symbol token`
+            (params[key] && params[key].message) ||
+            `${key} must be a address or symbol token`
         });
       }
     }
@@ -58,11 +68,14 @@ const isAddressOrSymbol = params => {
 const isString = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.is.not.string(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a string`
+          message:
+            (params[key] && params[key].message) || `${key} must be a string`
         });
       }
     }
@@ -72,11 +85,14 @@ const isString = params => {
 const isNumber = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.is.not.number(value) && utils.is.not.number(Number(value))) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a number`
+          message:
+            (params[key] && params[key].message) || `${key} must be a number`
         });
       }
     }
@@ -87,11 +103,14 @@ const isArray = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
       const value =
-        utils.is.object(params[key]) && params[key].value ? params[key].value : params[key];
+        utils.is.object(params[key]) && params[key].value
+          ? params[key].value
+          : params[key];
       if (!Array.isArray(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a array`
+          message:
+            (params[key] && params[key].message) || `${key} must be a array`
         });
       }
     }
@@ -101,11 +120,14 @@ const isArray = params => {
 const isFunction = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (value && utils.is.not.function(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a function`
+          message:
+            (params[key] && params[key].message) || `${key} must be a function`
         });
       }
     }
@@ -115,11 +137,14 @@ const isFunction = params => {
 const isBoolean = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.is.not.boolean(value)) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a boolean`
+          message:
+            (params[key] && params[key].message) || `${key} must be a boolean`
         });
       }
     }
@@ -132,7 +157,8 @@ const isObject = params => {
       if (utils.is.not.object(params[key])) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a object`
+          message:
+            (params[key] && params[key].message) || `${key} must be a object`
         });
       }
     }
@@ -142,11 +168,15 @@ const isObject = params => {
 const isZeroAddress = params => {
   for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      const value = utils.is.object(params[key]) ? params[key].value : params[key];
+      const value = utils.is.object(params[key])
+        ? params[key].value
+        : params[key];
       if (utils.isAddress(value) && value !== utils.ZERO_ADDRESS) {
         Error({
           name: "params",
-          message: (params[key] && params[key].message) || `${key} must be a ZERO_ADDRESS`
+          message:
+            (params[key] && params[key].message) ||
+            `${key} must be a ZERO_ADDRESS`
         });
       }
     }

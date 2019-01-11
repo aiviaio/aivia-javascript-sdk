@@ -5,7 +5,12 @@ const config = require("../config");
 const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isObject, isInteger, isZeroAddress } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isObject,
+  isInteger,
+  isZeroAddress
+} = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const EntryPoint = require("./EntryPoint");
 const ReselectData = require("../projects/ReselectData");
@@ -42,6 +47,7 @@ const ReselectData = require("../projects/ReselectData");
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {components} deployed project components
  */
 exports.deploy = async (type, params, options, callback) => {
@@ -51,7 +57,9 @@ exports.deploy = async (type, params, options, callback) => {
   const gasPrice = options.gasPrice || config.get("DEFAULT_GAS_PRICE");
   const approximateCost = utils.fromWei(gasPrice * 8000000);
   const balance = await errorHandler(ERC20.getBalance(options.from));
-  const tokenAddress = await errorHandler(AssetsRegistry.getAssetAddress(tokenSymbol));
+  const tokenAddress = await errorHandler(
+    AssetsRegistry.getAssetAddress(tokenSymbol)
+  );
   if (balance < approximateCost) {
     Error({
       name: "transaction",

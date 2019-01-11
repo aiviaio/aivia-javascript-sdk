@@ -60,5 +60,6 @@ exports.toFixed = (value, digits = 5) => Number(value.toFixed(digits));
  * @param {value} value
  * @returns {string} number;
  */
-exports.numberToHex = value => web3.utils.numberToHex(web3.utils.toWei(value.toString(), "ether"));
+exports.numberToHex = value =>
+  web3.utils.numberToHex(web3.utils.toWei(value.toString(), "ether"));
 exports.ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";

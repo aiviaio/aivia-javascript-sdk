@@ -7,7 +7,9 @@ const utils = require("../utils");
 module.exports = async configAddress => {
   isAddress({ configAddress });
   const instance = createInstance(Config.abi, configAddress);
-  const type = await errorHandler(instance.methods.getConstUint(utils.toHex("type")).call());
+  const type = await errorHandler(
+    instance.methods.getConstUint(utils.toHex("type")).call()
+  );
   const list = {
     1: await CryptoHedge(instance)
   };

@@ -198,7 +198,7 @@ returns asset symbol by address
 
 <a name="module_Deploy.deploy"></a>
 
-### SDK.project.deploy(type, params, options, callback) ⇒ <code>components</code>
+### SDK.project.deploy(type, params, options, callback, estimate) ⇒ <code>components</code>
 deploy project
 
 **Kind**: static method of [<code>Deploy</code>](#module_Deploy)  
@@ -229,6 +229,7 @@ deploy project
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
@@ -241,10 +242,10 @@ deploy project
     * [.getBalance(wallet, [assetAddress])](#module_ERC20.getBalance) ⇒ <code>balance</code>
     * [.totalSupply(assetAddress)](#module_ERC20.totalSupply) ⇒ <code>totalSupply</code>
     * [.allowance(assetAddress, owner, spender)](#module_ERC20.allowance) ⇒ <code>allowance</code>
-    * [.approve(assetAddress, spender, value, options, callback)](#module_ERC20.approve) ⇒ <code>event</code>
-    * [.transfer(to, value, assetAddress, options, callback)](#module_ERC20.transfer) ⇒ <code>event</code>
-    * [.transferETH(to, value, options, callback)](#module_ERC20.transferETH) ⇒ <code>event</code>
-    * [.mint(value, to, assetAddress, options, callback)](#module_ERC20.mint) ⇒ <code>event</code>
+    * [.approve(assetAddress, spender, value, options, callback, estimate)](#module_ERC20.approve) ⇒ <code>event</code>
+    * [.transfer(to, value, assetAddress, options, callback, estimate)](#module_ERC20.transfer) ⇒ <code>event</code>
+    * [.transferETH(to, value, options, callback, estimate)](#module_ERC20.transferETH) ⇒ <code>event</code>
+    * [.mint(value, to, assetAddress, options, callback, estimate)](#module_ERC20.mint) ⇒ <code>event</code>
 
 
 * * *
@@ -296,7 +297,7 @@ returns amount approved by owner to spender
 
 <a name="module_ERC20.approve"></a>
 
-### SDK.asset.approve(assetAddress, spender, value, options, callback) ⇒ <code>event</code>
+### SDK.asset.approve(assetAddress, spender, value, options, callback, estimate) ⇒ <code>event</code>
 allows spender to manage a certain amount of assets
 
 **Kind**: static method of [<code>ERC20</code>](#module_ERC20)  
@@ -313,13 +314,14 @@ allows spender to manage a certain amount of assets
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
 
 <a name="module_ERC20.transfer"></a>
 
-### SDK.asset.transfer(to, value, assetAddress, options, callback) ⇒ <code>event</code>
+### SDK.asset.transfer(to, value, assetAddress, options, callback, estimate) ⇒ <code>event</code>
 transfer ERC20 asset value to other address
 
 **Kind**: static method of [<code>ERC20</code>](#module_ERC20)  
@@ -336,13 +338,14 @@ transfer ERC20 asset value to other address
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
 
 <a name="module_ERC20.transferETH"></a>
 
-### SDK.asset.transferETH(to, value, options, callback) ⇒ <code>event</code>
+### SDK.asset.transferETH(to, value, options, callback, estimate) ⇒ <code>event</code>
 transfer ETH value to other address
 
 **Kind**: static method of [<code>ERC20</code>](#module_ERC20)  
@@ -358,13 +361,14 @@ transfer ETH value to other address
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
 
 <a name="module_ERC20.mint"></a>
 
-### SDK.asset.mint(value, to, assetAddress, options, callback) ⇒ <code>event</code>
+### SDK.asset.mint(value, to, assetAddress, options, callback, estimate) ⇒ <code>event</code>
 mint asset value to other wallet from contract owner
 
 **Kind**: static method of [<code>ERC20</code>](#module_ERC20)  
@@ -381,6 +385,7 @@ mint asset value to other wallet from contract owner
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
@@ -420,9 +425,9 @@ returns platform token address
 
 * [Buy/Sell](#module_Buy/Sell)
     * [.checkBeforeBuy(value, assetAddress, currencyAddress, from)](#module_Buy/Sell.checkBeforeBuy) ⇒ <code>true</code> \| <code>error</code>
-    * [.buyAsset(value, assetAddress, currencyAddress, options, callback)](#module_Buy/Sell.buyAsset) ⇒ <code>event</code>
+    * [.buyAsset(value, assetAddress, currencyAddress, options, callback, estimate)](#module_Buy/Sell.buyAsset) ⇒ <code>event</code>
     * [.checkBeforeSell(value, assetAddress, options)](#module_Buy/Sell.checkBeforeSell) ⇒ <code>true</code> \| <code>error</code>
-    * [.sellAsset(value, assetAddress, options, callback)](#module_Buy/Sell.sellAsset) ⇒ <code>event</code>
+    * [.sellAsset(value, assetAddress, options, callback, estimate)](#module_Buy/Sell.sellAsset) ⇒ <code>event</code>
     * [.estimate(value, assetAddress, [currencyAddress])](#module_Buy/Sell.estimate) ⇒ <code>estimate</code>
 
 
@@ -448,7 +453,7 @@ the method by which you can first check the parameters before buy
 
 <a name="module_Buy/Sell.buyAsset"></a>
 
-### SDK.trade.buyAsset(value, assetAddress, currencyAddress, options, callback) ⇒ <code>event</code>
+### SDK.trade.buyAsset(value, assetAddress, currencyAddress, options, callback, estimate) ⇒ <code>event</code>
 purchase of tokens
 
 **Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
@@ -465,6 +470,7 @@ purchase of tokens
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
@@ -489,7 +495,7 @@ the method by which you can first check the parameters before sell
 
 <a name="module_Buy/Sell.sellAsset"></a>
 
-### SDK.trade.sellAsset(value, assetAddress, options, callback) ⇒ <code>event</code>
+### SDK.trade.sellAsset(value, assetAddress, options, callback, estimate) ⇒ <code>event</code>
 sale of tokens
 
 **Kind**: static method of [<code>Buy/Sell</code>](#module_Buy/Sell)  
@@ -505,6 +511,7 @@ sale of tokens
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
 | callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
@@ -605,7 +612,7 @@ returns currency symbol by address
 ## TPLRegistry
 
 * [TPLRegistry](#module_TPLRegistry)
-    * [.addUser(userAddress, countryID, walletType, [expirationDate], options, callback)](#module_TPLRegistry.addUser) ⇒ <code>event</code>
+    * [.addUser(userAddress, countryID, walletType, [expirationDate], options, callback, estimate)](#module_TPLRegistry.addUser) ⇒ <code>event</code>
     * [.getUserDetails(userAddress)](#module_TPLRegistry.getUserDetails) ⇒ <code>object</code>
     * [.getUsersList()](#module_TPLRegistry.getUsersList) ⇒ <code>Array.&lt;userList&gt;</code>
 
@@ -614,7 +621,7 @@ returns currency symbol by address
 
 <a name="module_TPLRegistry.addUser"></a>
 
-### SDK.auditor.addUser(userAddress, countryID, walletType, [expirationDate], options, callback) ⇒ <code>event</code>
+### SDK.auditor.addUser(userAddress, countryID, walletType, [expirationDate], options, callback, estimate) ⇒ <code>event</code>
 add or update user
 
 **Kind**: static method of [<code>TPLRegistry</code>](#module_TPLRegistry)  
@@ -632,6 +639,7 @@ add or update user
 | options.gasPrice | <code>number</code> |  | gas price |
 | options.gasLimit | <code>number</code> |  | gas limit |
 | callback | <code>function</code> |  | function(hash) |
+| estimate | <code>boolean</code> |  | is need estimate |
 
 
 * * *

@@ -1,5 +1,10 @@
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isInteger, isArray } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddress,
+  isInteger,
+  isArray
+} = require("../helpers/errorHandler");
 const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");
 const signedTX = require("../helpers/signedTX");
@@ -18,7 +23,13 @@ const getConfigDirectly = async configAddress => {
   return config;
 };
 
-const updatePermission = async (configAddress, countryID, walletTypes, options, callback) => {
+const updatePermission = async (
+  configAddress,
+  countryID,
+  walletTypes,
+  options,
+  callback
+) => {
   isAddress({ configAddress });
   isInteger({ countryID });
   isArray({ walletTypes });

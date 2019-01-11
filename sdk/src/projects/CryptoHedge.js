@@ -11,7 +11,13 @@ const {
 
 const input = ({
   projectName,
-  tokenDetails: { tokenName, tokenSymbol, initialPrice, maxTokens, maxInvestors },
+  tokenDetails: {
+    tokenName,
+    tokenSymbol,
+    initialPrice,
+    maxTokens,
+    maxInvestors
+  },
   fees: { platformFee, entryFee, exitFee },
   custodian,
   permissions: { countries = [], walletTypes = [], rule = false }

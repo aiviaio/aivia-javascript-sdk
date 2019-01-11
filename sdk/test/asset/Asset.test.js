@@ -8,7 +8,9 @@ describe("Asset", () => {
     it("return auditDB address", async () => {
       const { tokenSymbol } = await SDK.asset.getConfig(projectList[0].token);
       const auditDBBySymbol = await SDK.asset.getAuditDBAddress(tokenSymbol);
-      const auditDBByAddress = await SDK.asset.getAuditDBAddress(projectList[0].token);
+      const auditDBByAddress = await SDK.asset.getAuditDBAddress(
+        projectList[0].token
+      );
       expect(auditDBBySymbol).to.equal(projectList[0].auditDB);
       expect(auditDBByAddress).to.equal(projectList[0].auditDB);
     });
@@ -18,7 +20,9 @@ describe("Asset", () => {
         projectList[projectList.length - 1].token
       );
       const priceBySymbol = await SDK.asset.getRate(tokenSymbol);
-      const priceByAddress = await SDK.asset.getRate(projectList[projectList.length - 1].token);
+      const priceByAddress = await SDK.asset.getRate(
+        projectList[projectList.length - 1].token
+      );
       expect(priceBySymbol).to.equal(initialPrice);
       expect(priceByAddress).to.equal(initialPrice);
     });
@@ -28,14 +32,21 @@ describe("Asset", () => {
         projectList[projectList.length - 1].token
       );
       const RPCBySymbol = await SDK.asset.getRPCAddress(tokenSymbol);
-      const RPCByAddress = await SDK.asset.getRPCAddress(projectList[projectList.length - 1].token);
+      const RPCByAddress = await SDK.asset.getRPCAddress(
+        projectList[projectList.length - 1].token
+      );
       expect(RPCBySymbol).to.equal(RPC);
       expect(RPCByAddress).to.equal(RPC);
     });
 
     it("update permission", async () => {
       const { config } = projectList[projectList.length - 1];
-      await SDK.project.updatePermission(config, 1, [1], getUser("projectOwner"));
+      await SDK.project.updatePermission(
+        config,
+        1,
+        [1],
+        getUser("projectOwner")
+      );
     });
   });
 });

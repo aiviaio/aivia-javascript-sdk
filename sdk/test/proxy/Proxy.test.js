@@ -11,7 +11,9 @@ describe("Proxy", () => {
   describe("getRegistryAddress", () => {
     it("return registry address", async () => {
       const address = await SDK.getRegistryAddress("projects");
-      expect(address).to.equal(require("../../src/ABI/ProjectsRegistry").address);
+      expect(address).to.equal(
+        require("../../src/ABI/ProjectsRegistry").address
+      );
     });
     it("return zero address", async () => {
       const address = await SDK.getRegistryAddress("nonexistent");

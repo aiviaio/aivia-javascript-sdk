@@ -7,7 +7,9 @@ const list = {};
 
 const createInstance = (ABI, contractAddress) => {
   if (!provider) {
-    provider = new Web3(new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER")));
+    provider = new Web3(
+      new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
+    );
   }
   const key = JSON.stringify(ABI) + contractAddress;
 
@@ -22,7 +24,9 @@ const createInstance = (ABI, contractAddress) => {
 
 const getProvider = () => {
   if (!provider) {
-    provider = new Web3(new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER")));
+    provider = new Web3(
+      new Web3.providers.HttpProvider(config.get("HTTP_PROVIDER"))
+    );
     return provider;
   }
   return provider;

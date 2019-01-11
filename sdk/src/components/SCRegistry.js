@@ -1,6 +1,11 @@
 const Assets = require("../ABI/SCRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isAddressOrSymbol, isString, isAddress } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddressOrSymbol,
+  isString,
+  isAddress
+} = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 
@@ -20,7 +25,9 @@ const utils = require("../utils");
 exports.getList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-  const addressesList = await errorHandler(instance.methods.getAssetsList().call());
+  const addressesList = await errorHandler(
+    instance.methods.getAssetsList().call()
+  );
   const assetsList = addressesList.map(async address => {
     const assets = await instance.methods.getAssetByAddress(address).call();
     const [assetsSymbol, assetsRate] = Object.values(assets);
@@ -43,14 +50,18 @@ exports.getRate = async addressOrSymbol => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
   if (utils.isAddress(addressOrSymbol)) {
-    const rate = await errorHandler(instance.methods.getAssetRate(addressOrSymbol).call());
+    const rate = await errorHandler(
+      instance.methods.getAssetRate(addressOrSymbol).call()
+    );
     return utils.fromWei(rate);
   }
 
   const assetAddress = await errorHandler(
     instance.methods.getAssetAddress(utils.toHex(addressOrSymbol)).call()
   );
-  const rate = await errorHandler(instance.methods.getAssetRate(assetAddress).call());
+  const rate = await errorHandler(
+    instance.methods.getAssetRate(assetAddress).call()
+  );
   return utils.fromWei(rate);
 };
 
@@ -79,6 +90,8 @@ exports.getSymbol = async currencyAddress => {
   isAddress({ currencyAddress });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
   const instance = createInstance(Assets.abi, registryAddress);
-  const hexSymbol = await errorHandler(instance.methods.getSymbol(currencyAddress).call());
+  const hexSymbol = await errorHandler(
+    instance.methods.getSymbol(currencyAddress).call()
+  );
   return utils.toUtf8(hexSymbol);
 };

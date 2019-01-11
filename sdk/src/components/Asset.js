@@ -23,7 +23,9 @@ const getAddressWithKey = async addressOrSymbol => {
   if (utils.isAddress(addressOrSymbol)) {
     return addressOrSymbol;
   }
-  const address = await errorHandler(AssetsRegistry.getAssetAddress(addressOrSymbol));
+  const address = await errorHandler(
+    AssetsRegistry.getAssetAddress(addressOrSymbol)
+  );
   return address;
 };
 
@@ -58,7 +60,9 @@ exports.getRPCAddress = async addressOrSymbol => {
  */
 exports.getRate = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
-  const auditDB = await errorHandler(module.exports.getAuditDBAddress(addressOrSymbol));
+  const auditDB = await errorHandler(
+    module.exports.getAuditDBAddress(addressOrSymbol)
+  );
   const instance = createInstance(Audit.abi, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
@@ -82,7 +86,9 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   isNumber({ AUM });
   isString({ checksum });
   const _AUM = AUM < 0 ? 0 : utils.toWei(AUM);
-  const auditDB = await errorHandler(module.exports.getAuditDBAddress(assetAddress));
+  const auditDB = await errorHandler(
+    module.exports.getAuditDBAddress(assetAddress)
+  );
   const instance = createInstance(Audit.abi, auditDB);
   const timestamp = Math.floor(Date.now() / 1000);
   const action = await errorHandler(
@@ -128,7 +134,9 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
  */
 exports.NET = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
-  const auditDB = await errorHandler(module.exports.getAuditDBAddress(addressOrSymbol));
+  const auditDB = await errorHandler(
+    module.exports.getAuditDBAddress(addressOrSymbol)
+  );
   const instance = createInstance(Audit.abi, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));
@@ -142,6 +150,8 @@ exports.getInvestors = async assetAddress => {
   isAddress({ assetAddress });
   const RPC = await errorHandler(module.exports.getRPCAddress(assetAddress));
   const instance = createInstance(RPC_ABI.abi, RPC);
-  const investors = await errorHandler(instance.methods.getInvestorsCount().call());
+  const investors = await errorHandler(
+    instance.methods.getInvestorsCount().call()
+  );
   return Number(investors);
 };

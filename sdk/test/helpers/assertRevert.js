@@ -4,7 +4,10 @@ const assertRevert = async promise => {
   try {
     await promise;
   } catch (error) {
-    error.message.should.include("revert", `Expected "revert", got ${error} instead`);
+    error.message.should.include(
+      "revert",
+      `Expected "revert", got ${error} instead`
+    );
     return;
   }
   should.fail("Expected revert not received");

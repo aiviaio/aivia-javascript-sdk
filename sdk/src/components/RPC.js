@@ -6,7 +6,11 @@ const RPC = require("../ABI/RPC");
 const ERC20ABI = require("../ABI/ERC20Mintable").abi;
 const { createInstance } = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
-const { errorHandler, isNumber, isAddress } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isNumber,
+  isAddress
+} = require("../helpers/errorHandler");
 const Error = require("../helpers/Error");
 const utils = require("../utils");
 const { estimateTX } = require("../helpers/estimateTX");
@@ -14,8 +18,10 @@ const { estimateTX } = require("../helpers/estimateTX");
 const storage = {};
 
 const createCurrenciesInstances = async () => {
-  storage.TUSDAddress = storage.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
-  storage.AIVAddress = storage.AIVAddress || (await SCRegistry.getAddress("AIV"));
+  storage.TUSDAddress =
+    storage.TUSDAddress || (await SCRegistry.getAddress("TUSD"));
+  storage.AIVAddress =
+    storage.AIVAddress || (await SCRegistry.getAddress("AIV"));
   storage.TUSD = storage.TUSD || createInstance(ERC20ABI, storage.TUSDAddress);
   storage.AIV = storage.AIV || createInstance(ERC20ABI, storage.AIVAddress);
 };
@@ -58,11 +64,24 @@ exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
 
-exports.buyAsset = async (value, assetAddress, currencyAddress, options, callback, estimate) => {
-  await module.exports.checkBeforeBuy(value, assetAddress, currencyAddress, options.from);
+exports.buyAsset = async (
+  value,
+  assetAddress,
+  currencyAddress,
+  options,
+  callback,
+  estimate
+) => {
+  await module.exports.checkBeforeBuy(
+    value,
+    assetAddress,
+    currencyAddress,
+    options.from
+  );
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
@@ -168,9 +187,16 @@ exports.checkBeforeSell = async (value, assetAddress, from) => {
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
  */
-exports.sellAsset = async (value, assetAddress, options, callback, estimate) => {
+exports.sellAsset = async (
+  value,
+  assetAddress,
+  options,
+  callback,
+  estimate
+) => {
   await module.exports.checkBeforeSell(value, assetAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
   const instance = createInstance(RPC.abi, RPCAddress);

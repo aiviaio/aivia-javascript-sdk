@@ -1,6 +1,10 @@
 const TPLRegistry = require("../ABI/TPLRegistry");
 const { createInstance } = require("../helpers/createInstance");
-const { errorHandler, isAddress, isInteger } = require("../helpers/errorHandler");
+const {
+  errorHandler,
+  isAddress,
+  isInteger
+} = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 const utils = require("../utils");
 const signedTX = require("../helpers/signedTX");
@@ -22,6 +26,7 @@ const signedTX = require("../helpers/signedTX");
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
  * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @return {event} transaction event {eventName, address}
  */
 exports.addUser = async (
@@ -36,7 +41,12 @@ exports.addUser = async (
   isInteger({ countryID, walletType, expirationDate });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
-  const action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
+  const action = instance.methods.addUser(
+    userAddress,
+    countryID,
+    walletType,
+    expirationDate
+  );
   const { blockNumber } = await errorHandler(
     signedTX({
       data: action,
@@ -80,7 +90,9 @@ exports.getUserDetails = async userAddress => {
   isAddress({ userAddress });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
-  const userDetails = await errorHandler(instance.methods.getUserDetails(userAddress).call());
+  const userDetails = await errorHandler(
+    instance.methods.getUserDetails(userAddress).call()
+  );
   const [country, walletType, expirationDate] = Object.values(userDetails);
   return {
     address: userAddress,
@@ -102,12 +114,16 @@ exports.getUserDetails = async userAddress => {
 exports.getUsersList = async short => {
   const registryAddress = await Proxy.getRegistryAddress("tpl");
   const instance = createInstance(TPLRegistry.abi, registryAddress);
-  const addressList = await errorHandler(instance.methods.getUsersList().call());
+  const addressList = await errorHandler(
+    instance.methods.getUsersList().call()
+  );
   if (short) {
     return addressList;
   }
   const userList = addressList.map(async address => {
-    const userDetails = await errorHandler(module.exports.getUserDetails(address));
+    const userDetails = await errorHandler(
+      module.exports.getUserDetails(address)
+    );
     return userDetails;
   });
   return Promise.all(userList);
