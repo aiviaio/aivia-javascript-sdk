@@ -1,8 +1,10 @@
 
-# [AIVIA JavaScript SDK](https://aivia.io/)
-
+# [AIVIA JavaScript SDK](https://aivia.io/) 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dshm/aivia-sdk/LICENSE)
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
+
+
+Javascript Wrapper for interaction with AIVIA Protocol. 
 
 
 ## Installation

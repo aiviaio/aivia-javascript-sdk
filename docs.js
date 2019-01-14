@@ -7,6 +7,9 @@ const badges = `
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
 `;
 
+const description = `
+Javascript Wrapper for interaction with AIVIA Protocol. 
+`;
 const install = `
 ## Installation
 This is a [Node.js](https://nodejs.org/en/) module available through the
@@ -36,8 +39,8 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
 `;
 
 const head = `
-${title}
-${badges}
+${title} ${badges}
+${description}
 ${install}
 ${example}
 `;
