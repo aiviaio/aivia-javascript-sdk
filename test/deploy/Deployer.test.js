@@ -11,7 +11,11 @@ const options = {
     entryFee: 1,
     exitFee: 1
   },
-  initialPrice: 0.025
+  initialPrice: 0.025,
+  maxTokens: 25000000,
+  maxInvestors: 3000,
+  projectName: "Crypto Hedge Project",
+  tokenName: "Token from SDK"
 };
 
 describe("Deploy", () => {
@@ -22,13 +26,13 @@ describe("Deploy", () => {
       const project = await SDK.project.deploy(
         1,
         {
-          projectName: "Crypto Hedge Project",
+          projectName: options.projectName,
           tokenDetails: {
-            tokenName: "Token from SDK",
+            tokenName: options.tokenName,
             tokenSymbol: `ST${projectList.length}`,
             initialPrice: options.initialPrice,
-            maxTokens: 25000000,
-            maxInvestors: 3000
+            maxTokens: options.maxTokens,
+            maxInvestors: options.maxInvestors
           },
           fees: options.fees,
           custodian: custodianAddress,
