@@ -21,7 +21,8 @@ const list = [
   "TrueUSD",
   "PlatformRegistry",
   "TPLRegistry",
-  "CustodiansRegistry"
+  "CustodiansRegistry",
+  "EternalStorage"
 ];
 
 process.stdout.write("\x1Bc");

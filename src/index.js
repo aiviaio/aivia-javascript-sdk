@@ -110,7 +110,9 @@ SDK.prototype = {
         walletTypes,
         options,
         callback
-      )
+      ),
+    update: (configAddress, key, value, options, callback) =>
+      Config.update(configAddress, key, value, options, callback)
   },
 
   platform: {
