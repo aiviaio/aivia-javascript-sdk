@@ -151,6 +151,9 @@ SDK.prototype = {
     },
     updatePermission: function updatePermission(configAddress, countryID, walletTypes, options, callback) {
       return Config.updatePermission(configAddress, countryID, walletTypes, options, callback);
+    },
+    update: function update(configAddress, key, value, options, callback) {
+      return Config.update(configAddress, key, value, options, callback);
     }
   },
   platform: {

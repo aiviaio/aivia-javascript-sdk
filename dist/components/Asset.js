@@ -79,7 +79,7 @@ function () {
 }();
 /**
  * returns AuditDB address
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {AuditDBAddress} AuditDB address
  */
 
@@ -126,7 +126,7 @@ function () {
 }();
 /**
  * returns asset RPC address
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {RPCAddress} RPC address
  */
 
@@ -173,7 +173,7 @@ function () {
 }();
 /**
  * returns asset rate by address or symbol
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {rate} current(last) rate
  */
 
@@ -322,7 +322,7 @@ function () {
 }();
 /**
  * returns asset NET by address or symbol
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {NET}
  */
 
@@ -410,5 +410,45 @@ function () {
 
   return function (_x10) {
     return _ref10.apply(this, arguments);
+  };
+}();
+/**
+ * returns config by config address
+ * @param {string|address} assetAddress
+ * @returns {object} config
+ */
+
+
+exports.getConfig =
+/*#__PURE__*/
+function () {
+  var _ref11 = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee8(assetAddress) {
+    var config;
+    return _regenerator.default.wrap(function _callee8$(_context8) {
+      while (1) {
+        switch (_context8.prev = _context8.next) {
+          case 0:
+            isAddressOrSymbol({
+              assetAddress: assetAddress
+            });
+            _context8.next = 3;
+            return Config.getConfig(assetAddress);
+
+          case 3:
+            config = _context8.sent;
+            return _context8.abrupt("return", config);
+
+          case 5:
+          case "end":
+            return _context8.stop();
+        }
+      }
+    }, _callee8, this);
+  }));
+
+  return function (_x11) {
+    return _ref11.apply(this, arguments);
   };
 }();

@@ -334,8 +334,8 @@ function () {
             list = {
               bytes: ["tokenName", "projectName"],
               constBytes: ["tokenSymbol"],
-              uint: ["platformFee", "entryFee", "exitFee"],
-              constUint: ["type", "initialPrice", "maxTokens", "maxInvestors"],
+              uint: ["platformFee", "entryFee", "exitFee", "maxTokens", "maxInvestors"],
+              constUint: ["type", "initialPrice"],
               address: ["RPC"],
               constAddress: ["token", "auditDB", "custodian"]
             };
