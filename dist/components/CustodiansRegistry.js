@@ -8,7 +8,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var CustodiansRegistry = require("../ABI/CustodiansRegistry");
+var CUSTODIAN_REGISTRY_ABI = require("../ABI/CustodiansRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -37,7 +37,7 @@ function () {
 
           case 2:
             registryAddress = _context2.sent;
-            instance = createInstance(CustodiansRegistry.abi, registryAddress);
+            instance = createInstance(CUSTODIAN_REGISTRY_ABI, registryAddress);
             _context2.next = 6;
             return errorHandler(instance.methods.getCustodiansList().call());
 
@@ -114,7 +114,7 @@ function () {
 
           case 3:
             registryAddress = _context3.sent;
-            instance = createInstance(CustodiansRegistry.abi, registryAddress);
+            instance = createInstance(CUSTODIAN_REGISTRY_ABI, registryAddress);
             _context3.next = 7;
             return errorHandler(instance.methods.getCustodianDetails(custodianAddress).call());
 

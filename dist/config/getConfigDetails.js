@@ -8,7 +8,7 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var CryptoHedge = require("./CryptoHedge");
 
-var Config = require("../ABI/ProjectConfig");
+var CONFIG_ABI = require("../ABI/ProjectConfig");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -33,7 +33,7 @@ function () {
             isAddress({
               configAddress: configAddress
             });
-            instance = createInstance(Config.abi, configAddress);
+            instance = createInstance(CONFIG_ABI, configAddress);
             _context.next = 4;
             return errorHandler(instance.methods.getConstUint(utils.toHex("type")).call());
 

@@ -8,7 +8,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var ERC20 = require("../ABI/ERC20Mintable");
+var ERC20_ABI = require("../ABI/ERC20Mintable");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance,
@@ -62,7 +62,7 @@ function () {
               break;
             }
 
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             _context.t0 = errorHandler;
             _context.next = 7;
             return instance.methods.balanceOf(wallet).call();
@@ -120,7 +120,7 @@ function () {
             isAddress({
               assetAddress: assetAddress
             });
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             _context2.next = 4;
             return errorHandler(instance.methods.totalSupply().call());
 
@@ -165,7 +165,7 @@ function () {
               owner: owner,
               spender: spender
             });
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             _context3.t0 = errorHandler;
             _context3.next = 5;
             return instance.methods.allowance(owner, spender).call();
@@ -226,7 +226,7 @@ function () {
             isNumber({
               value: value
             });
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             action = instance.methods.approve(spender, utils.toWei(value));
             _context4.next = 6;
             return errorHandler(signedTX({
@@ -322,7 +322,7 @@ function () {
             isFunction({
               callback: callback
             });
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             action = instance.methods.transfer(to, utils.toWei(value));
             _context5.next = 7;
             return errorHandler(signedTX({
@@ -479,7 +479,7 @@ function () {
               assetAddress: assetAddress,
               to: to
             });
-            instance = createInstance(ERC20.abi, assetAddress);
+            instance = createInstance(ERC20_ABI, assetAddress);
             action = instance.methods.mint(to, utils.toWei(value));
             _context7.next = 6;
             return errorHandler(signedTX({

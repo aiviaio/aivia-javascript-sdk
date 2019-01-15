@@ -6,7 +6,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var Proxy = require("../ABI/Proxy");
+var PROXY_ABI = require("../ABI/Proxy");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -40,7 +40,7 @@ function () {
 
           case 3:
             proxyAddress = _context.sent;
-            instance = createInstance(Proxy.abi, proxyAddress);
+            instance = createInstance(PROXY_ABI, proxyAddress);
             return _context.abrupt("return", errorHandler(instance.methods.getRegistryAddress(utils.toHex(key)).call()));
 
           case 6:
@@ -75,7 +75,7 @@ function () {
 
           case 3:
             proxyAddress = _context2.sent;
-            instance = createInstance(Proxy.abi, proxyAddress);
+            instance = createInstance(PROXY_ABI, proxyAddress);
             return _context2.abrupt("return", errorHandler(instance.methods.isDeployer(deployerAddress).call()));
 
           case 6:
@@ -113,7 +113,7 @@ function () {
 
           case 4:
             proxyAddress = _context3.sent;
-            instance = createInstance(Proxy.abi, proxyAddress);
+            instance = createInstance(PROXY_ABI, proxyAddress);
             return _context3.abrupt("return", errorHandler(instance.methods.isAuditor(auditorAddress, type).call()));
 
           case 7:

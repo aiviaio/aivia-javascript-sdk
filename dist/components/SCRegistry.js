@@ -8,7 +8,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var Assets = require("../ABI/SCRegistry");
+var SC_REGISTRY_ABI = require("../ABI/SCRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -52,7 +52,7 @@ _regenerator.default.mark(function _callee2() {
 
         case 2:
           registryAddress = _context2.sent;
-          instance = createInstance(Assets.abi, registryAddress);
+          instance = createInstance(SC_REGISTRY_ABI, registryAddress);
           _context2.next = 6;
           return errorHandler(instance.methods.getAssetsList().call());
 
@@ -131,7 +131,7 @@ function () {
 
           case 3:
             registryAddress = _context3.sent;
-            instance = createInstance(Assets.abi, registryAddress);
+            instance = createInstance(SC_REGISTRY_ABI, registryAddress);
 
             if (!utils.isAddress(addressOrSymbol)) {
               _context3.next = 10;
@@ -196,7 +196,7 @@ function () {
 
           case 3:
             registryAddress = _context4.sent;
-            instance = createInstance(Assets.abi, registryAddress);
+            instance = createInstance(SC_REGISTRY_ABI, registryAddress);
             _context4.next = 7;
             return errorHandler(instance.methods.getAssetAddress(utils.toHex(symbol)).call());
 
@@ -242,7 +242,7 @@ function () {
 
           case 3:
             registryAddress = _context5.sent;
-            instance = createInstance(Assets.abi, registryAddress);
+            instance = createInstance(SC_REGISTRY_ABI, registryAddress);
             _context5.next = 7;
             return errorHandler(instance.methods.getSymbol(currencyAddress).call());
 

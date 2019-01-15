@@ -6,7 +6,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var EntryPoint = require("../ABI/EntryPoint");
+var ENTRY_POINT_ABI = require("../ABI/EntryPoint");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -27,7 +27,7 @@ function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            instance = createInstance(EntryPoint.abi, config.get("ENTRY_POINT"));
+            instance = createInstance(ENTRY_POINT_ABI, config.get("ENTRY_POINT"));
             _context.next = 3;
             return errorHandler(instance.methods.getProxyAddress().call());
 

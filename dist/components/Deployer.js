@@ -10,7 +10,7 @@ var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var Proxy = require("../ABI/Proxy");
+var PROXY_ABI = require("../ABI/Proxy");
 
 var AssetsRegistry = require("./AssetsRegistry");
 
@@ -126,7 +126,7 @@ function () {
 
           case 15:
             proxyAddress = _context.sent;
-            instance = createInstance(Proxy.abi, proxyAddress);
+            instance = createInstance(PROXY_ABI, proxyAddress);
             _params = ReselectData.input(type, params);
             deployAction = (_instance$methods = instance.methods).deployProject.apply(_instance$methods, (0, _toConsumableArray2.default)(_params));
             initAction = instance.methods.initProject();

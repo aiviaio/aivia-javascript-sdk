@@ -8,7 +8,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var TPLRegistry = require("../ABI/TPLRegistry");
+var TPL_REGISTRY_ABI = require("../ABI/TPLRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -85,7 +85,7 @@ function () {
 
           case 7:
             registryAddress = _context.sent;
-            instance = createInstance(TPLRegistry.abi, registryAddress);
+            instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
             action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
             _context.next = 12;
             return errorHandler(signedTX({
@@ -172,7 +172,7 @@ function () {
 
           case 3:
             registryAddress = _context2.sent;
-            instance = createInstance(TPLRegistry.abi, registryAddress);
+            instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
             _context2.next = 7;
             return errorHandler(instance.methods.getUserDetails(userAddress).call());
 
@@ -225,7 +225,7 @@ function () {
 
           case 2:
             registryAddress = _context4.sent;
-            instance = createInstance(TPLRegistry.abi, registryAddress);
+            instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
             _context4.next = 6;
             return errorHandler(instance.methods.getUsersList().call());
 

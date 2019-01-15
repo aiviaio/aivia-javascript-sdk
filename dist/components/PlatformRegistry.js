@@ -6,7 +6,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var PlatformRegistry = require("../ABI/PlatformRegistry");
+var PLATFORM_REGISTRY_ABI = require("../ABI/PlatformRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -43,7 +43,7 @@ _regenerator.default.mark(function _callee() {
 
         case 2:
           registryAddress = _context.sent;
-          instance = createInstance(PlatformRegistry.abi, registryAddress);
+          instance = createInstance(PLATFORM_REGISTRY_ABI, registryAddress);
           _context.next = 6;
           return errorHandler(instance.methods.getAddress(utils.toHex("platformWallet")).call());
 
@@ -78,7 +78,7 @@ _regenerator.default.mark(function _callee2() {
 
         case 2:
           registryAddress = _context2.sent;
-          instance = createInstance(PlatformRegistry.abi, registryAddress);
+          instance = createInstance(PLATFORM_REGISTRY_ABI, registryAddress);
           _context2.next = 6;
           return errorHandler(instance.methods.getAddress(utils.toHex("platformToken")).call());
 

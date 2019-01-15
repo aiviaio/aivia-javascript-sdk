@@ -16,9 +16,9 @@ var ERC20 = require("./ERC20");
 
 var Config = require("./Config");
 
-var RPC = require("../ABI/RPC");
+var RPC_ABI = require("../ABI/RPC");
 
-var ERC20ABI = require("../ABI/ERC20Mintable").abi;
+var ERC20ABI = require("../ABI/ERC20Mintable");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -200,7 +200,7 @@ function () {
 
           case 4:
             RPCAddress = _context3.sent;
-            instance = createInstance(RPC.abi, RPCAddress);
+            instance = createInstance(RPC_ABI, RPCAddress);
             action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
             _context3.next = 9;
             return Config.getConfig(assetAddress);
@@ -416,7 +416,7 @@ function () {
 
           case 4:
             RPCAddress = _context5.sent;
-            instance = createInstance(RPC.abi, RPCAddress);
+            instance = createInstance(RPC_ABI, RPCAddress);
             action = instance.methods.sellAsset(utils.toWei(value));
             transaction = signedTX({
               data: action,

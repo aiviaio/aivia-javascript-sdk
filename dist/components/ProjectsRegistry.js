@@ -8,7 +8,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var Projects = require("../ABI/ProjectsRegistry");
+var PROJECT_REGISTRY_ABI = require("../ABI/ProjectsRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -34,7 +34,7 @@ function () {
 
           case 2:
             registryAddress = _context2.sent;
-            instance = createInstance(Projects.abi, registryAddress);
+            instance = createInstance(PROJECT_REGISTRY_ABI, registryAddress);
             _context2.t0 = Number;
             _context2.next = 7;
             return errorHandler(instance.methods.getProjectLength().call());

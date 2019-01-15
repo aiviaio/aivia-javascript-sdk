@@ -6,7 +6,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var AssetsRegistry = require("../ABI/AssetsRegistry");
+var ASSETS_REGISTRY_ABI = require("../ABI/AssetsRegistry");
 
 var _require = require("../helpers/createInstance"),
     createInstance = _require.createInstance;
@@ -48,7 +48,7 @@ _regenerator.default.mark(function _callee2() {
 
         case 2:
           registryAddress = _context2.sent;
-          instance = createInstance(AssetsRegistry.abi, registryAddress);
+          instance = createInstance(ASSETS_REGISTRY_ABI, registryAddress);
           _context2.next = 6;
           return errorHandler(instance.methods.getAssetsList().call());
 
@@ -122,7 +122,7 @@ function () {
 
           case 3:
             registryAddress = _context3.sent;
-            instance = createInstance(AssetsRegistry.abi, registryAddress);
+            instance = createInstance(ASSETS_REGISTRY_ABI, registryAddress);
             _context3.next = 7;
             return errorHandler(instance.methods.getAddress(utils.toHex(symbol)).call());
 
@@ -168,7 +168,7 @@ function () {
 
           case 3:
             registryAddress = _context4.sent;
-            instance = createInstance(AssetsRegistry.abi, registryAddress);
+            instance = createInstance(ASSETS_REGISTRY_ABI, registryAddress);
             _context4.next = 7;
             return errorHandler(instance.methods.getSymbol(assetAddress).call());
 

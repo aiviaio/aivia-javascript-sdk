@@ -8,7 +8,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var Audit = require("../ABI/ProjectAudit");
+var AUDIT_DB_ABI = require("../ABI/ProjectAudit");
 
 var RPC_ABI = require("../ABI/RPC");
 
@@ -197,7 +197,7 @@ function () {
 
           case 3:
             auditDB = _context4.sent;
-            instance = createInstance(Audit.abi, auditDB);
+            instance = createInstance(AUDIT_DB_ABI, auditDB);
             _context4.next = 7;
             return errorHandler(instance.methods.getLastPrice().call());
 
@@ -259,7 +259,7 @@ function () {
 
           case 6:
             auditDB = _context5.sent;
-            instance = createInstance(Audit.abi, auditDB);
+            instance = createInstance(AUDIT_DB_ABI, auditDB);
             timestamp = Math.floor(Date.now() / 1000);
             _context5.next = 11;
             return errorHandler(instance.methods.updateRate(_AUM, timestamp, utils.toHex(checksum)));
@@ -346,7 +346,7 @@ function () {
 
           case 3:
             auditDB = _context6.sent;
-            instance = createInstance(Audit.abi, auditDB);
+            instance = createInstance(AUDIT_DB_ABI, auditDB);
             _context6.next = 7;
             return errorHandler(instance.methods.NET().call());
 
@@ -392,7 +392,7 @@ function () {
 
           case 3:
             RPC = _context7.sent;
-            instance = createInstance(RPC_ABI.abi, RPC);
+            instance = createInstance(RPC_ABI, RPC);
             _context7.next = 7;
             return errorHandler(instance.methods.getInvestorsCount().call());
 
