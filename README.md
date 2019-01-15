@@ -39,6 +39,8 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
 <dd></dd>
 <dt><a href="#module_AssetsRegistry">AssetsRegistry</a></dt>
 <dd></dd>
+<dt><a href="#module_Project">Project</a></dt>
+<dd></dd>
 <dt><a href="#module_Deploy">Deploy</a></dt>
 <dd></dd>
 <dt><a href="#module_ERC20">ERC20</a></dt>
@@ -66,6 +68,7 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
     * [.updateRate(assetAddress, AUM, checksum, options)](#module_Asset.updateRate) ⇒ <code>event</code>
     * [.NET(addressOrSymbol)](#module_Asset.NET) ⇒ <code>NET</code>
     * [.getInvestors(addressOrSymbol)](#module_Asset.getInvestors) ⇒ <code>investors</code>
+    * [.getConfig(assetAddress)](#module_Asset.getConfig) ⇒ <code>object</code>
 
 
 * * *
@@ -80,7 +83,7 @@ returns AuditDB address
 
 | Param | Type |
 | --- | --- |
-| addressOrSymbol | <code>String</code> \| <code>Address</code> | 
+| addressOrSymbol | <code>string</code> \| <code>address</code> | 
 
 
 * * *
@@ -95,7 +98,7 @@ returns asset RPC address
 
 | Param | Type |
 | --- | --- |
-| addressOrSymbol | <code>String</code> \| <code>Address</code> | 
+| addressOrSymbol | <code>string</code> \| <code>address</code> | 
 
 
 * * *
@@ -110,7 +113,7 @@ returns asset rate by address or symbol
 
 | Param | Type |
 | --- | --- |
-| addressOrSymbol | <code>String</code> \| <code>Address</code> | 
+| addressOrSymbol | <code>string</code> \| <code>address</code> | 
 
 
 * * *
@@ -146,7 +149,7 @@ returns asset NET by address or symbol
 
 | Param | Type |
 | --- | --- |
-| addressOrSymbol | <code>String</code> \| <code>Address</code> | 
+| addressOrSymbol | <code>string</code> \| <code>address</code> | 
 
 
 * * *
@@ -161,6 +164,21 @@ returns asset investors count by address
 | Param | Type |
 | --- | --- |
 | addressOrSymbol | <code>address</code> | 
+
+
+* * *
+
+<a name="module_Asset.getConfig"></a>
+
+### SDK.asset.getConfig(assetAddress) ⇒ <code>object</code>
+returns config by config address
+
+**Kind**: static method of [<code>Asset</code>](#module_Asset)  
+**Returns**: <code>object</code> - config  
+
+| Param | Type |
+| --- | --- |
+| assetAddress | <code>string</code> \| <code>address</code> | 
 
 
 * * *
@@ -220,6 +238,80 @@ returns asset symbol by address
 | Param | Type |
 | --- | --- |
 | assetAddress | <code>address</code> | 
+
+
+* * *
+
+<a name="module_Project"></a>
+
+## Project
+
+* [Project](#module_Project)
+    * [.getConfig(configAddress)](#module_Project.getConfig) ⇒ <code>object</code>
+    * [.updatePermission(configAddress, key, countryID, walletTypes, options, callback, estimate)](#module_Project.updatePermission) ⇒ <code>transaction</code>
+    * [.update(configAddress, key, value, options, callback, estimate)](#module_Project.update) ⇒ <code>transaction</code>
+
+
+* * *
+
+<a name="module_Project.getConfig"></a>
+
+### SDK.project.getConfig(configAddress) ⇒ <code>object</code>
+returns config by config address
+
+**Kind**: static method of [<code>Project</code>](#module_Project)  
+**Returns**: <code>object</code> - config  
+
+| Param | Type |
+| --- | --- |
+| configAddress | <code>string</code> \| <code>address</code> | 
+
+
+* * *
+
+<a name="module_Project.updatePermission"></a>
+
+### SDK.project.updatePermission(configAddress, key, countryID, walletTypes, options, callback, estimate) ⇒ <code>transaction</code>
+update project config
+
+**Kind**: static method of [<code>Project</code>](#module_Project)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| configAddress | <code>address</code> | asset address that will be sold |
+| key | <code>string</code> | field name |
+| countryID | <code>number</code> | country ID |
+| walletTypes | <code>array.&lt;number&gt;</code> | wallets types array |
+| options | <code>object</code> |  |
+| options.address | <code>address</code> | wallet address |
+| options.privateKey | <code>string</code> | private key |
+| options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
+| callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
+
+
+* * *
+
+<a name="module_Project.update"></a>
+
+### SDK.project.update(configAddress, key, value, options, callback, estimate) ⇒ <code>transaction</code>
+update project config
+
+**Kind**: static method of [<code>Project</code>](#module_Project)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| configAddress | <code>address</code> | asset address that will be sold |
+| key | <code>string</code> | field name |
+| value | <code>number</code> \| <code>string</code> | new value |
+| options | <code>object</code> |  |
+| options.address | <code>address</code> | wallet address |
+| options.privateKey | <code>string</code> | private key |
+| options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
+| callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *

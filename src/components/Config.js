@@ -21,7 +21,17 @@ const fields = {
   names: ["projectName", "tokenName"]
 };
 
-const getConfig = async assetAddress => {
+/**
+ * @module Project
+ * @typicalname SDK.project
+ */
+
+/**
+ * returns config by config address
+ * @param {string|address} configAddress
+ * @returns {object} config
+ */
+exports.getConfig = async assetAddress => {
   isAddress({ assetAddress });
   const instance = createInstance(ABI.config, assetAddress);
   const configAddress = await errorHandler(instance.methods.config().call());
@@ -29,13 +39,28 @@ const getConfig = async assetAddress => {
   return config;
 };
 
-const getConfigDirectly = async configAddress => {
+exports.getConfigDirectly = async configAddress => {
   isAddress({ configAddress });
   const config = await errorHandler(getConfigDetails(configAddress));
   return config;
 };
 
-const updatePermission = async (
+/**
+ * update project config
+ * @param {address} configAddress asset address that will be sold
+ * @param {string} key field name
+ * @param {number} countryID country ID
+ *  @param {array.<number>} walletTypes wallets types array
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
+ * @return {transaction}
+ */
+exports.updatePermission = async (
   configAddress,
   countryID,
   walletTypes,
@@ -63,7 +88,22 @@ const updatePermission = async (
   );
 };
 
-const update = async (configAddress, key, value, options, callback) => {
+/**
+ * update project config
+ * @param {address} configAddress asset address that will be sold
+ * @param {string} key field name
+ * @param {number|string} value new value
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
+ * @return {transaction}
+ */
+
+exports.update = async (configAddress, key, value, options, callback) => {
   if (![...fields.names, ...fields.fees, ...fields.uint].includes(key)) {
     Error({
       name: "params",
@@ -106,11 +146,4 @@ const update = async (configAddress, key, value, options, callback) => {
     })
   );
   return tx;
-};
-
-module.exports = {
-  getConfig,
-  getConfigDirectly,
-  updatePermission,
-  update
 };

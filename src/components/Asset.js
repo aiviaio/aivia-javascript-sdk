@@ -31,7 +31,7 @@ const getAddressWithKey = async addressOrSymbol => {
 
 /**
  * returns AuditDB address
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {AuditDBAddress} AuditDB address
  */
 exports.getAuditDBAddress = async addressOrSymbol => {
@@ -43,7 +43,7 @@ exports.getAuditDBAddress = async addressOrSymbol => {
 
 /**
  * returns asset RPC address
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {RPCAddress} RPC address
  */
 exports.getRPCAddress = async addressOrSymbol => {
@@ -55,7 +55,7 @@ exports.getRPCAddress = async addressOrSymbol => {
 
 /**
  * returns asset rate by address or symbol
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {rate} current(last) rate
  */
 exports.getRate = async addressOrSymbol => {
@@ -129,7 +129,7 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
 
 /**
  * returns asset NET by address or symbol
- * @param {String|Address} addressOrSymbol
+ * @param {string|address} addressOrSymbol
  * @returns {NET}
  */
 exports.NET = async addressOrSymbol => {
@@ -154,4 +154,15 @@ exports.getInvestors = async assetAddress => {
     instance.methods.getInvestorsCount().call()
   );
   return Number(investors);
+};
+
+/**
+ * returns config by config address
+ * @param {string|address} assetAddress
+ * @returns {object} config
+ */
+exports.getConfig = async assetAddress => {
+  isAddressOrSymbol({ assetAddress });
+  const config = await Config.getConfig(assetAddress);
+  return config;
 };
