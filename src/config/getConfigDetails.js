@@ -1,12 +1,12 @@
 const CryptoHedge = require("./CryptoHedge");
-const Config = require("../ABI/ProjectConfig");
+const CONFIG_ABI = require("../ABI/ProjectConfig");
 const { createInstance } = require("../helpers/createInstance");
 const { errorHandler, isAddress } = require("../helpers/errorHandler");
 const utils = require("../utils");
 
 module.exports = async configAddress => {
   isAddress({ configAddress });
-  const instance = createInstance(Config.abi, configAddress);
+  const instance = createInstance(CONFIG_ABI, configAddress);
   const type = await errorHandler(
     instance.methods.getConstUint(utils.toHex("type")).call()
   );

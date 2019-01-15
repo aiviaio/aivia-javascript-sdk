@@ -1,4 +1,4 @@
-const Assets = require("../ABI/SCRegistry");
+const SC_REGISTRY_ABI = require("../ABI/SCRegistry");
 const { createInstance } = require("../helpers/createInstance");
 const {
   errorHandler,
@@ -24,7 +24,7 @@ const utils = require("../utils");
  */
 exports.getList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
-  const instance = createInstance(Assets.abi, registryAddress);
+  const instance = createInstance(SC_REGISTRY_ABI, registryAddress);
   const addressesList = await errorHandler(
     instance.methods.getAssetsList().call()
   );
@@ -48,7 +48,7 @@ exports.getRate = async addressOrSymbol => {
   isAddressOrSymbol({ addressOrSymbol });
 
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
-  const instance = createInstance(Assets.abi, registryAddress);
+  const instance = createInstance(SC_REGISTRY_ABI, registryAddress);
   if (utils.isAddress(addressOrSymbol)) {
     const rate = await errorHandler(
       instance.methods.getAssetRate(addressOrSymbol).call()
@@ -73,7 +73,7 @@ exports.getRate = async addressOrSymbol => {
 exports.getAddress = async symbol => {
   isString({ symbol });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
-  const instance = createInstance(Assets.abi, registryAddress);
+  const instance = createInstance(SC_REGISTRY_ABI, registryAddress);
   const assetAddress = await errorHandler(
     instance.methods.getAssetAddress(utils.toHex(symbol)).call()
   );
@@ -89,7 +89,7 @@ exports.getAddress = async symbol => {
 exports.getSymbol = async currencyAddress => {
   isAddress({ currencyAddress });
   const registryAddress = await Proxy.getRegistryAddress("cryptocurrencies");
-  const instance = createInstance(Assets.abi, registryAddress);
+  const instance = createInstance(SC_REGISTRY_ABI, registryAddress);
   const hexSymbol = await errorHandler(
     instance.methods.getSymbol(currencyAddress).call()
   );

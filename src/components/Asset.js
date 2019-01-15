@@ -1,4 +1,4 @@
-const Audit = require("../ABI/ProjectAudit");
+const AUDIT_DB_ABI = require("../ABI/ProjectAudit");
 const RPC_ABI = require("../ABI/RPC");
 const { createInstance } = require("../helpers/createInstance");
 const {
@@ -63,7 +63,7 @@ exports.getRate = async addressOrSymbol => {
   const auditDB = await errorHandler(
     module.exports.getAuditDBAddress(addressOrSymbol)
   );
-  const instance = createInstance(Audit.abi, auditDB);
+  const instance = createInstance(AUDIT_DB_ABI, auditDB);
   const price = await errorHandler(instance.methods.getLastPrice().call());
   return utils.fromWei(price);
 };
@@ -89,7 +89,7 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
   const auditDB = await errorHandler(
     module.exports.getAuditDBAddress(assetAddress)
   );
-  const instance = createInstance(Audit.abi, auditDB);
+  const instance = createInstance(AUDIT_DB_ABI, auditDB);
   const timestamp = Math.floor(Date.now() / 1000);
   const action = await errorHandler(
     instance.methods.updateRate(_AUM, timestamp, utils.toHex(checksum))
@@ -137,7 +137,7 @@ exports.NET = async addressOrSymbol => {
   const auditDB = await errorHandler(
     module.exports.getAuditDBAddress(addressOrSymbol)
   );
-  const instance = createInstance(Audit.abi, auditDB);
+  const instance = createInstance(AUDIT_DB_ABI, auditDB);
   const value = await errorHandler(instance.methods.NET().call());
   return utils.toFixed(utils.fromWei(value));
 };
@@ -149,7 +149,7 @@ exports.NET = async addressOrSymbol => {
 exports.getInvestors = async assetAddress => {
   isAddress({ assetAddress });
   const RPC = await errorHandler(module.exports.getRPCAddress(assetAddress));
-  const instance = createInstance(RPC_ABI.abi, RPC);
+  const instance = createInstance(RPC_ABI, RPC);
   const investors = await errorHandler(
     instance.methods.getInvestorsCount().call()
   );

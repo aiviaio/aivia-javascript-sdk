@@ -1,4 +1,4 @@
-const PlatformRegistry = require("../ABI/PlatformRegistry");
+const PLATFORM_REGISTRY_ABI = require("../ABI/PlatformRegistry");
 const { createInstance } = require("../helpers/createInstance");
 const { errorHandler } = require("../helpers/errorHandler");
 const utils = require("../utils");
@@ -15,7 +15,7 @@ const Proxy = require("./Proxy");
  */
 exports.getPlatformWallet = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
-  const instance = createInstance(PlatformRegistry.abi, registryAddress);
+  const instance = createInstance(PLATFORM_REGISTRY_ABI, registryAddress);
   const address = await errorHandler(
     instance.methods.getAddress(utils.toHex("platformWallet")).call()
   );
@@ -28,7 +28,7 @@ exports.getPlatformWallet = async () => {
  */
 exports.getPlatformToken = async () => {
   const registryAddress = await Proxy.getRegistryAddress("platform");
-  const instance = createInstance(PlatformRegistry.abi, registryAddress);
+  const instance = createInstance(PLATFORM_REGISTRY_ABI, registryAddress);
   const address = await errorHandler(
     instance.methods.getAddress(utils.toHex("platformToken")).call()
   );

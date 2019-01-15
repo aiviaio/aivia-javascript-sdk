@@ -1,4 +1,4 @@
-const TPLRegistry = require("../ABI/TPLRegistry");
+const TPL_REGISTRY_ABI = require("../ABI/TPLRegistry");
 const { createInstance } = require("../helpers/createInstance");
 const {
   errorHandler,
@@ -40,7 +40,7 @@ exports.addUser = async (
   isAddress({ userAddress });
   isInteger({ countryID, walletType, expirationDate });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
-  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
   const action = instance.methods.addUser(
     userAddress,
     countryID,
@@ -89,7 +89,7 @@ exports.addUser = async (
 exports.getUserDetails = async userAddress => {
   isAddress({ userAddress });
   const registryAddress = await Proxy.getRegistryAddress("tpl");
-  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
   const userDetails = await errorHandler(
     instance.methods.getUserDetails(userAddress).call()
   );
@@ -113,7 +113,7 @@ exports.getUserDetails = async userAddress => {
  */
 exports.getUsersList = async short => {
   const registryAddress = await Proxy.getRegistryAddress("tpl");
-  const instance = createInstance(TPLRegistry.abi, registryAddress);
+  const instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
   const addressList = await errorHandler(
     instance.methods.getUsersList().call()
   );

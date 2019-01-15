@@ -10,10 +10,10 @@ describe("SCRegistry", () => {
       expect(this.currencies[0].symbol).to.equal("AIV");
       expect(this.currencies[1].symbol).to.equal("TUSD");
       expect(this.currencies[0].address).to.equal(
-        require("../../src/ABI/PlatformToken").address
+        require("../contracts").PlatformToken
       );
       expect(this.currencies[1].address).to.equal(
-        require("../../src/ABI/TrueUSD").address
+        require("../contracts").TrueUSD
       );
     });
 

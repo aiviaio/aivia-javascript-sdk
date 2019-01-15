@@ -2,8 +2,8 @@ const Asset = require("./Asset");
 const SCRegistry = require("./SCRegistry");
 const ERC20 = require("./ERC20");
 const Config = require("./Config");
-const RPC = require("../ABI/RPC");
-const ERC20ABI = require("../ABI/ERC20Mintable").abi;
+const RPC_ABI = require("../ABI/RPC");
+const ERC20ABI = require("../ABI/ERC20Mintable");
 const { createInstance } = require("../helpers/createInstance");
 const signedTX = require("../helpers/signedTX");
 const {
@@ -83,7 +83,7 @@ exports.buyAsset = async (
     options.from
   );
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
-  const instance = createInstance(RPC.abi, RPCAddress);
+  const instance = createInstance(RPC_ABI, RPCAddress);
   const action = instance.methods.buyAsset(utils.toWei(value), currencyAddress);
   const { custodian } = await Config.getConfig(assetAddress);
   if (!estimate) {
@@ -199,7 +199,7 @@ exports.sellAsset = async (
 ) => {
   await module.exports.checkBeforeSell(value, assetAddress, options.from);
   const RPCAddress = await Asset.getRPCAddress(assetAddress);
-  const instance = createInstance(RPC.abi, RPCAddress);
+  const instance = createInstance(RPC_ABI, RPCAddress);
   const action = instance.methods.sellAsset(utils.toWei(value));
 
   const transaction = signedTX({

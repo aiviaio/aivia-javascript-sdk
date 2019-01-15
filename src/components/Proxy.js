@@ -1,4 +1,4 @@
-const Proxy = require("../ABI/Proxy");
+const PROXY_ABI = require("../ABI/Proxy");
 const { createInstance } = require("../helpers/createInstance");
 const {
   errorHandler,
@@ -12,7 +12,7 @@ const utils = require("../utils");
 const getRegistryAddress = async key => {
   isString({ key });
   const proxyAddress = await EntryPoint.getProxyAddress();
-  const instance = createInstance(Proxy.abi, proxyAddress);
+  const instance = createInstance(PROXY_ABI, proxyAddress);
   return errorHandler(
     instance.methods.getRegistryAddress(utils.toHex(key)).call()
   );
@@ -21,7 +21,7 @@ const getRegistryAddress = async key => {
 const isDeployer = async deployerAddress => {
   isAddress({ deployerAddress });
   const proxyAddress = await EntryPoint.getProxyAddress();
-  const instance = createInstance(Proxy.abi, proxyAddress);
+  const instance = createInstance(PROXY_ABI, proxyAddress);
   return errorHandler(instance.methods.isDeployer(deployerAddress).call());
 };
 
@@ -29,7 +29,7 @@ const isAuditor = async (auditorAddress, type) => {
   isAddress({ auditorAddress });
   isInteger({ type });
   const proxyAddress = await EntryPoint.getProxyAddress();
-  const instance = createInstance(Proxy.abi, proxyAddress);
+  const instance = createInstance(PROXY_ABI, proxyAddress);
   return errorHandler(instance.methods.isAuditor(auditorAddress, type).call());
 };
 

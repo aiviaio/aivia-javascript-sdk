@@ -1,4 +1,4 @@
-const ERC20 = require("../ABI/ERC20Mintable");
+const ERC20_ABI = require("../ABI/ERC20Mintable");
 const { createInstance, getProvider } = require("../helpers/createInstance");
 const {
   errorHandler,
@@ -28,7 +28,7 @@ exports.getBalance = async (wallet, assetAddress, isString) => {
   }
 
   if (assetAddress) {
-    const instance = createInstance(ERC20.abi, assetAddress);
+    const instance = createInstance(ERC20_ABI, assetAddress);
     const balance = await errorHandler(
       await instance.methods.balanceOf(wallet).call()
     );
@@ -48,7 +48,7 @@ exports.getBalance = async (wallet, assetAddress, isString) => {
  */
 exports.totalSupply = async assetAddress => {
   isAddress({ assetAddress });
-  const instance = createInstance(ERC20.abi, assetAddress);
+  const instance = createInstance(ERC20_ABI, assetAddress);
   const total = await errorHandler(instance.methods.totalSupply().call());
   return utils.fromWei(total);
 };
@@ -62,7 +62,7 @@ exports.totalSupply = async assetAddress => {
  */
 exports.allowance = async (assetAddress, owner, spender) => {
   isAddress({ assetAddress, owner, spender });
-  const instance = createInstance(ERC20.abi, assetAddress);
+  const instance = createInstance(ERC20_ABI, assetAddress);
   const value = await errorHandler(
     await instance.methods.allowance(owner, spender).call()
   );
@@ -86,7 +86,7 @@ exports.allowance = async (assetAddress, owner, spender) => {
 exports.approve = async (assetAddress, spender, value, options, callback) => {
   isAddress({ assetAddress, spender });
   isNumber({ value });
-  const instance = createInstance(ERC20.abi, assetAddress);
+  const instance = createInstance(ERC20_ABI, assetAddress);
   const action = instance.methods.approve(spender, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
@@ -147,7 +147,7 @@ exports.transfer = async (
   isNumber({ value });
   isAddress({ assetAddress, to, from: options.from });
   isFunction({ callback });
-  const instance = createInstance(ERC20.abi, assetAddress);
+  const instance = createInstance(ERC20_ABI, assetAddress);
   const action = instance.methods.transfer(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({
@@ -233,7 +233,7 @@ exports.transferETH = async (to, value, options, callback, estimate) => {
 exports.mint = async (value, to, assetAddress, options, callback) => {
   isNumber({ value });
   isAddress({ assetAddress, to });
-  const instance = createInstance(ERC20.abi, assetAddress);
+  const instance = createInstance(ERC20_ABI, assetAddress);
   const action = instance.methods.mint(to, utils.toWei(value));
   const { blockNumber } = await errorHandler(
     signedTX({

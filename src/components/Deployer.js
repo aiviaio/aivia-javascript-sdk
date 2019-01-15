@@ -1,4 +1,4 @@
-const Proxy = require("../ABI/Proxy");
+const PROXY_ABI = require("../ABI/Proxy");
 const AssetsRegistry = require("./AssetsRegistry");
 const ERC20 = require("./ERC20");
 const config = require("../config");
@@ -73,7 +73,7 @@ exports.deploy = async (type, params, options, callback) => {
     }
   });
   const proxyAddress = await errorHandler(EntryPoint.getProxyAddress());
-  const instance = createInstance(Proxy.abi, proxyAddress);
+  const instance = createInstance(PROXY_ABI, proxyAddress);
   const _params = ReselectData.input(type, params);
   const deployAction = instance.methods.deployProject(..._params);
   const initAction = instance.methods.initProject();

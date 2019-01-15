@@ -1,11 +1,11 @@
-const Projects = require("../ABI/ProjectsRegistry");
+const PROJECT_REGISTRY_ABI = require("../ABI/ProjectsRegistry");
 const { createInstance } = require("../helpers/createInstance");
 const { errorHandler } = require("../helpers/errorHandler");
 const Proxy = require("./Proxy");
 
 const getProjectsList = async () => {
   const registryAddress = await Proxy.getRegistryAddress("projects");
-  const instance = createInstance(Projects.abi, registryAddress);
+  const instance = createInstance(PROJECT_REGISTRY_ABI, registryAddress);
   const length = Number(
     await errorHandler(instance.methods.getProjectLength().call())
   );
