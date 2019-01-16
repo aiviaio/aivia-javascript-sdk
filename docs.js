@@ -10,17 +10,17 @@ const badges = `
 
 const warning = `
 #### Please note that **THIS** version is running on  [Ropsten](https://ropsten.etherscan.io/) TestNet.
-### Please **DO NOT** add your MainNet wallet. You will lose your funds.
+### Please **DO NOT** add your MainNet wallet. You may lose your funds.
 `;
 
 const ropsten = `
-## How connect to Ropsten TestNet with Infura
+## How to connect to the Ropsten TestNet with Infura
 #### Register with Infura
 
-Before you can use Infura, you need to [register for an Infura Access Token](https://infura.io/register).
+You need to [register for an Infura Access Token](https://infura.io/register).
 
-Fill out the form and you will receive your token. Your information will be sent to your email and displayed on the screen. Make sure you save this __TOKEN__ and keep it private!
-Use this __TOKEN__ for the url of the HTTP_PROVIDER, like:
+Fill out the form and you will receive your access token. 
+Use your access token in url of the HTTP_PROVIDER, like:
 
 \`\`\`JavaScript
   const HTTP_PROVIDER = "https://ropsten.infura.io/v3/0db7ff8aff88e_demo_key"
@@ -64,10 +64,8 @@ const head = `
 ${title} ${badges}
 ${description}
 ___
-:exclamation::exclamation::exclamation:
 ${warning}
 ___
-:point_up: :point_up: :point_up:
 ${ropsten}
 ${install}
 ${example}
