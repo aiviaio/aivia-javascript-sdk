@@ -9,13 +9,28 @@ const badges = `
 `;
 
 const warning = `
-#### Please note that **THIS** version is running on Ropsten TestNet.
-#### If you don't have a wallet on Ropsten TestNet, please create a new one.
-## Please **DO NOT** add your MainNet wallet. You will lose your funds.
+#### Please note that **THIS** version is running on  [Ropsten](https://ropsten.etherscan.io/) TestNet.
+### Please **DO NOT** add your MainNet wallet. You will lose your funds.
+`;
+
+const ropsten = `
+## How connect to Ropsten TestNet with Infura
+#### Register with Infura
+
+Before you can use Infura, you need to [register for an Infura Access Token](https://infura.io/register).
+
+Fill out the form and you will receive your token. Your information will be sent to your email and displayed on the screen. Make sure you save this __TOKEN__ and keep it private!
+Use this __TOKEN__ for the url of the HTTP_PROVIDER, like:
+
+\`\`\`JavaScript
+  const HTTP_PROVIDER = "https://ropsten.infura.io/v3/0db7ff8aff88e_demo_key"
+\`\`\`
 `;
 
 const description = `
 JavaScript Wrapper for interaction with AIVIA Protocol. 
+
+:white_check_mark: Crypto Hedge Fund Template is supported
 `;
 const install = `
 ## Installation
@@ -38,7 +53,7 @@ const AIVIA_SDK = require("aivia"); // es6
 const AIVIA_SDK = require("aivia/sdk"); // es5
 
 const ENTRY_POINT = "0x0000000000000000000000000000000000000000" // protocol entry point contract address
-const HTTP_PROVIDER = "http://127.0.0.1:8545";
+const HTTP_PROVIDER = "https://ropsten.infura.io/v3/YOUR-ACCESS-TOKEN";
 const DEFAULT_GAS_PRICE = 10000000000 // in wei, default value 50000000000 (50 gWei)
 const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
 \`\`\`
@@ -52,6 +67,8 @@ ___
 :exclamation::exclamation::exclamation:
 ${warning}
 ___
+:point_up: :point_up: :point_up:
+${ropsten}
 ${install}
 ${example}
 `;
