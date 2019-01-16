@@ -16,7 +16,7 @@ ___
 
 ___
 
-## How connect to Ropsten TestNet with Infura
+## How to connect to the Ropsten TestNet with Infura
 #### Register with Infura
 
 Before you can use Infura, you need to [register for an Infura Access Token](https://infura.io/register).
