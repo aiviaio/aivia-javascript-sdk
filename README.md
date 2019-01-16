@@ -10,13 +10,11 @@ JavaScript Wrapper for interaction with AIVIA Protocol.
 :white_check_mark: Crypto Hedge Fund Template is supported
 
 ___
-:exclamation::exclamation::exclamation:
 
 #### Please note that **THIS** version is running on  [Ropsten](https://ropsten.etherscan.io/) TestNet.
 ### Please **DO NOT** add your MainNet wallet. You will lose your funds.
 
 ___
-:point_up: :point_up: :point_up:
 
 ## How connect to Ropsten TestNet with Infura
 #### Register with Infura
