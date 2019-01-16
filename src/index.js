@@ -112,7 +112,8 @@ SDK.prototype = {
         callback
       ),
     update: (configAddress, key, value, options, callback) =>
-      Config.update(configAddress, key, value, options, callback)
+      Config.update(configAddress, key, value, options, callback),
+    getConfigAddress: assetAddress => Config.getConfigAddress(assetAddress)
   },
 
   platform: {

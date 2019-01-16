@@ -29,6 +29,18 @@ const fields = {
  */
 
 /**
+ * returns config address
+ * @param {address} assetAddress
+ * @returns {address} config address
+ */
+exports.getConfigAddress = async assetAddress => {
+  isAddress({ assetAddress });
+  const instance = createInstance(ABI.config, assetAddress);
+  const configAddress = await errorHandler(instance.methods.config().call());
+  return configAddress;
+};
+
+/**
  * returns config by config address
  * @param {string|address} configAddress
  * @returns {object} config

@@ -269,9 +269,25 @@ returns asset symbol by address
 ## Project
 
 * [Project](#module_Project)
+    * [.getConfigAddress(assetAddress)](#module_Project.getConfigAddress) ⇒ <code>address</code>
     * [.getConfig(configAddress)](#module_Project.getConfig) ⇒ <code>object</code>
     * [.updatePermission(configAddress, key, countryID, walletTypes, options, callback, estimate)](#module_Project.updatePermission) ⇒ <code>transaction</code>
     * [.update(configAddress, key, value, options, callback, estimate)](#module_Project.update) ⇒ <code>transaction</code>
+
+
+* * *
+
+<a name="module_Project.getConfigAddress"></a>
+
+### SDK.project.getConfigAddress(assetAddress) ⇒ <code>address</code>
+returns config address
+
+**Kind**: static method of [<code>Project</code>](#module_Project)  
+**Returns**: <code>address</code> - config address  
+
+| Param | Type |
+| --- | --- |
+| assetAddress | <code>address</code> | 
 
 
 * * *
