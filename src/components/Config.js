@@ -140,7 +140,6 @@ exports.update = async (configAddress, key, value, options, callback) => {
     if (key === "maxTokens") {
       const totalSupply = await ERC20.totalSupply(token);
       if (totalSupply > value) {
-        console.info("totalSupply error");
         Error({
           name: "params",
           message: `There are already ${totalSupply}  tokens, the new value should be either equal to ${totalSupply} or more`

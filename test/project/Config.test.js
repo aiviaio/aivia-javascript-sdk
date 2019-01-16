@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { getUser } = require("../helpers/users");
+const assertRevert = require("../helpers/assertRevert");
 const projectList = require("../projects");
 const initialData = require("../deploy/Deployer.test");
 const SDK = require("../core");
@@ -18,6 +19,19 @@ const newData = {
 
 describe("Project config", () => {
   describe("update field", () => {
+    it("should assert revert when try update from other user", async () => {
+      const { config } = projectList[0];
+
+      await assertRevert(
+        SDK.project.update(
+          config,
+          "projectName",
+          newData.projectName,
+          getUser("external")
+        )
+      );
+    });
+
     it("should return error", async () => {
       const { config } = projectList[0];
       try {
@@ -53,6 +67,34 @@ describe("Project config", () => {
 
       expect(tokenName).to.eq(newData.tokenName);
       expect(projectName).to.eq(newData.projectName);
+    });
+
+    it("should return error  when value > totalSupply", async () => {
+      const { config } = projectList[0];
+      try {
+        await SDK.project.update(
+          config,
+          "maxTokens",
+          0,
+          getUser("projectOwner")
+        );
+      } catch (error) {
+        expect(error).to.be.an("error");
+      }
+    });
+
+    it("should return error  when value > investors", async () => {
+      const { config } = projectList[0];
+      try {
+        await SDK.project.update(
+          config,
+          "maxInvestors",
+          0,
+          getUser("projectOwner")
+        );
+      } catch (error) {
+        expect(error).to.be.an("error");
+      }
     });
 
     it("should update uint fields", async () => {
