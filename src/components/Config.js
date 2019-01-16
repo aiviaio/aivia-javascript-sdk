@@ -14,6 +14,8 @@ const ABI = require("../helpers/utility-abi");
 const signedTX = require("../helpers/signedTX");
 const ETERNAL_STORAGE_ABI = require("../ABI/EternalStorage");
 const utils = require("../utils");
+const Asset = require("./Asset");
+const ERC20 = require("./ERC20");
 
 const fields = {
   uint: ["maxTokens", "maxInvestors"],
@@ -50,7 +52,7 @@ exports.getConfigDirectly = async configAddress => {
  * @param {address} configAddress asset address that will be sold
  * @param {string} key field name
  * @param {number} countryID country ID
- *  @param {array.<number>} walletTypes wallets types array
+ * @param {array.<number>} walletTypes wallets types array
  * @param {object} options
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
@@ -124,7 +126,31 @@ exports.update = async (configAddress, key, value, options, callback) => {
 
   if (fields.uint.includes(key)) {
     isInteger({ value });
-    action = await errorHandler(instance.methods.setUint(_key, value));
+    const { token } = await module.exports.getConfigDirectly(configAddress);
+    if (key === "maxInvestors") {
+      const investors = await Asset.getInvestors(token);
+      if (investors > value) {
+        Error({
+          name: "params",
+          message: `There are already ${investors} investors, the new value should be either equal to ${investors} or more`
+        });
+      }
+    }
+
+    if (key === "maxTokens") {
+      const totalSupply = await ERC20.totalSupply(token);
+      if (totalSupply > value) {
+        console.info("totalSupply error");
+        Error({
+          name: "params",
+          message: `There are already ${totalSupply}  tokens, the new value should be either equal to ${totalSupply} or more`
+        });
+      }
+    }
+
+    action = await errorHandler(
+      instance.methods.setUint(_key, utils.numberToHex(value))
+    );
   }
 
   if (fields.fees.includes(key)) {

@@ -10,8 +10,8 @@ const newData = {
     entryFee: 1,
     exitFee: 0.2
   },
-  maxTokens: 0,
-  maxInvestors: 100,
+  maxTokens: 25 * 10 ** 18,
+  maxInvestors: 3,
   projectName: "New Project name",
   tokenName: "New Token name"
 };

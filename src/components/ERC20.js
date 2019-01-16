@@ -209,7 +209,7 @@ exports.transferETH = async (to, value, options, callback, estimate) => {
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
       callback,
-      value: utils.numberToHex(value),
+      value: utils.numberToHex(value, true),
       estimate
     })
   );
