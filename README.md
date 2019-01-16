@@ -12,7 +12,7 @@ JavaScript Wrapper for interaction with AIVIA Protocol.
 ___
 
 #### Please note that **THIS** version is running on  [Ropsten](https://ropsten.etherscan.io/) TestNet.
-### Please **DO NOT** add your MainNet wallet. You will lose your funds.
+### Please **DO NOT** add your MainNet wallet. You may lose your funds.
 
 ___
 
