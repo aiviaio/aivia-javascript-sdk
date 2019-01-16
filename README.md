@@ -1,10 +1,12 @@
 
 # [AIVIA JavaScript SDK](https://aivia.io/) 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dshm/aivia-sdk/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aivia/aivia-javscript-sdk/LICENSE)
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
+[![npm version](https://img.shields.io/badge/coverage-93%25-blue.svg)](https://github.com/aivia/aivia-javscript-sdk/)
 
 
-Javascript Wrapper for interaction with AIVIA Protocol. 
+
+JavaScript Wrapper for interaction with AIVIA Protocol. 
 
 
 ## Installation
@@ -824,7 +826,8 @@ returns user list list
     * [.isAddress(address)](#module_utils.isAddress) ⇒ <code>boolean</code>
     * [.toUtf8(hex)](#module_utils.toUtf8) ⇒ <code>string</code>
     * [.toFixed(value, [digits])](#module_utils.toFixed) ⇒ <code>value</code>
-    * [.numberToHex(value)](#module_utils.numberToHex) ⇒ <code>string</code>
+    * [.numberToHex(value, [inWei])](#module_utils.numberToHex) ⇒ <code>string</code>
+    * [.BN(value)](#module_utils.BN) ⇒ <code>BN</code>
 
 
 * * *
@@ -920,11 +923,27 @@ formats a number using fixed-point notation
 
 <a name="module_utils.numberToHex"></a>
 
-### SDK.utils.numberToHex(value) ⇒ <code>string</code>
+### SDK.utils.numberToHex(value, [inWei]) ⇒ <code>string</code>
 covert number to hex
 
 **Kind**: static method of [<code>utils</code>](#module_utils)  
 **Returns**: <code>string</code> - number;  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| value | <code>value</code> |  | 
+| [inWei] | <code>boolean</code> | <code>false</code> | 
+
+
+* * *
+
+<a name="module_utils.BN"></a>
+
+### SDK.utils.BN(value) ⇒ <code>BN</code>
+covert number to BN
+
+**Kind**: static method of [<code>utils</code>](#module_utils)  
+**Returns**: <code>BN</code> - BN;  
 
 | Param | Type |
 | --- | --- |

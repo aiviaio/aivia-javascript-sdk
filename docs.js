@@ -3,12 +3,14 @@ const fs = require("fs");
 
 const title = "# [AIVIA JavaScript SDK](https://aivia.io/)";
 const badges = `
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/dshm/aivia-sdk/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/LICENSE)
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
+[![npm version](https://img.shields.io/badge/coverage-93%25-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/)
+
 `;
 
 const description = `
-Javascript Wrapper for interaction with AIVIA Protocol. 
+JavaScript Wrapper for interaction with AIVIA Protocol. 
 `;
 const install = `
 ## Installation

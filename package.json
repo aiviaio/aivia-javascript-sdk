@@ -27,14 +27,16 @@
     "generate-export-aliases": "^1.1.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "prettier": "^1.14.3"
   },
   "scripts": {
-    "test": " mocha ./test/index.js --timeout=13000",
+    "test": "mocha ./test/index.js --timeout=13000",
     "init": "MODE=dev node ./init.js",
     "build": "babel src -d dist",
     "prepublish": "generate-export-aliases",
-    "docs": "node ./docs.js"
+    "docs": "node ./docs.js",
+    "coverage": "nyc mocha ./test/index.js --timeout=13000"
   },
   "config": {
     "exportAliases": {
