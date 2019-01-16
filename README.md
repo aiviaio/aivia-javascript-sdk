@@ -1,13 +1,20 @@
 
 # [AIVIA JavaScript SDK](https://aivia.io/) 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aivia/aivia-javscript-sdk/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/LICENSE)
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
-[![npm version](https://img.shields.io/badge/coverage-93%25-blue.svg)](https://github.com/aivia/aivia-javscript-sdk/)
-
+[![npm version](https://img.shields.io/badge/coverage-93%25-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/)
 
 
 JavaScript Wrapper for interaction with AIVIA Protocol. 
 
+___
+:exclamation::exclamation::exclamation:
+
+#### Please note that **THIS** version is running on Ropsten TestNet.
+#### If you don't have a wallet on Ropsten TestNet, please create a new one.
+## Please **DO NOT** add your MainNet wallet. You will lose your funds.
+
+___
 
 ## Installation
 This is a [Node.js](https://nodejs.org/en/) module available through the

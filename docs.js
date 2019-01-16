@@ -6,7 +6,12 @@ const badges = `
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/LICENSE)
 [![npm version](https://img.shields.io/npm/v/aivia.svg?style=flat)](https://www.npmjs.com/package/aivia)
 [![npm version](https://img.shields.io/badge/coverage-93%25-blue.svg)](https://github.com/aiviaio/aivia-javscript-sdk/)
+`;
 
+const warning = `
+#### Please note that **THIS** version is running on Ropsten TestNet.
+#### If you don't have a wallet on Ropsten TestNet, please create a new one.
+## Please **DO NOT** add your MainNet wallet. You will lose your funds.
 `;
 
 const description = `
@@ -43,6 +48,10 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
 const head = `
 ${title} ${badges}
 ${description}
+___
+:exclamation::exclamation::exclamation:
+${warning}
+___
 ${install}
 ${example}
 `;
