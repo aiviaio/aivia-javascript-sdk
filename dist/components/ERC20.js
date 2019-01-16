@@ -424,7 +424,7 @@ function () {
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
               callback: callback,
-              value: utils.numberToHex(value),
+              value: utils.numberToHex(value, true),
               estimate: estimate
             }));
 

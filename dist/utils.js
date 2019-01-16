@@ -80,12 +80,27 @@ exports.toFixed = function (value) {
 /**
  * covert number to hex
  * @param {value} value
+ * @param {boolean} [inWei=false]
  * @returns {string} number;
  */
 
 
 exports.numberToHex = function (value) {
-  return web3.utils.numberToHex(web3.utils.toWei(value.toString(), "ether"));
+  var inWei = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var _value = inWei ? web3.utils.toWei(value.toString(), "ether") : value;
+
+  return web3.utils.numberToHex(_value);
+};
+/**
+ * covert number to BN
+ * @param {value} value
+ * @returns {BN} BN;
+ */
+
+
+exports.BN = function (value) {
+  return new web3.utils.BN(value.toString());
 };
 
 exports.ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";

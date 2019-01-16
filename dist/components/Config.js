@@ -31,6 +31,10 @@ var ETERNAL_STORAGE_ABI = require("../ABI/EternalStorage");
 
 var utils = require("../utils");
 
+var Asset = require("./Asset");
+
+var ERC20 = require("./ERC20");
+
 var fields = {
   uint: ["maxTokens", "maxInvestors"],
   fees: ["platformFee", "entryFee", "exitFee"],
@@ -125,7 +129,7 @@ function () {
  * @param {address} configAddress asset address that will be sold
  * @param {string} key field name
  * @param {number} countryID country ID
- *  @param {array.<number>} walletTypes wallets types array
+ * @param {array.<number>} walletTypes wallets types array
  * @param {object} options
  * @param {address} options.address wallet address
  * @param {string} options.privateKey private key
@@ -208,7 +212,7 @@ function () {
   var _ref4 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee4(configAddress, key, value, options, callback) {
-    var instance, _key, action, tx;
+    var instance, _key, action, _ref5, token, investors, totalSupply, tx;
 
     return _regenerator.default.wrap(function _callee4$(_context4) {
       while (1) {
@@ -241,7 +245,7 @@ function () {
 
           case 9:
             if (!fields.uint.includes(key)) {
-              _context4.next = 14;
+              _context4.next = 28;
               break;
             }
 
@@ -249,28 +253,73 @@ function () {
               value: value
             });
             _context4.next = 13;
-            return errorHandler(instance.methods.setUint(_key, value));
+            return module.exports.getConfigDirectly(configAddress);
 
           case 13:
+            _ref5 = _context4.sent;
+            token = _ref5.token;
+
+            if (!(key === "maxInvestors")) {
+              _context4.next = 20;
+              break;
+            }
+
+            _context4.next = 18;
+            return Asset.getInvestors(token);
+
+          case 18:
+            investors = _context4.sent;
+
+            if (investors > value) {
+              Error({
+                name: "params",
+                message: "There are already ".concat(investors, " investors, the new value should be either equal to ").concat(investors, " or more")
+              });
+            }
+
+          case 20:
+            if (!(key === "maxTokens")) {
+              _context4.next = 25;
+              break;
+            }
+
+            _context4.next = 23;
+            return ERC20.totalSupply(token);
+
+          case 23:
+            totalSupply = _context4.sent;
+
+            if (totalSupply > value) {
+              Error({
+                name: "params",
+                message: "There are already ".concat(totalSupply, "  tokens, the new value should be either equal to ").concat(totalSupply, " or more")
+              });
+            }
+
+          case 25:
+            _context4.next = 27;
+            return errorHandler(instance.methods.setUint(_key, utils.numberToHex(value)));
+
+          case 27:
             action = _context4.sent;
 
-          case 14:
+          case 28:
             if (!fields.fees.includes(key)) {
-              _context4.next = 19;
+              _context4.next = 33;
               break;
             }
 
             isNumber({
               value: value
             });
-            _context4.next = 18;
+            _context4.next = 32;
             return errorHandler(instance.methods.setUint(_key, utils.toWei(value)));
 
-          case 18:
+          case 32:
             action = _context4.sent;
 
-          case 19:
-            _context4.next = 21;
+          case 33:
+            _context4.next = 35;
             return errorHandler(signedTX({
               data: action,
               from: options.from,
@@ -281,11 +330,11 @@ function () {
               callback: callback
             }));
 
-          case 21:
+          case 35:
             tx = _context4.sent;
             return _context4.abrupt("return", tx);
 
-          case 23:
+          case 37:
           case "end":
             return _context4.stop();
         }
