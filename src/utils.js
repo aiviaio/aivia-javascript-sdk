@@ -58,8 +58,19 @@ exports.toFixed = (value, digits = 5) => Number(value.toFixed(digits));
 /**
  * covert number to hex
  * @param {value} value
+ * @param {boolean} [inWei=false]
  * @returns {string} number;
  */
-exports.numberToHex = value =>
-  web3.utils.numberToHex(web3.utils.toWei(value.toString(), "ether"));
+exports.numberToHex = (value, inWei = false) => {
+  const _value = inWei ? web3.utils.toWei(value.toString(), "ether") : value;
+  return web3.utils.numberToHex(_value);
+};
+
+/**
+ * covert number to BN
+ * @param {value} value
+ * @returns {BN} BN;
+ */
+exports.BN = value => new web3.utils.BN(value.toString());
+
 exports.ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
