@@ -154,6 +154,9 @@ SDK.prototype = {
     },
     update: function update(configAddress, key, value, options, callback) {
       return Config.update(configAddress, key, value, options, callback);
+    },
+    getConfigAddress: function getConfigAddress(assetAddress) {
+      return Config.getConfigAddress(assetAddress);
     }
   },
   platform: {

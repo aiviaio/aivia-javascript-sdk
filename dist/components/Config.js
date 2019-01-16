@@ -46,18 +46,18 @@ var fields = {
  */
 
 /**
- * returns config by config address
- * @param {string|address} configAddress
- * @returns {object} config
+ * returns config address
+ * @param {address} assetAddress
+ * @returns {address} config address
  */
 
-exports.getConfig =
+exports.getConfigAddress =
 /*#__PURE__*/
 function () {
   var _ref = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee(assetAddress) {
-    var instance, configAddress, config;
+    var instance, configAddress;
     return _regenerator.default.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -71,14 +71,9 @@ function () {
 
           case 4:
             configAddress = _context.sent;
-            _context.next = 7;
-            return errorHandler(getConfigDetails(configAddress));
+            return _context.abrupt("return", configAddress);
 
-          case 7:
-            config = _context.sent;
-            return _context.abrupt("return", config);
-
-          case 9:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -90,29 +85,41 @@ function () {
     return _ref.apply(this, arguments);
   };
 }();
+/**
+ * returns config by config address
+ * @param {string|address} configAddress
+ * @returns {object} config
+ */
 
-exports.getConfigDirectly =
+
+exports.getConfig =
 /*#__PURE__*/
 function () {
   var _ref2 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee2(configAddress) {
-    var config;
+  _regenerator.default.mark(function _callee2(assetAddress) {
+    var instance, configAddress, config;
     return _regenerator.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             isAddress({
-              configAddress: configAddress
+              assetAddress: assetAddress
             });
-            _context2.next = 3;
+            instance = createInstance(ABI.config, assetAddress);
+            _context2.next = 4;
+            return errorHandler(instance.methods.config().call());
+
+          case 4:
+            configAddress = _context2.sent;
+            _context2.next = 7;
             return errorHandler(getConfigDetails(configAddress));
 
-          case 3:
+          case 7:
             config = _context2.sent;
             return _context2.abrupt("return", config);
 
-          case 5:
+          case 9:
           case "end":
             return _context2.stop();
         }
@@ -122,6 +129,40 @@ function () {
 
   return function (_x2) {
     return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.getConfigDirectly =
+/*#__PURE__*/
+function () {
+  var _ref3 = (0, _asyncToGenerator2.default)(
+  /*#__PURE__*/
+  _regenerator.default.mark(function _callee3(configAddress) {
+    var config;
+    return _regenerator.default.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            isAddress({
+              configAddress: configAddress
+            });
+            _context3.next = 3;
+            return errorHandler(getConfigDetails(configAddress));
+
+          case 3:
+            config = _context3.sent;
+            return _context3.abrupt("return", config);
+
+          case 5:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, this);
+  }));
+
+  return function (_x3) {
+    return _ref3.apply(this, arguments);
   };
 }();
 /**
@@ -144,13 +185,13 @@ function () {
 exports.updatePermission =
 /*#__PURE__*/
 function () {
-  var _ref3 = (0, _asyncToGenerator2.default)(
+  var _ref4 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee3(configAddress, countryID, walletTypes, options, callback) {
+  _regenerator.default.mark(function _callee4(configAddress, countryID, walletTypes, options, callback) {
     var instance, action;
-    return _regenerator.default.wrap(function _callee3$(_context3) {
+    return _regenerator.default.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
             isAddress({
               configAddress: configAddress
@@ -162,12 +203,12 @@ function () {
               walletTypes: walletTypes
             });
             instance = createInstance(ABI.updatePermission, configAddress);
-            _context3.next = 6;
+            _context4.next = 6;
             return errorHandler(instance.methods.updatePermissionByCountry(countryID, walletTypes));
 
           case 6:
-            action = _context3.sent;
-            _context3.next = 9;
+            action = _context4.sent;
+            _context4.next = 9;
             return errorHandler(signedTX({
               data: action,
               from: options.from,
@@ -180,14 +221,14 @@ function () {
 
           case 9:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee4, this);
   }));
 
-  return function (_x3, _x4, _x5, _x6, _x7) {
-    return _ref3.apply(this, arguments);
+  return function (_x4, _x5, _x6, _x7, _x8) {
+    return _ref4.apply(this, arguments);
   };
 }();
 /**
@@ -209,14 +250,14 @@ function () {
 exports.update =
 /*#__PURE__*/
 function () {
-  var _ref4 = (0, _asyncToGenerator2.default)(
+  var _ref5 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee4(configAddress, key, value, options, callback) {
-    var instance, _key, action, _ref5, token, investors, totalSupply, tx;
+  _regenerator.default.mark(function _callee5(configAddress, key, value, options, callback) {
+    var instance, _key, action, _ref6, token, investors, totalSupply, tx;
 
-    return _regenerator.default.wrap(function _callee4$(_context4) {
+    return _regenerator.default.wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             if (![].concat((0, _toConsumableArray2.default)(fields.names), (0, _toConsumableArray2.default)(fields.fees), (0, _toConsumableArray2.default)(fields.uint)).includes(key)) {
               Error({
@@ -230,45 +271,45 @@ function () {
             action = null;
 
             if (!fields.names.includes(key)) {
-              _context4.next = 9;
+              _context5.next = 9;
               break;
             }
 
             isString({
               value: value
             });
-            _context4.next = 8;
+            _context5.next = 8;
             return errorHandler(instance.methods.setBytes(_key, utils.toHex(value)));
 
           case 8:
-            action = _context4.sent;
+            action = _context5.sent;
 
           case 9:
             if (!fields.uint.includes(key)) {
-              _context4.next = 28;
+              _context5.next = 28;
               break;
             }
 
             isInteger({
               value: value
             });
-            _context4.next = 13;
+            _context5.next = 13;
             return module.exports.getConfigDirectly(configAddress);
 
           case 13:
-            _ref5 = _context4.sent;
-            token = _ref5.token;
+            _ref6 = _context5.sent;
+            token = _ref6.token;
 
             if (!(key === "maxInvestors")) {
-              _context4.next = 20;
+              _context5.next = 20;
               break;
             }
 
-            _context4.next = 18;
+            _context5.next = 18;
             return Asset.getInvestors(token);
 
           case 18:
-            investors = _context4.sent;
+            investors = _context5.sent;
 
             if (investors > value) {
               Error({
@@ -279,15 +320,15 @@ function () {
 
           case 20:
             if (!(key === "maxTokens")) {
-              _context4.next = 25;
+              _context5.next = 25;
               break;
             }
 
-            _context4.next = 23;
+            _context5.next = 23;
             return ERC20.totalSupply(token);
 
           case 23:
-            totalSupply = _context4.sent;
+            totalSupply = _context5.sent;
 
             if (totalSupply > value) {
               Error({
@@ -297,29 +338,29 @@ function () {
             }
 
           case 25:
-            _context4.next = 27;
+            _context5.next = 27;
             return errorHandler(instance.methods.setUint(_key, utils.numberToHex(value)));
 
           case 27:
-            action = _context4.sent;
+            action = _context5.sent;
 
           case 28:
             if (!fields.fees.includes(key)) {
-              _context4.next = 33;
+              _context5.next = 33;
               break;
             }
 
             isNumber({
               value: value
             });
-            _context4.next = 32;
+            _context5.next = 32;
             return errorHandler(instance.methods.setUint(_key, utils.toWei(value)));
 
           case 32:
-            action = _context4.sent;
+            action = _context5.sent;
 
           case 33:
-            _context4.next = 35;
+            _context5.next = 35;
             return errorHandler(signedTX({
               data: action,
               from: options.from,
@@ -331,18 +372,18 @@ function () {
             }));
 
           case 35:
-            tx = _context4.sent;
-            return _context4.abrupt("return", tx);
+            tx = _context5.sent;
+            return _context5.abrupt("return", tx);
 
           case 37:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, this);
+    }, _callee5, this);
   }));
 
-  return function (_x8, _x9, _x10, _x11, _x12) {
-    return _ref4.apply(this, arguments);
+  return function (_x9, _x10, _x11, _x12, _x13) {
+    return _ref5.apply(this, arguments);
   };
 }();
