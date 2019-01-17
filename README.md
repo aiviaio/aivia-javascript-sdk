@@ -87,7 +87,7 @@ const SDK = new AIVIA_SDK(ENTRY_POINT, HTTP_PROVIDER, DEFAULT_GAS_PRICE );
     * [.getAuditDBAddress(addressOrSymbol)](#module_Asset.getAuditDBAddress) ⇒ <code>AuditDBAddress</code>
     * [.getRPCAddress(addressOrSymbol)](#module_Asset.getRPCAddress) ⇒ <code>RPCAddress</code>
     * [.getRate(addressOrSymbol)](#module_Asset.getRate) ⇒ <code>rate</code>
-    * [.updateRate(assetAddress, AUM, checksum, options)](#module_Asset.updateRate) ⇒ <code>event</code>
+    * [.updateRate(assetAddress, AUM, checksum, options, callback, estimate)](#module_Asset.updateRate) ⇒ <code>event</code>
     * [.NET(addressOrSymbol)](#module_Asset.NET) ⇒ <code>NET</code>
     * [.getInvestors(addressOrSymbol)](#module_Asset.getInvestors) ⇒ <code>investors</code>
     * [.getConfig(assetAddress)](#module_Asset.getConfig) ⇒ <code>object</code>
@@ -142,7 +142,7 @@ returns asset rate by address or symbol
 
 <a name="module_Asset.updateRate"></a>
 
-### SDK.asset.updateRate(assetAddress, AUM, checksum, options) ⇒ <code>event</code>
+### SDK.asset.updateRate(assetAddress, AUM, checksum, options, callback, estimate) ⇒ <code>event</code>
 function to update the price of the asset rate
 
 **Kind**: static method of [<code>Asset</code>](#module_Asset)  
@@ -158,6 +158,9 @@ function to update the price of the asset rate
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
+| callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
 
 
 * * *
@@ -325,6 +328,7 @@ update project config
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -348,6 +352,7 @@ update project config
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -477,6 +482,7 @@ allows spender to manage a certain amount of assets
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -501,6 +507,7 @@ transfer ERC20 asset value to other address
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -524,6 +531,7 @@ transfer ETH value to other address
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -548,6 +556,7 @@ mint asset value to other wallet from contract owner
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -633,6 +642,7 @@ purchase of tokens
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -674,6 +684,7 @@ sale of tokens
 | options.privateKey | <code>string</code> | private key |
 | options.gasPrice | <code>number</code> | gas price |
 | options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
 | callback | <code>function</code> | function(hash) |
 | estimate | <code>boolean</code> | is need estimate |
 
@@ -802,6 +813,7 @@ add or update user
 | options.privateKey | <code>string</code> |  | private key |
 | options.gasPrice | <code>number</code> |  | gas price |
 | options.gasLimit | <code>number</code> |  | gas limit |
+| options.nonce | <code>number</code> |  | nonce of transaction |
 | callback | <code>function</code> |  | function(hash) |
 | estimate | <code>boolean</code> |  | is need estimate |
 
