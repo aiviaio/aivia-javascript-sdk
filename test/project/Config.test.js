@@ -50,21 +50,23 @@ describe("Project config", () => {
       const { config } = projectList[0];
       const options = getUser("projectOwner");
 
-      let GAS_LIMIT = 0;
+      let gasLimit = 0;
+      const nonce = await SDK.utils.getNonce(getAddress("projectOwner"));
       await SDK.project.update(
         config,
         "projectName",
         newData.projectName,
         { from: getAddress("projectOwner") },
         value => {
-          GAS_LIMIT = value;
+          gasLimit = value;
         },
         true
       );
 
       await SDK.project.update(config, "projectName", newData.projectName, {
         ...options,
-        gasLimit: GAS_LIMIT
+        nonce,
+        gasLimit
       });
 
       await SDK.project.update(
@@ -112,21 +114,21 @@ describe("Project config", () => {
     it("should update uint fields", async () => {
       const { config } = projectList[0];
       const options = getUser("projectOwner");
-      let GAS_LIMIT = 0;
+      let gasLimit = 0;
       await SDK.project.update(
         config,
         "maxTokens",
         newData.maxTokens,
         { from: getAddress("projectOwner") },
         value => {
-          GAS_LIMIT = value;
+          gasLimit = value;
         },
         true
       );
 
       await SDK.project.update(config, "maxTokens", newData.maxTokens, {
         ...options,
-        gasLimit: GAS_LIMIT
+        gasLimit
       });
 
       await SDK.project.update(
@@ -146,14 +148,14 @@ describe("Project config", () => {
     it("should update fees fields", async () => {
       const { config } = projectList[0];
       const options = getUser("projectOwner");
-      let GAS_LIMIT = 0;
+      let gasLimit = 0;
       await SDK.project.update(
         config,
         "platformFee",
         newData.maxTokens,
         { from: getAddress("projectOwner") },
         value => {
-          GAS_LIMIT = value;
+          gasLimit = value;
         },
         true
       );
@@ -164,7 +166,7 @@ describe("Project config", () => {
         newData.fees.platformFee,
         {
           ...options,
-          gasLimit: GAS_LIMIT
+          gasLimit
         }
       );
 
