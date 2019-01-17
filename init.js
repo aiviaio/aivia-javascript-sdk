@@ -1,5 +1,5 @@
 const fs = require("fs");
-const contracts = require("./test/contracts.json");
+const contracts = require("./test/contracts.json") || {};
 
 const path = "../aivia-ethereum-protocol/build/contracts/";
 

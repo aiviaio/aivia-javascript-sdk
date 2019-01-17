@@ -79,7 +79,8 @@ exports.updatePermission = async (
   countryID,
   walletTypes,
   options,
-  callback
+  callback,
+  estimate
 ) => {
   isAddress({ configAddress });
   isInteger({ countryID });
@@ -97,7 +98,8 @@ exports.updatePermission = async (
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      callback,
+      estimate
     })
   );
 };
@@ -117,7 +119,14 @@ exports.updatePermission = async (
  * @return {transaction}
  */
 
-exports.update = async (configAddress, key, value, options, callback) => {
+exports.update = async (
+  configAddress,
+  key,
+  value,
+  options,
+  callback,
+  estimate
+) => {
   if (![...fields.names, ...fields.fees, ...fields.uint].includes(key)) {
     Error({
       name: "params",
@@ -179,7 +188,8 @@ exports.update = async (configAddress, key, value, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      callback,
+      estimate
     })
   );
   return tx;

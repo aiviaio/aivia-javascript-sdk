@@ -102,17 +102,19 @@ SDK.prototype = {
       countryID,
       walletTypes,
       options,
-      callback
+      callback,
+      estimate
     ) =>
       Config.updatePermission(
         configAddress,
         countryID,
         walletTypes,
         options,
-        callback
+        callback,
+        estimate
       ),
-    update: (configAddress, key, value, options, callback) =>
-      Config.update(configAddress, key, value, options, callback),
+    update: (configAddress, key, value, options, callback, estimate) =>
+      Config.update(configAddress, key, value, options, callback, estimate),
     getConfigAddress: assetAddress => Config.getConfigAddress(assetAddress)
   },
 

@@ -79,9 +79,18 @@ exports.getRate = async addressOrSymbol => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @returns {event} transaction event {rate, auditor}
  */
-exports.updateRate = async (assetAddress, AUM, checksum, options) => {
+exports.updateRate = async (
+  assetAddress,
+  AUM,
+  checksum,
+  options,
+  callback,
+  estimate
+) => {
   isAddress({ assetAddress });
   isNumber({ AUM });
   isString({ checksum });
@@ -102,7 +111,9 @@ exports.updateRate = async (assetAddress, AUM, checksum, options) => {
     privateKey: options.privateKey,
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
-    nonce: options.nonce
+    nonce: options.nonce,
+    callback,
+    estimate
   });
 
   const { blockNumber } = await errorHandler(transaction);
