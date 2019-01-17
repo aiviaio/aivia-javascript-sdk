@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const { getUser } = require("../helpers/users");
+const { getUser, getAddress } = require("../helpers/users");
 const assertRevert = require("../helpers/assertRevert");
 const projectList = require("../projects");
 const initialData = require("../deploy/Deployer.test");
@@ -48,12 +48,24 @@ describe("Project config", () => {
 
     it("should update bytes fields", async () => {
       const { config } = projectList[0];
+      const options = getUser("projectOwner");
+
+      let GAS_LIMIT = 0;
       await SDK.project.update(
         config,
         "projectName",
         newData.projectName,
-        getUser("projectOwner")
+        { from: getAddress("projectOwner") },
+        value => {
+          GAS_LIMIT = value;
+        },
+        true
       );
+
+      await SDK.project.update(config, "projectName", newData.projectName, {
+        ...options,
+        gasLimit: GAS_LIMIT
+      });
 
       await SDK.project.update(
         config,
@@ -99,12 +111,23 @@ describe("Project config", () => {
 
     it("should update uint fields", async () => {
       const { config } = projectList[0];
+      const options = getUser("projectOwner");
+      let GAS_LIMIT = 0;
       await SDK.project.update(
         config,
         "maxTokens",
         newData.maxTokens,
-        getUser("projectOwner")
+        { from: getAddress("projectOwner") },
+        value => {
+          GAS_LIMIT = value;
+        },
+        true
       );
+
+      await SDK.project.update(config, "maxTokens", newData.maxTokens, {
+        ...options,
+        gasLimit: GAS_LIMIT
+      });
 
       await SDK.project.update(
         config,
@@ -122,11 +145,27 @@ describe("Project config", () => {
 
     it("should update fees fields", async () => {
       const { config } = projectList[0];
+      const options = getUser("projectOwner");
+      let GAS_LIMIT = 0;
+      await SDK.project.update(
+        config,
+        "platformFee",
+        newData.maxTokens,
+        { from: getAddress("projectOwner") },
+        value => {
+          GAS_LIMIT = value;
+        },
+        true
+      );
+
       await SDK.project.update(
         config,
         "platformFee",
         newData.fees.platformFee,
-        getUser("projectOwner")
+        {
+          ...options,
+          gasLimit: GAS_LIMIT
+        }
       );
 
       await SDK.project.update(
