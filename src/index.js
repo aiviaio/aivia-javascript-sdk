@@ -49,8 +49,15 @@ SDK.prototype = {
     getInvestors: assetAddress => Asset.getInvestors(assetAddress),
 
     // audit DB
-    updateRate: (assetAddress, AUM, checksum, options) =>
-      Asset.updateRate(assetAddress, AUM, checksum, options),
+    updateRate: (assetAddress, AUM, checksum, options, callback, estimate) =>
+      Asset.updateRate(
+        assetAddress,
+        AUM,
+        checksum,
+        options,
+        callback,
+        estimate
+      ),
 
     // NET
     NET: addressOrSymbol => Asset.NET(addressOrSymbol),
@@ -59,16 +66,16 @@ SDK.prototype = {
     getBalance: (wallet, assetAddress, isString) =>
       ERC20.getBalance(wallet, assetAddress, isString),
     totalSupply: assetAddress => ERC20.totalSupply(assetAddress),
-    approve: (assetAddress, spender, value, options, callback) =>
-      ERC20.approve(assetAddress, spender, value, options, callback),
+    approve: (assetAddress, spender, value, options, callback, estimate) =>
+      ERC20.approve(assetAddress, spender, value, options, callback, estimate),
     allowance: (assetAddress, owner, spender) =>
       ERC20.allowance(assetAddress, owner, spender),
     transfer: (to, value, assetAddress, options, callback, estimate) =>
       ERC20.transfer(to, value, assetAddress, options, callback, estimate),
     transferETH: (to, value, options, callback, estimate) =>
       ERC20.transferETH(to, value, options, callback, estimate),
-    mint: (value, to, assetAddress, options, callback) =>
-      ERC20.mint(value, to, assetAddress, options, callback)
+    mint: (value, to, assetAddress, options, callback, estimate) =>
+      ERC20.mint(value, to, assetAddress, options, callback, estimate)
   },
 
   trade: {
@@ -95,8 +102,8 @@ SDK.prototype = {
   project: {
     getList: () => ProjectsRegistry.getProjectsList(),
     getConfig: configAddress => Config.getConfigDirectly(configAddress),
-    deploy: (type, params, options, callback) =>
-      Deployer.deploy(type, params, options, callback),
+    deploy: (type, params, options, callback, estimate) =>
+      Deployer.deploy(type, params, options, callback, estimate),
     updatePermission: (
       configAddress,
       countryID,

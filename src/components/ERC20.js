@@ -79,11 +79,19 @@ exports.allowance = async (assetAddress, owner, spender) => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
-exports.approve = async (assetAddress, spender, value, options, callback) => {
+exports.approve = async (
+  assetAddress,
+  spender,
+  value,
+  options,
+  callback,
+  estimate
+) => {
   isAddress({ assetAddress, spender });
   isNumber({ value });
   const instance = createInstance(ERC20_ABI, assetAddress);
@@ -96,7 +104,9 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      nonce: options.nonce,
+      callback,
+      estimate
     })
   );
 
@@ -131,6 +141,7 @@ exports.approve = async (assetAddress, spender, value, options, callback) => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -157,6 +168,7 @@ exports.transfer = async (
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
       estimate
     })
@@ -192,6 +204,7 @@ exports.transfer = async (
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -205,11 +218,12 @@ exports.transferETH = async (to, value, options, callback, estimate) => {
     signedTX({
       from: options.from,
       to,
+      value: utils.numberToHex(value, true),
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
-      value: utils.numberToHex(value, true),
       estimate
     })
   );
@@ -226,11 +240,12 @@ exports.transferETH = async (to, value, options, callback, estimate) => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
  */
-exports.mint = async (value, to, assetAddress, options, callback) => {
+exports.mint = async (value, to, assetAddress, options, callback, estimate) => {
   isNumber({ value });
   isAddress({ assetAddress, to });
   const instance = createInstance(ERC20_ABI, assetAddress);
@@ -243,7 +258,9 @@ exports.mint = async (value, to, assetAddress, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
-      callback
+      nonce: options.nonce,
+      callback,
+      estimate
     })
   );
 

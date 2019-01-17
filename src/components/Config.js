@@ -70,6 +70,7 @@ exports.getConfigDirectly = async configAddress => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {transaction}
@@ -98,6 +99,7 @@ exports.updatePermission = async (
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
       estimate
     })
@@ -114,6 +116,7 @@ exports.updatePermission = async (
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {transaction}
@@ -188,6 +191,7 @@ exports.update = async (
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
       estimate
     })

@@ -25,6 +25,7 @@ const signedTX = require("../helpers/signedTX");
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {eventName, address}
@@ -35,7 +36,8 @@ exports.addUser = async (
   walletType,
   expirationDate = 0,
   options,
-  callback
+  callback,
+  estimate
 ) => {
   isAddress({ userAddress });
   isInteger({ countryID, walletType, expirationDate });
@@ -54,8 +56,9 @@ exports.addUser = async (
       to: registryAddress,
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit,
-      callback
+      nonce: options.nonce,
+      callback,
+      estimate
     })
   );
   const Events = errorHandler(

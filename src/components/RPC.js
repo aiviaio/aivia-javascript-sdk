@@ -63,6 +63,7 @@ exports.checkBeforeBuy = async (value, assetAddress, currencyAddress, from) => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
@@ -103,11 +104,12 @@ exports.buyAsset = async (
     data: action,
     from: options.from,
     to: RPCAddress,
+    action: "trade",
     privateKey: options.privateKey,
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
+    nonce: options.nonce,
     callback,
-    action: "trade",
     estimate
   });
 
@@ -186,6 +188,7 @@ exports.checkBeforeSell = async (value, assetAddress, from) => {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
@@ -206,11 +209,12 @@ exports.sellAsset = async (
     data: action,
     from: options.from,
     to: RPCAddress,
+    action: "trade",
     privateKey: options.privateKey,
     gasPrice: options.gasPrice,
     gasLimit: options.gasLimit,
+    nonce: options.nonce,
     callback,
-    action: "trade",
     estimate
   });
 

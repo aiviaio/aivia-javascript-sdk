@@ -85,6 +85,7 @@ exports.deploy = async (type, params, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
       action: "deploy"
     })
@@ -98,6 +99,7 @@ exports.deploy = async (type, params, options, callback) => {
       privateKey: options.privateKey,
       gasPrice: options.gasPrice,
       gasLimit: options.gasLimit,
+      nonce: options.nonce,
       callback,
       action: "deploy"
     })
