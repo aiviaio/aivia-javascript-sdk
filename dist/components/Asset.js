@@ -228,6 +228,9 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
  * @returns {event} transaction event {rate, auditor}
  */
 
@@ -237,7 +240,7 @@ exports.updateRate =
 function () {
   var _ref7 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee5(assetAddress, AUM, checksum, options) {
+  _regenerator.default.mark(function _callee5(assetAddress, AUM, checksum, options, callback, estimate) {
     var _AUM, auditDB, instance, timestamp, action, transaction, _ref8, blockNumber, Events, _Events$map, _Events$map2, Event;
 
     return _regenerator.default.wrap(function _callee5$(_context5) {
@@ -273,7 +276,9 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
-              nonce: options.nonce
+              nonce: options.nonce,
+              callback: callback,
+              estimate: estimate
             });
             _context5.next = 15;
             return errorHandler(transaction);
@@ -316,7 +321,7 @@ function () {
     }, _callee5, this);
   }));
 
-  return function (_x5, _x6, _x7, _x8) {
+  return function (_x5, _x6, _x7, _x8, _x9, _x10) {
     return _ref7.apply(this, arguments);
   };
 }();
@@ -362,7 +367,7 @@ function () {
     }, _callee6, this);
   }));
 
-  return function (_x9) {
+  return function (_x11) {
     return _ref9.apply(this, arguments);
   };
 }();
@@ -408,7 +413,7 @@ function () {
     }, _callee7, this);
   }));
 
-  return function (_x10) {
+  return function (_x12) {
     return _ref10.apply(this, arguments);
   };
 }();
@@ -448,7 +453,7 @@ function () {
     }, _callee8, this);
   }));
 
-  return function (_x11) {
+  return function (_x13) {
     return _ref11.apply(this, arguments);
   };
 }();

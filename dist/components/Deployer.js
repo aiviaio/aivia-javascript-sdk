@@ -138,6 +138,7 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
               action: "deploy"
             }));
@@ -151,6 +152,7 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
               action: "deploy"
             }));

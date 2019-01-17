@@ -92,8 +92,8 @@ SDK.prototype = {
       return Asset.getInvestors(assetAddress);
     },
     // audit DB
-    updateRate: function updateRate(assetAddress, AUM, checksum, options) {
-      return Asset.updateRate(assetAddress, AUM, checksum, options);
+    updateRate: function updateRate(assetAddress, AUM, checksum, options, callback, estimate) {
+      return Asset.updateRate(assetAddress, AUM, checksum, options, callback, estimate);
     },
     // NET
     NET: function NET(addressOrSymbol) {
@@ -106,8 +106,8 @@ SDK.prototype = {
     totalSupply: function totalSupply(assetAddress) {
       return ERC20.totalSupply(assetAddress);
     },
-    approve: function approve(assetAddress, spender, value, options, callback) {
-      return ERC20.approve(assetAddress, spender, value, options, callback);
+    approve: function approve(assetAddress, spender, value, options, callback, estimate) {
+      return ERC20.approve(assetAddress, spender, value, options, callback, estimate);
     },
     allowance: function allowance(assetAddress, owner, spender) {
       return ERC20.allowance(assetAddress, owner, spender);
@@ -118,8 +118,8 @@ SDK.prototype = {
     transferETH: function transferETH(to, value, options, callback, estimate) {
       return ERC20.transferETH(to, value, options, callback, estimate);
     },
-    mint: function mint(value, to, assetAddress, options, callback) {
-      return ERC20.mint(value, to, assetAddress, options, callback);
+    mint: function mint(value, to, assetAddress, options, callback, estimate) {
+      return ERC20.mint(value, to, assetAddress, options, callback, estimate);
     }
   },
   trade: {
@@ -146,14 +146,14 @@ SDK.prototype = {
     getConfig: function getConfig(configAddress) {
       return Config.getConfigDirectly(configAddress);
     },
-    deploy: function deploy(type, params, options, callback) {
-      return Deployer.deploy(type, params, options, callback);
+    deploy: function deploy(type, params, options, callback, estimate) {
+      return Deployer.deploy(type, params, options, callback, estimate);
     },
-    updatePermission: function updatePermission(configAddress, countryID, walletTypes, options, callback) {
-      return Config.updatePermission(configAddress, countryID, walletTypes, options, callback);
+    updatePermission: function updatePermission(configAddress, countryID, walletTypes, options, callback, estimate) {
+      return Config.updatePermission(configAddress, countryID, walletTypes, options, callback, estimate);
     },
-    update: function update(configAddress, key, value, options, callback) {
-      return Config.update(configAddress, key, value, options, callback);
+    update: function update(configAddress, key, value, options, callback, estimate) {
+      return Config.update(configAddress, key, value, options, callback, estimate);
     },
     getConfigAddress: function getConfigAddress(assetAddress) {
       return Config.getConfigAddress(assetAddress);

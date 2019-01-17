@@ -39,6 +39,7 @@ var signedTX = require("../helpers/signedTX");
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {eventName, address}
@@ -54,6 +55,7 @@ function () {
     var expirationDate,
         options,
         callback,
+        estimate,
         registryAddress,
         instance,
         action,
@@ -72,6 +74,7 @@ function () {
             expirationDate = _args.length > 3 && _args[3] !== undefined ? _args[3] : 0;
             options = _args.length > 4 ? _args[4] : undefined;
             callback = _args.length > 5 ? _args[5] : undefined;
+            estimate = _args.length > 6 ? _args[6] : undefined;
             isAddress({
               userAddress: userAddress
             });
@@ -80,29 +83,30 @@ function () {
               walletType: walletType,
               expirationDate: expirationDate
             });
-            _context.next = 7;
+            _context.next = 8;
             return Proxy.getRegistryAddress("tpl");
 
-          case 7:
+          case 8:
             registryAddress = _context.sent;
             instance = createInstance(TPL_REGISTRY_ABI, registryAddress);
             action = instance.methods.addUser(userAddress, countryID, walletType, expirationDate);
-            _context.next = 12;
+            _context.next = 13;
             return errorHandler(signedTX({
               data: action,
               from: options.from,
               to: registryAddress,
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
-              gasLimit: options.gasLimit,
-              callback: callback
+              nonce: options.nonce,
+              callback: callback,
+              estimate: estimate
             }));
 
-          case 12:
+          case 13:
             _ref2 = _context.sent;
             blockNumber = _ref2.blockNumber;
             _context.t0 = errorHandler;
-            _context.next = 17;
+            _context.next = 18;
             return instance.getPastEvents("registryEvent", {
               filter: {
                 eventName: "Add"
@@ -111,7 +115,7 @@ function () {
               toBlock: "latest"
             });
 
-          case 17:
+          case 18:
             _context.t1 = _context.sent;
             Events = (0, _context.t0)(_context.t1);
             _Events$map = Events.map(function (event) {
@@ -129,7 +133,7 @@ function () {
             }), _Events$map2 = (0, _slicedToArray2.default)(_Events$map, 1), Event = _Events$map2[0];
             return _context.abrupt("return", Event);
 
-          case 21:
+          case 22:
           case "end":
             return _context.stop();
         }

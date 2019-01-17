@@ -201,6 +201,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -212,7 +213,7 @@ exports.approve =
 function () {
   var _ref4 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee4(assetAddress, spender, value, options, callback) {
+  _regenerator.default.mark(function _callee4(assetAddress, spender, value, options, callback, estimate) {
     var instance, action, _ref5, blockNumber, Events, _Events$map, _Events$map2, Event;
 
     return _regenerator.default.wrap(function _callee4$(_context4) {
@@ -236,7 +237,9 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
-              callback: callback
+              nonce: options.nonce,
+              callback: callback,
+              estimate: estimate
             }));
 
           case 6:
@@ -279,7 +282,7 @@ function () {
     }, _callee4, this);
   }));
 
-  return function (_x8, _x9, _x10, _x11, _x12) {
+  return function (_x8, _x9, _x10, _x11, _x12, _x13) {
     return _ref4.apply(this, arguments);
   };
 }();
@@ -293,6 +296,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -332,6 +336,7 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
               estimate: estimate
             }));
@@ -376,7 +381,7 @@ function () {
     }, _callee5, this);
   }));
 
-  return function (_x13, _x14, _x15, _x16, _x17, _x18) {
+  return function (_x14, _x15, _x16, _x17, _x18, _x19) {
     return _ref6.apply(this, arguments);
   };
 }();
@@ -389,6 +394,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -420,11 +426,12 @@ function () {
             return errorHandler(signedTX({
               from: options.from,
               to: to,
+              value: utils.numberToHex(value, true),
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
-              value: utils.numberToHex(value, true),
               estimate: estimate
             }));
 
@@ -440,7 +447,7 @@ function () {
     }, _callee6, this);
   }));
 
-  return function (_x19, _x20, _x21, _x22, _x23) {
+  return function (_x20, _x21, _x22, _x23, _x24) {
     return _ref8.apply(this, arguments);
   };
 }();
@@ -454,6 +461,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {from, to, value}
@@ -465,7 +473,7 @@ exports.mint =
 function () {
   var _ref9 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
-  _regenerator.default.mark(function _callee7(value, to, assetAddress, options, callback) {
+  _regenerator.default.mark(function _callee7(value, to, assetAddress, options, callback, estimate) {
     var instance, action, _ref10, blockNumber, Events, _Events$map5, _Events$map6, Event;
 
     return _regenerator.default.wrap(function _callee7$(_context7) {
@@ -489,7 +497,9 @@ function () {
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
-              callback: callback
+              nonce: options.nonce,
+              callback: callback,
+              estimate: estimate
             }));
 
           case 6:
@@ -532,7 +542,7 @@ function () {
     }, _callee7, this);
   }));
 
-  return function (_x24, _x25, _x26, _x27, _x28) {
+  return function (_x25, _x26, _x27, _x28, _x29, _x30) {
     return _ref9.apply(this, arguments);
   };
 }();

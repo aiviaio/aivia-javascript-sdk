@@ -173,6 +173,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
@@ -240,11 +241,12 @@ function () {
               data: action,
               from: options.from,
               to: RPCAddress,
+              action: "trade",
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
-              action: "trade",
               estimate: estimate
             });
             _context3.next = 24;
@@ -389,6 +391,7 @@ function () {
  * @param {string} options.privateKey private key
  * @param {number} options.gasPrice gas price
  * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
  * @param {function} callback function(hash)
  * @param {boolean} estimate is need estimate
  * @return {event} transaction event {spend, received, fees: { manager, platform } }
@@ -422,11 +425,12 @@ function () {
               data: action,
               from: options.from,
               to: RPCAddress,
+              action: "trade",
               privateKey: options.privateKey,
               gasPrice: options.gasPrice,
               gasLimit: options.gasLimit,
+              nonce: options.nonce,
               callback: callback,
-              action: "trade",
               estimate: estimate
             });
             _context5.next = 10;
