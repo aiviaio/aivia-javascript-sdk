@@ -1,6 +1,11 @@
 const fs = require("fs");
-const contracts = require("./test/contracts.json") || {};
 
+let contracts;
+try {
+  contracts = require("./test/contracts.json");
+} catch (error) {
+  contracts = {};
+}
 const path = "../aivia-ethereum-protocol/build/contracts/";
 
 const SDKPath = "./src/ABI/";
