@@ -107,7 +107,16 @@ SDK.prototype = {
     update: (configAddress, key, value, options, callback, estimate) =>
       Config.update(configAddress, key, value, options, callback, estimate),
     getConfigAddress: assetAddress => Config.getConfigAddress(assetAddress),
+
     // permissions
+    updatePermissionRule: (configAddress, rule, options, callback, estimate) =>
+      Config.updatePermissionRule(
+        configAddress,
+        rule,
+        options,
+        callback,
+        estimate
+      ),
     updatePermission: (
       configAddress,
       countryID,

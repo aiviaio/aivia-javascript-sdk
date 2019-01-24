@@ -6,7 +6,8 @@ const {
   isInteger,
   isNumber,
   isArray,
-  isString
+  isString,
+  isBoolean
 } = require("../helpers/errorHandler");
 
 const getConfigDetails = require("../config/getConfigDetails");
@@ -154,9 +155,52 @@ exports.update = async (
 };
 
 /**
- * update project config
+ * update project permissions rule
  * @param {address} configAddress asset address that will be sold
- * @param {string} key field name
+ * @param {boolean} rule
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
+ * @return {transaction}
+ */
+
+exports.updatePermissionRule = async (
+  configAddress,
+  rule,
+  options,
+  callback,
+  estimate
+) => {
+  isAddress({ configAddress });
+  isBoolean({ rule });
+  const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
+  const action = await errorHandler(
+    instance.methods.updatePermissionRule(rule)
+  );
+
+  await errorHandler(
+    signedTX({
+      data: action,
+      from: options.from,
+      to: configAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      nonce: options.nonce,
+      callback,
+      estimate
+    })
+  );
+};
+
+/**
+ * update project permissions wallet types
+ * @param {address} configAddress asset address that will be sold
  * @param {number} countryID country ID
  * @param {array.<number>} walletTypes wallets types array
  * @param {object} options
