@@ -6,6 +6,13 @@ const { permissions } = require("../deploy/Deployer.test");
 const SDK = require("../core");
 
 describe("Permissions", () => {
+  it("should assert revert when update permission rule", async () => {
+    const { config } = projectList[projectList.length - 1];
+    await assertRevert(
+      SDK.project.updatePermissionRule(config, false, getUser("external"))
+    );
+  });
+
   it("should assert revert when update permission", async () => {
     const { config } = projectList[projectList.length - 1];
     await assertRevert(
@@ -24,6 +31,15 @@ describe("Permissions", () => {
       config,
       permissions.countries[0],
       permissions.walletTypes,
+      getUser("projectOwner")
+    );
+  });
+
+  it("should update permission rule", async () => {
+    const { config } = projectList[projectList.length - 1];
+    await SDK.project.updatePermissionRule(
+      config,
+      true,
       getUser("projectOwner")
     );
   });

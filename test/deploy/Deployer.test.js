@@ -42,9 +42,9 @@ describe("Deploy", () => {
           fees: options.fees,
           custodian: custodianAddress,
           permissions: {
-            countries: [1],
-            walletTypes: [2],
-            rule: true
+            countries: [1, 1, 1],
+            walletTypes: [2, 3, 4],
+            rule: false
           }
         },
         getUser("projectOwner")
