@@ -22,6 +22,7 @@ const list = [
   "RPC",
   "ERC20Mintable",
   "ProjectConfig",
+  "ConfigWithPermissions",
   "PlatformToken",
   "TrueUSD",
   "PlatformRegistry",
