@@ -149,14 +149,24 @@ SDK.prototype = {
     deploy: function deploy(type, params, options, callback, estimate) {
       return Deployer.deploy(type, params, options, callback, estimate);
     },
-    updatePermission: function updatePermission(configAddress, countryID, walletTypes, options, callback, estimate) {
-      return Config.updatePermission(configAddress, countryID, walletTypes, options, callback, estimate);
-    },
     update: function update(configAddress, key, value, options, callback, estimate) {
       return Config.update(configAddress, key, value, options, callback, estimate);
     },
     getConfigAddress: function getConfigAddress(assetAddress) {
       return Config.getConfigAddress(assetAddress);
+    },
+    // permissions
+    updatePermissionRule: function updatePermissionRule(configAddress, rule, options, callback, estimate) {
+      return Config.updatePermissionRule(configAddress, rule, options, callback, estimate);
+    },
+    updatePermission: function updatePermission(configAddress, countryID, walletTypes, options, callback, estimate) {
+      return Config.updatePermission(configAddress, countryID, walletTypes, options, callback, estimate);
+    },
+    getPermissionsRule: function getPermissionsRule(configAddress) {
+      return Config.getPermissionsRule(configAddress);
+    },
+    getPermissionsList: function getPermissionsList(configAddress, countryID) {
+      return Config.getPermissionsList(configAddress, countryID);
     }
   },
   platform: {
