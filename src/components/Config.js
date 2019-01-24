@@ -223,8 +223,11 @@ exports.getPermissionsList = async (configAddress, countryID) => {
   isAddress({ configAddress });
   isInteger({ countryID });
   const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
-  const walletTypes = await errorHandler(
+  const walletTypesRaw = await errorHandler(
     instance.methods.getPermissionsList(countryID).call()
   );
+  // convert array to number array
+  const walletTypes = walletTypesRaw.map(element => Number(element));
+
   return walletTypes;
 };

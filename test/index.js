@@ -3,6 +3,7 @@ require("./registries/CustodiansRegistry.test");
 require("./proxy/EntryPoint.test");
 require("./proxy/Proxy.test");
 require("./deploy/Deployer.test");
+require("./project/Permissions.test");
 require("./registries/AssetsRegistry.test");
 require("./registries/ProjectsRegistry.test");
 require("./registries/SCRegistry.test");

@@ -1,6 +1,5 @@
 const { expect } = require("chai");
 const projectList = require("../projects");
-const { getUser } = require("../helpers/users");
 const SDK = require("../core");
 
 describe("Asset", () => {
@@ -37,16 +36,6 @@ describe("Asset", () => {
       );
       expect(RPCBySymbol).to.equal(RPC);
       expect(RPCByAddress).to.equal(RPC);
-    });
-
-    it("update permission", async () => {
-      const { config } = projectList[projectList.length - 1];
-      await SDK.project.updatePermission(
-        config,
-        1,
-        [1],
-        getUser("projectOwner")
-      );
     });
   });
 });

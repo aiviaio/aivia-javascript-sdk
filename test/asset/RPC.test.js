@@ -170,17 +170,6 @@ describe("RPC", async () => {
 
     const { spend, received, fees } = tx;
 
-    await SDK.trade.buy(
-      amount.TUSD,
-      token,
-      TUSD,
-      { from: getAddress("user") },
-      value => {
-        console.info("GAS:", value);
-      },
-      true
-    );
-
     const _TUSD_USER = await SDK.asset.getBalance(user, TUSD);
     const _TOKEN_USER = await SDK.asset.getBalance(user, token);
     const _AIV_PLATFORM = await SDK.asset.getBalance(platformWallet, AIV);

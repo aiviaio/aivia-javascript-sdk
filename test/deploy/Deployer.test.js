@@ -15,7 +15,12 @@ const options = {
   maxTokens: 25000000,
   maxInvestors: 3000,
   projectName: "Crypto Hedge Project",
-  tokenName: "Token from SDK"
+  tokenName: "Token from SDK",
+  permissions: {
+    countries: [1],
+    walletTypes: [1],
+    rule: true
+  }
 };
 
 describe("Deploy", () => {
