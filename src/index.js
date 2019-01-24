@@ -104,6 +104,10 @@ SDK.prototype = {
     getConfig: configAddress => Config.getConfigDirectly(configAddress),
     deploy: (type, params, options, callback, estimate) =>
       Deployer.deploy(type, params, options, callback, estimate),
+    update: (configAddress, key, value, options, callback, estimate) =>
+      Config.update(configAddress, key, value, options, callback, estimate),
+    getConfigAddress: assetAddress => Config.getConfigAddress(assetAddress),
+    // permissions
     updatePermission: (
       configAddress,
       countryID,
@@ -120,9 +124,10 @@ SDK.prototype = {
         callback,
         estimate
       ),
-    update: (configAddress, key, value, options, callback, estimate) =>
-      Config.update(configAddress, key, value, options, callback, estimate),
-    getConfigAddress: assetAddress => Config.getConfigAddress(assetAddress)
+    getPermissionsRule: configAddress =>
+      Config.getPermissionsRule(configAddress),
+    getPermissionsList: (configAddress, countryID) =>
+      Config.getPermissionsList(configAddress, countryID)
   },
 
   platform: {
