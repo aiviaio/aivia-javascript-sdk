@@ -51,11 +51,13 @@ describe("Permissions", () => {
   });
 
   it("should return  assert revert", async () => {
-    await assertRevert(
-      SDK.project.getPermissionsRule(
-        "0xDc0484E5432e6BEB900612A51cC4739003502dfD"
-      )
-    );
+    try {
+      await SDK.project.getPermissionsRule(
+        "0x0000000000000000000000000000000000000000"
+      );
+    } catch (error) {
+      expect(error).to.be.an("error");
+    }
   });
 
   it("should return permissions wallet types", async () => {
