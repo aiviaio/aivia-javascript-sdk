@@ -275,7 +275,8 @@ returns asset symbol by address
     * [.getConfigAddress(assetAddress)](#module_Project.getConfigAddress) ⇒ <code>address</code>
     * [.getConfig(configAddress)](#module_Project.getConfig) ⇒ <code>object</code>
     * [.update(configAddress, key, value, options, callback, estimate)](#module_Project.update) ⇒ <code>transaction</code>
-    * [.updatePermission(configAddress, key, countryID, walletTypes, options, callback, estimate)](#module_Project.updatePermission) ⇒ <code>transaction</code>
+    * [.updatePermissionRule(configAddress, rule, options, callback, estimate)](#module_Project.updatePermissionRule) ⇒ <code>transaction</code>
+    * [.updatePermission(configAddress, countryID, walletTypes, options, callback, estimate)](#module_Project.updatePermission) ⇒ <code>transaction</code>
     * [.getPermissionsRule(configAddress)](#module_Project.getPermissionsRule) ⇒ <code>boolean</code>
     * [.getPermissionsList(configAddress, countryID)](#module_Project.getPermissionsList)
 
@@ -336,17 +337,39 @@ update project config
 
 * * *
 
-<a name="module_Project.updatePermission"></a>
+<a name="module_Project.updatePermissionRule"></a>
 
-### SDK.project.updatePermission(configAddress, key, countryID, walletTypes, options, callback, estimate) ⇒ <code>transaction</code>
-update project config
+### SDK.project.updatePermissionRule(configAddress, rule, options, callback, estimate) ⇒ <code>transaction</code>
+update project permissions rule
 
 **Kind**: static method of [<code>Project</code>](#module_Project)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | configAddress | <code>address</code> | asset address that will be sold |
-| key | <code>string</code> | field name |
+| rule | <code>boolean</code> |  |
+| options | <code>object</code> |  |
+| options.address | <code>address</code> | wallet address |
+| options.privateKey | <code>string</code> | private key |
+| options.gasPrice | <code>number</code> | gas price |
+| options.gasLimit | <code>number</code> | gas limit |
+| options.nonce | <code>number</code> | nonce of transaction |
+| callback | <code>function</code> | function(hash) |
+| estimate | <code>boolean</code> | is need estimate |
+
+
+* * *
+
+<a name="module_Project.updatePermission"></a>
+
+### SDK.project.updatePermission(configAddress, countryID, walletTypes, options, callback, estimate) ⇒ <code>transaction</code>
+update project permissions wallet types
+
+**Kind**: static method of [<code>Project</code>](#module_Project)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| configAddress | <code>address</code> | asset address that will be sold |
 | countryID | <code>number</code> | country ID |
 | walletTypes | <code>array.&lt;number&gt;</code> | wallets types array |
 | options | <code>object</code> |  |
