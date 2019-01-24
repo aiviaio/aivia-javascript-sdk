@@ -15,7 +15,12 @@ const options = {
   maxTokens: 25000000,
   maxInvestors: 3000,
   projectName: "Crypto Hedge Project",
-  tokenName: "Token from SDK"
+  tokenName: "Token from SDK",
+  permissions: {
+    countries: [1],
+    walletTypes: [1],
+    rule: true
+  }
 };
 
 describe("Deploy", () => {
@@ -37,9 +42,9 @@ describe("Deploy", () => {
           fees: options.fees,
           custodian: custodianAddress,
           permissions: {
-            countries: [1],
-            walletTypes: [2],
-            rule: true
+            countries: [1, 1, 1],
+            walletTypes: [2, 3, 4],
+            rule: false
           }
         },
         getUser("projectOwner")

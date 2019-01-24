@@ -6,13 +6,15 @@ const {
   isInteger,
   isNumber,
   isArray,
-  isString
+  isString,
+  isBoolean
 } = require("../helpers/errorHandler");
 
 const getConfigDetails = require("../config/getConfigDetails");
 const ABI = require("../helpers/utility-abi");
 const signedTX = require("../helpers/signedTX");
 const ETERNAL_STORAGE_ABI = require("../ABI/EternalStorage");
+const CONFIG_WITH_PERMISSIONS_ABI = require("../ABI/ConfigWithPermissions");
 const utils = require("../utils");
 const Asset = require("./Asset");
 const ERC20 = require("./ERC20");
@@ -57,53 +59,6 @@ exports.getConfigDirectly = async configAddress => {
   isAddress({ configAddress });
   const config = await errorHandler(getConfigDetails(configAddress));
   return config;
-};
-
-/**
- * update project config
- * @param {address} configAddress asset address that will be sold
- * @param {string} key field name
- * @param {number} countryID country ID
- * @param {array.<number>} walletTypes wallets types array
- * @param {object} options
- * @param {address} options.address wallet address
- * @param {string} options.privateKey private key
- * @param {number} options.gasPrice gas price
- * @param {number} options.gasLimit gas limit
- * @param {number} options.nonce nonce of transaction
- * @param {function} callback function(hash)
- * @param {boolean} estimate is need estimate
- * @return {transaction}
- */
-exports.updatePermission = async (
-  configAddress,
-  countryID,
-  walletTypes,
-  options,
-  callback,
-  estimate
-) => {
-  isAddress({ configAddress });
-  isInteger({ countryID });
-  isArray({ walletTypes });
-  const instance = createInstance(ABI.updatePermission, configAddress);
-  const action = await errorHandler(
-    instance.methods.updatePermissionByCountry(countryID, walletTypes)
-  );
-
-  await errorHandler(
-    signedTX({
-      data: action,
-      from: options.from,
-      to: configAddress,
-      privateKey: options.privateKey,
-      gasPrice: options.gasPrice,
-      gasLimit: options.gasLimit,
-      nonce: options.nonce,
-      callback,
-      estimate
-    })
-  );
 };
 
 /**
@@ -197,4 +152,126 @@ exports.update = async (
     })
   );
   return tx;
+};
+
+/**
+ * update project permissions rule
+ * @param {address} configAddress asset address that will be sold
+ * @param {boolean} rule
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
+ * @return {transaction}
+ */
+
+exports.updatePermissionRule = async (
+  configAddress,
+  rule,
+  options,
+  callback,
+  estimate
+) => {
+  isAddress({ configAddress });
+  isBoolean({ rule });
+  const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
+  const action = await errorHandler(
+    instance.methods.updatePermissionRule(rule)
+  );
+
+  await errorHandler(
+    signedTX({
+      data: action,
+      from: options.from,
+      to: configAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      nonce: options.nonce,
+      callback,
+      estimate
+    })
+  );
+};
+
+/**
+ * update project permissions wallet types
+ * @param {address} configAddress asset address that will be sold
+ * @param {number} countryID country ID
+ * @param {array.<number>} walletTypes wallets types array
+ * @param {object} options
+ * @param {address} options.address wallet address
+ * @param {string} options.privateKey private key
+ * @param {number} options.gasPrice gas price
+ * @param {number} options.gasLimit gas limit
+ * @param {number} options.nonce nonce of transaction
+ * @param {function} callback function(hash)
+ * @param {boolean} estimate is need estimate
+ * @return {transaction}
+ */
+
+exports.updatePermission = async (
+  configAddress,
+  countryID,
+  walletTypes,
+  options,
+  callback,
+  estimate
+) => {
+  isAddress({ configAddress });
+  isInteger({ countryID });
+  isArray({ walletTypes });
+  const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
+  const action = await errorHandler(
+    instance.methods.updatePermissionByCountry(countryID, walletTypes)
+  );
+
+  await errorHandler(
+    signedTX({
+      data: action,
+      from: options.from,
+      to: configAddress,
+      privateKey: options.privateKey,
+      gasPrice: options.gasPrice,
+      gasLimit: options.gasLimit,
+      nonce: options.nonce,
+      callback,
+      estimate
+    })
+  );
+};
+
+/**
+ * returns permissions rule(tru or false)
+ * @param {string|address} configAddress
+ * @returns {boolean} rule
+ */
+exports.getPermissionsRule = async configAddress => {
+  const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
+  isAddress({ configAddress });
+  const rule = await errorHandler(instance.methods.getPermissionRule().call());
+  return rule;
+};
+
+/**
+ * returns permissions rule(tru or false)
+ * @param {string|address} configAddress
+ * @param {number} countryID ID of country
+ * @returns{array.<number>} wallets types array
+ */
+exports.getPermissionsList = async (configAddress, countryID) => {
+  isAddress({ configAddress });
+  isInteger({ countryID });
+  const instance = createInstance(CONFIG_WITH_PERMISSIONS_ABI, configAddress);
+  const walletTypesRaw = await errorHandler(
+    instance.methods.getPermissionsList(countryID).call()
+  );
+  // convert array to number array
+  const walletTypes = walletTypesRaw.map(element => Number(element));
+
+  return walletTypes;
 };
