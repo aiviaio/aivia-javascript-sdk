@@ -183,7 +183,7 @@ exports.updatePermissionRule = async (
     instance.methods.updatePermissionRule(rule)
   );
 
-  await errorHandler(
+  const tx = await errorHandler(
     signedTX({
       data: action,
       from: options.from,
@@ -196,6 +196,7 @@ exports.updatePermissionRule = async (
       estimate
     })
   );
+  return tx;
 };
 
 /**
@@ -230,7 +231,7 @@ exports.updatePermission = async (
     instance.methods.updatePermissionByCountry(countryID, walletTypes)
   );
 
-  await errorHandler(
+  const tx = await errorHandler(
     signedTX({
       data: action,
       from: options.from,
@@ -243,6 +244,7 @@ exports.updatePermission = async (
       estimate
     })
   );
+  return tx;
 };
 
 /**

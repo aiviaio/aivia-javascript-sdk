@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const { getUser } = require("../helpers/users");
+const { getUser, getAddress } = require("../helpers/users");
 const assertRevert = require("../helpers/assertRevert");
 const projectList = require("../projects");
 const { permissions } = require("../deploy/Deployer.test");
@@ -23,6 +23,20 @@ describe("Permissions", () => {
         getUser("external")
       )
     );
+  });
+
+  it("should estimate update  permission", async () => {
+    const { config } = projectList[projectList.length - 1];
+    const owner = getAddress("projectOwner");
+    const gas = await SDK.project.updatePermission(
+      config,
+      permissions.countries[0],
+      permissions.walletTypes,
+      { from: owner },
+      () => {},
+      true
+    );
+    expect(gas).to.not.eq(0);
   });
 
   it("should update permission", async () => {
