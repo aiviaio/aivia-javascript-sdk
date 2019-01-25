@@ -349,7 +349,7 @@ function () {
   var _ref6 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee5(configAddress, rule, options, callback, estimate) {
-    var instance, action;
+    var instance, action, tx;
     return _regenerator.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
@@ -380,6 +380,10 @@ function () {
             }));
 
           case 8:
+            tx = _context5.sent;
+            return _context5.abrupt("return", tx);
+
+          case 10:
           case "end":
             return _context5.stop();
         }
@@ -414,7 +418,7 @@ function () {
   var _ref7 = (0, _asyncToGenerator2.default)(
   /*#__PURE__*/
   _regenerator.default.mark(function _callee6(configAddress, countryID, walletTypes, options, callback, estimate) {
-    var instance, action;
+    var instance, action, tx;
     return _regenerator.default.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
@@ -448,6 +452,10 @@ function () {
             }));
 
           case 9:
+            tx = _context6.sent;
+            return _context6.abrupt("return", tx);
+
+          case 11:
           case "end":
             return _context6.stop();
         }
