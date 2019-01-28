@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const path = "../ethereum-protocol/";
+const path = "../aivia-ethereum-protocol/";
 const SDKPath = "./src/ABI/";
 
 const networkId = 777;
