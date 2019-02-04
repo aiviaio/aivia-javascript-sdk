@@ -11,8 +11,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x05d2035b"
+    "type": "function"
   },
   {
     "constant": true,
@@ -26,8 +25,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x06fdde03"
+    "type": "function"
   },
   {
     "constant": false,
@@ -50,8 +48,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x095ea7b3"
+    "type": "function"
   },
   {
     "constant": true,
@@ -65,8 +62,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x18160ddd"
+    "type": "function"
   },
   {
     "constant": false,
@@ -93,8 +89,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x23b872dd"
+    "type": "function"
   },
   {
     "constant": true,
@@ -113,8 +108,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x27e235e3"
+    "type": "function"
   },
   {
     "constant": true,
@@ -128,8 +122,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x313ce567"
+    "type": "function"
   },
   {
     "constant": true,
@@ -143,8 +136,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x324536eb"
+    "type": "function"
   },
   {
     "constant": true,
@@ -163,8 +155,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x372c12b1"
+    "type": "function"
   },
   {
     "constant": false,
@@ -187,8 +178,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x39509351"
+    "type": "function"
   },
   {
     "constant": false,
@@ -206,8 +196,7 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x3b3e672f"
+    "type": "function"
   },
   {
     "constant": false,
@@ -230,8 +219,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x40c10f19"
+    "type": "function"
   },
   {
     "constant": true,
@@ -254,8 +242,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x5c658165"
+    "type": "function"
   },
   {
     "constant": true,
@@ -274,8 +261,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x70a08231"
+    "type": "function"
   },
   {
     "constant": false,
@@ -284,8 +270,7 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x715018a6"
+    "type": "function"
   },
   {
     "constant": false,
@@ -299,8 +284,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x7d64bcb4"
+    "type": "function"
   },
   {
     "constant": true,
@@ -314,8 +298,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x8da5cb5b"
+    "type": "function"
   },
   {
     "constant": true,
@@ -329,8 +312,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0x95d89b41"
+    "type": "function"
   },
   {
     "constant": false,
@@ -353,8 +335,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xa457c2d7"
+    "type": "function"
   },
   {
     "constant": false,
@@ -377,8 +358,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xa9059cbb"
+    "type": "function"
   },
   {
     "constant": true,
@@ -392,8 +372,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0xad7a672f"
+    "type": "function"
   },
   {
     "constant": true,
@@ -407,8 +386,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0xd8894bb5"
+    "type": "function"
   },
   {
     "constant": true,
@@ -431,8 +409,7 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "signature": "0xdd62ed3e"
+    "type": "function"
   },
   {
     "constant": false,
@@ -446,15 +423,13 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xf2fde38b"
+    "type": "function"
   },
   {
     "anonymous": false,
     "inputs": [],
     "name": "MintingFinished",
-    "type": "event",
-    "signature": "0xb828d9b5c78095deeeeff2eca2e5d4fe046ce3feb4c99702624a3fd384ad2dbc"
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -466,8 +441,7 @@ module.exports = [
       }
     ],
     "name": "OwnershipRenounced",
-    "type": "event",
-    "signature": "0xf8df31144d9c2f0f6b59d69b8b98abd5459d07f2742c4df920b25aae33c64820"
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -484,8 +458,7 @@ module.exports = [
       }
     ],
     "name": "OwnershipTransferred",
-    "type": "event",
-    "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -507,8 +480,7 @@ module.exports = [
       }
     ],
     "name": "Transfer",
-    "type": "event",
-    "signature": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -530,8 +502,7 @@ module.exports = [
       }
     ],
     "name": "Approval",
-    "type": "event",
-    "signature": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925"
+    "type": "event"
   },
   {
     "constant": false,
@@ -545,8 +516,7 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x0e86f506"
+    "type": "function"
   },
   {
     "constant": false,
@@ -560,8 +530,7 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x47ee0394"
+    "type": "function"
   },
   {
     "constant": false,
@@ -575,8 +544,7 @@ module.exports = [
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0x01bf6648"
+    "type": "function"
   },
   {
     "constant": false,
@@ -603,7 +571,6 @@ module.exports = [
     ],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function",
-    "signature": "0xce368990"
+    "type": "function"
   }
 ]

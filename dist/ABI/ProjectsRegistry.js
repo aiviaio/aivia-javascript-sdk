@@ -10,8 +10,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xb88646e7"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [],
@@ -22,8 +21,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xe25a37b4"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -37,8 +35,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xf720f80b"
+  "type": "function"
 }, {
   "inputs": [{
     "name": "_DGStorageAddress",
@@ -49,8 +46,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "constructor",
-  "signature": "constructor"
+  "type": "constructor"
 }, {
   "anonymous": false,
   "inputs": [{
@@ -67,8 +63,7 @@ module.exports = [{
     "type": "uint256"
   }],
   "name": "NewProject",
-  "type": "event",
-  "signature": "0xfbb8da64a8e12e8f5141154359f8c8c1feb1425e6c90d6eb018c1757dbbaf882"
+  "type": "event"
 }, {
   "constant": false,
   "inputs": [{
@@ -88,8 +83,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function",
-  "signature": "0xf35e746e"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -109,8 +103,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x54253b7d"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [],
@@ -121,8 +114,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x0e539a46"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -136,8 +128,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xaee233b3"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -151,8 +142,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xc1ee792a"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [],
@@ -163,6 +153,5 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x61c2c5c8"
+  "type": "function"
 }];

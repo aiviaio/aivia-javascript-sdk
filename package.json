@@ -1,6 +1,6 @@
 {
   "name": "aivia",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "description": "JavaScript SDK for AIVIA protocol",
   "main": "./src/index.js",
   "dependencies": {

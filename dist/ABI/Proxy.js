@@ -10,8 +10,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xe25a37b4"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -25,8 +24,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0xf720f80b"
+  "type": "function"
 }, {
   "inputs": [{
     "name": "_DGStorageAddress",
@@ -37,8 +35,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "constructor",
-  "signature": "constructor"
+  "type": "constructor"
 }, {
   "anonymous": false,
   "inputs": [{
@@ -51,8 +48,7 @@ module.exports = [{
     "type": "address[]"
   }],
   "name": "NewProject",
-  "type": "event",
-  "signature": "0x7300adb4a03b0d31fe2b5ea1f39f0c6deb06807f485a0f3386394627851a23c8"
+  "type": "event"
 }, {
   "constant": true,
   "inputs": [{
@@ -66,8 +62,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x8a7762e7"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -84,8 +79,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x500e68ad"
+  "type": "function"
 }, {
   "constant": true,
   "inputs": [{
@@ -99,8 +93,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function",
-  "signature": "0x50c358a4"
+  "type": "function"
 }, {
   "constant": false,
   "inputs": [{
@@ -132,8 +125,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function",
-  "signature": "0xf74c65d0"
+  "type": "function"
 }, {
   "constant": false,
   "inputs": [],
@@ -144,8 +136,7 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function",
-  "signature": "0xedc1c4b3"
+  "type": "function"
 }, {
   "constant": false,
   "inputs": [{
@@ -159,6 +150,5 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function",
-  "signature": "0xbe0ee616"
+  "type": "function"
 }];
