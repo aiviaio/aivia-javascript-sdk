@@ -10,7 +10,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xe25a37b4"
 }, {
   "constant": true,
   "inputs": [{
@@ -24,7 +25,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xf720f80b"
 }, {
   "inputs": [{
     "name": "_DGStorageAddress",
@@ -32,7 +34,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "constructor"
+  "type": "constructor",
+  "signature": "constructor"
 }, {
   "constant": false,
   "inputs": [{
@@ -43,7 +46,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0x2bde75ef"
 }, {
   "constant": false,
   "inputs": [{
@@ -54,7 +58,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0x46a7dadc"
 }, {
   "constant": true,
   "inputs": [],
@@ -65,5 +70,6 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0x43a73d9a"
 }];

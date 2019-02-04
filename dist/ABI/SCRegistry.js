@@ -10,7 +10,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xb88646e7"
 }, {
   "constant": true,
   "inputs": [],
@@ -21,7 +22,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xe25a37b4"
 }, {
   "constant": true,
   "inputs": [{
@@ -35,7 +37,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xf720f80b"
 }, {
   "inputs": [{
     "name": "_DGStorageAddress",
@@ -46,7 +49,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "constructor"
+  "type": "constructor",
+  "signature": "constructor"
 }, {
   "anonymous": false,
   "inputs": [{
@@ -63,7 +67,8 @@ module.exports = [{
     "type": "address"
   }],
   "name": "registryEvent",
-  "type": "event"
+  "type": "event",
+  "signature": "0x970601f4a0b569dc12be1307b881337073c217ec487a5185acb0a931208d0ca9"
 }, {
   "anonymous": false,
   "inputs": [{
@@ -80,7 +85,8 @@ module.exports = [{
     "type": "address"
   }],
   "name": "updateRate",
-  "type": "event"
+  "type": "event",
+  "signature": "0x34debe67be2f6e3b6eaf5fc624f42da9224ed44f1c27f22a845ebc6c3104c386"
 }, {
   "constant": true,
   "inputs": [{
@@ -97,7 +103,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0x0cba53ea"
 }, {
   "constant": true,
   "inputs": [{
@@ -111,7 +118,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xc9b2e522"
 }, {
   "constant": true,
   "inputs": [{
@@ -125,7 +133,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0x76d02895"
 }, {
   "constant": true,
   "inputs": [{
@@ -139,7 +148,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0x5896749a"
 }, {
   "constant": true,
   "inputs": [],
@@ -150,7 +160,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xa73b870c"
 }, {
   "constant": false,
   "inputs": [{
@@ -167,7 +178,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0xf0ea883b"
 }, {
   "constant": false,
   "inputs": [{
@@ -181,7 +193,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0x2a7619f2"
 }, {
   "constant": false,
   "inputs": [{
@@ -192,5 +205,6 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0x4a5e42b1"
 }];

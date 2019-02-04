@@ -10,7 +10,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xb88646e7"
 }, {
   "constant": true,
   "inputs": [],
@@ -21,7 +22,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xe25a37b4"
 }, {
   "constant": true,
   "inputs": [{
@@ -35,7 +37,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xf720f80b"
 }, {
   "inputs": [{
     "name": "_DGStorageAddress",
@@ -46,7 +49,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "constructor"
+  "type": "constructor",
+  "signature": "constructor"
 }, {
   "anonymous": false,
   "inputs": [{
@@ -59,7 +63,8 @@ module.exports = [{
     "type": "address"
   }],
   "name": "registryEvent",
-  "type": "event"
+  "type": "event",
+  "signature": "0x32b20f3349e58ed09ff3665fa7d4bf5093314b165c00f8a86ca7dcb91d78ffb5"
 }, {
   "constant": false,
   "inputs": [{
@@ -79,7 +84,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0xca0f2369"
 }, {
   "constant": false,
   "inputs": [{
@@ -93,7 +99,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0xbb431814"
 }, {
   "constant": true,
   "inputs": [{
@@ -113,7 +120,8 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xcc3d967b"
 }, {
   "constant": false,
   "inputs": [{
@@ -124,7 +132,8 @@ module.exports = [{
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
+  "type": "function",
+  "signature": "0x98575188"
 }, {
   "constant": true,
   "inputs": [],
@@ -135,5 +144,6 @@ module.exports = [{
   }],
   "payable": false,
   "stateMutability": "view",
-  "type": "function"
+  "type": "function",
+  "signature": "0xc74e13f3"
 }];
