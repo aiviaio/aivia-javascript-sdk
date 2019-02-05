@@ -1,12 +1,12 @@
 {
   "name": "aivia",
-  "version": "1.11.3",
+  "version": "1.11.4",
   "description": "JavaScript SDK for AIVIA protocol",
   "main": "./src/index.js",
   "dependencies": {
     "ethereumjs-tx": "^1.3.7",
     "is_js": "^0.9.0",
-    "web3": "1.0.0-beta.37"
+    "web3": "1.0.0-beta.36"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
