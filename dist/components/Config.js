@@ -249,7 +249,7 @@ function () {
           case 18:
             investors = _context4.sent;
 
-            if (investors > value) {
+            if (investors !== 0 && investors > value) {
               Error({
                 name: "params",
                 message: "There are already ".concat(investors, " investors, the new value should be either equal to ").concat(investors, " or more")
@@ -268,7 +268,7 @@ function () {
           case 23:
             totalSupply = _context4.sent;
 
-            if (totalSupply > value) {
+            if (totalSupply !== 0 && totalSupply > value) {
               Error({
                 name: "params",
                 message: "There are already ".concat(totalSupply, "  tokens, the new value should be either equal to ").concat(totalSupply, " or more")
