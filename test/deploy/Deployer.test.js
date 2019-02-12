@@ -12,8 +12,8 @@ const options = {
     exitFee: 1
   },
   initialPrice: 0.025,
-  maxTokens: 25000000,
-  maxInvestors: 3000,
+  maxTokens: 0,
+  maxInvestors: 0,
   projectName: "Crypto Hedge Project",
   tokenName: "Token from SDK",
   permissions: {

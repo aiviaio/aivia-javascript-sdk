@@ -108,7 +108,7 @@ exports.update = async (
     const { token } = await module.exports.getConfigDirectly(configAddress);
     if (key === "maxInvestors") {
       const investors = await Asset.getInvestors(token);
-      if (investors !== 0 && investors > value) {
+      if (value !== 0 && investors > value) {
         Error({
           name: "params",
           message: `There are already ${investors} investors, the new value should be either equal to ${investors} or more`
@@ -118,7 +118,7 @@ exports.update = async (
 
     if (key === "maxTokens") {
       const totalSupply = await ERC20.totalSupply(token);
-      if (totalSupply !== 0 && totalSupply > value) {
+      if (value !== 0 && totalSupply > value) {
         Error({
           name: "params",
           message: `There are already ${totalSupply}  tokens, the new value should be either equal to ${totalSupply} or more`
