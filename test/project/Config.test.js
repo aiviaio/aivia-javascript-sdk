@@ -257,9 +257,12 @@ describe("Project config", () => {
       expect(exitFee).to.eq(initialData.fees.exitFee);
       expect(entryFee).to.eq(initialData.fees.entryFee);
       expect(platformFee).to.eq(initialData.fees.platformFee);
+
       expect(maxInvestors).to.eq(initialData.maxInvestors);
+
       expect(maxTokens).to.eq(initialData.maxTokens);
       expect(tokenName).to.eq(initialData.tokenName);
+
       expect(projectName).to.eq(initialData.projectName);
     });
   });
