@@ -274,6 +274,5 @@ exports.getPermissionsList = async (configAddress, countryID) => {
   );
   // convert array to number array
   const walletTypes = walletTypesRaw.map(element => Number(element));
-
   return walletTypes;
 };
