@@ -23,7 +23,7 @@ const list = [
   "ERC20Mintable",
   "ProjectConfig",
   "ConfigWithPermissions",
-  "PlatformToken",
+  "AIV",
   "TrueUSD",
   "PlatformRegistry",
   "TPLRegistry",
@@ -55,13 +55,13 @@ if (process.env.MODE === "dev") {
 
   process.stdout.write("\x1Bc");
 
-  fs.copyFile(`${path}/config/users.json`, "./test/users.json", err => {
+  fs.copyFile(`${path}/config/users.json`, "./test/users.json", (err) => {
     if (err) throw err;
     console.info("users.json was copied to destination.txt");
   });
 }
 
-list.forEach(fileName => {
+list.forEach((fileName) => {
   fs.readFile(
     `${path}build/contracts/${fileName}.json`,
     "utf8",
@@ -74,7 +74,7 @@ list.forEach(fileName => {
           fs.writeFile(
             "./test/contracts.json",
             new Uint8Array(Buffer.from(JSON.stringify(contracts, null, 2))),
-            error => {
+            (error) => {
               if (error) throw error;
             }
           );
@@ -82,7 +82,7 @@ list.forEach(fileName => {
       }
       const text = `module.exports = ${JSON.stringify(ABI, null, 2)}`;
       const file = new Uint8Array(Buffer.from(text));
-      fs.writeFile(`${SDKPath + fileName}.js`, file, error => {
+      fs.writeFile(`${SDKPath + fileName}.js`, file, (error) => {
         if (error) throw error;
       });
     }

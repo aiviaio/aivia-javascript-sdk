@@ -27,7 +27,8 @@
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "typedarray-to-buffer": "^3.1.5"
   },
   "scripts": {
     "test": "mocha ./test/index.js --timeout=13000",
